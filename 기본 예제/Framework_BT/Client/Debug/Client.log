@@ -7,4 +7,5 @@
   Obj.cpp
   Player.cpp
   코드를 생성하고 있습니다...
-  Client.vcxproj -> C:\Users\김준혁\Desktop\쥬신\3개월차\180227_4방향 미사일_소멸\Framework_BT\Debug\Client.exe
+  LINK : D:\CrossyRoad\Crossy-Road\기본 예제\Framework_BT\Debug\Client.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+  Client.vcxproj -> D:\CrossyRoad\Crossy-Road\기본 예제\Framework_BT\Debug\Client.exe
