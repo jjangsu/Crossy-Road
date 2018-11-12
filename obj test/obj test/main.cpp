@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
 	// 안그러면 에러.
 	loader = new ObjLoader();
 	//loader->Open_ObjFile(argv[1]);
-	loader->Open_ObjFile("character object/box.obj");
-	//loader->Open_ObjFile("character object/chicken.obj");
+	//loader->Open_ObjFile("character object/box.obj");
+	loader->Open_ObjFile("character object/chicken.obj");
 
 	glutMainLoop();
 

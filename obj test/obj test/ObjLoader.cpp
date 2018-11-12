@@ -7,12 +7,13 @@
 //
 
 #include "ObjLoader.h"
+#define hi 3
 
 ObjLoader::ObjLoader()
 {
 	isLoadSuccess = false;
 	rotate = 0.0;
-	scaleFactor = 10;
+	scaleFactor = 3;
 	pos_x = 0.0;
 	pos_y = -20.0;
 	listIndex = glGenLists(1);
@@ -36,13 +37,31 @@ void ObjLoader::Open_ObjFile(string filepath)
 		return;
 	}
 
-	ObjStruct objStruct;
-	string temp;
+	faceCount = 0;
+	vertexCount = 0;
+
+	while (!file.eof())
+	{
+		getline(file, temp);
+		if (temp[0] == 'v' && temp[1] == ' ')
+			vertexCount++;
+		else if (temp[0] == 'f' && temp[1] == ' ')
+			faceCount++;
+	}
+	cout << vertexCount << " " << faceCount <<endl;
 
 	glPointSize(2.0);
-	glNewList(listIndex, GL_COMPILE_AND_EXECUTE);// GL_COMPILE);
-	glPushMatrix();
-	glBegin(GL_POINTS);
+	//glNewList(listIndex, GL_COMPILE_AND_EXECUTE);// GL_COMPILE);
+	//glPushMatrix();
+	//glBegin(GL_LINES);
+
+	file.close();
+	file.open(filepath.c_str(), ios::in);
+
+	vertexs = new ObjStruct[vertexCount];
+	faces = new FACES[faceCount * 3];
+	faceCount = 0;
+	vertexCount = 0;
 
 	while (!file.eof())
 	{
@@ -57,13 +76,44 @@ void ObjLoader::Open_ObjFile(string filepath)
 
 			cout << "Draw Vertex3f : " << objStruct.x << " " << objStruct.y << " " << objStruct.z << endl;
 
-			glVertex3f(objStruct.x, objStruct.y, objStruct.z);
+			//glVertex3f(objStruct.x, objStruct.y, objStruct.z);
+			
+			vertexs[vertexCount] = objStruct;
+			vertexCount++;
+
+		}
+		if (temp.c_str()[0] == 'f' && temp.c_str()[1] == ' ')
+		{
+
+			sscanf_s(temp.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
+				&tempF[0].v, &tempF[0].vt, &tempF[0].vn,
+				&tempF[1].v, &tempF[1].vt, &tempF[1].vn,
+				&tempF[2].v, &tempF[2].vt, &tempF[2].vn);
+
+			faces[faceCount] = tempF[0];
+			faces[faceCount + 1] = tempF[1];
+			faces[faceCount + 2] = tempF[2];
+			faceCount += 3;
 		}
 	}
 
-	glEnd();
-	glPopMatrix();
-	glEndList();
+
+	//glColor3f(0.0, 1.0, 0.0);
+	//for (int i = 0; i < faceCount; i += 3)
+	//{
+	//	glBegin(GL_TRIANGLES);
+	//	{
+	//		glVertex3f(objStruct.x, objStruct.y, objStruct.z);
+	//	
+	//		glVertex3i(vertexs[faces[i + 0].v].x, vertexs[faces[i + 0].v].y, vertexs[faces[i + 0].v].z);
+	//		glVertex3i(vertexs[faces[i + 1].v].x, vertexs[faces[i + 1].v].y, vertexs[faces[i + 1].v].z);
+	//		glVertex3i(vertexs[faces[i + 2].v].x, vertexs[faces[i + 2].v].y, vertexs[faces[i + 2].v].z);
+	//	}
+	//	glEnd();
+	//}
+	//glEnd();
+	//glPopMatrix();
+	//glEndList();
 
 	isLoadSuccess = true;
 }
@@ -81,7 +131,14 @@ void ObjLoader::Create_Model()
 	glScalef(scaleFactor, scaleFactor, scaleFactor);
 	glRotatef(rotate, 0, 1, 0);
 
-	glCallList(listIndex);
+	//glCallList(listIndex);
+		glBegin(GL_TRIANGLES); 
+	for (int i = 0; i < faceCount /12 * 12; ++i)
+	{
+		//glColor3f(float(i) / faceCount, float(i) / faceCount, float(i) / faceCount);
+		glVertex3f(vertexs[faces[i].v-1].x, vertexs[faces[i].v-1].y, vertexs[faces[i].v-1].z);
+	}
+		glEnd();
 
 	glPopMatrix();
 }

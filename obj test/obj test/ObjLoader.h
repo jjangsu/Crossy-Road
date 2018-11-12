@@ -24,6 +24,18 @@ typedef struct ObjStruct {
 	GLfloat z;
 }ObjStruct;
 
+typedef struct __faces
+{
+	int v;
+	int vt;
+	int vn;
+}FACES;
+
+struct FACE
+{
+	ObjStruct _3vertex;
+};
+
 class ObjLoader {
 private:
 	bool isLoadSuccess;
@@ -32,6 +44,14 @@ private:
 	GLfloat scaleFactor;
 	GLfloat pos_x;
 	GLfloat pos_y;
+
+	ObjStruct objStruct;
+	FACES tempF[3];
+	ObjStruct* vertexs;
+	FACES* faces;
+	string temp;
+	int faceCount;
+	int vertexCount;
 
 public:
 	ObjLoader();
