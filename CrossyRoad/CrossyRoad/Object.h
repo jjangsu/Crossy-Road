@@ -1,11 +1,11 @@
 #pragma once
-#include "INFO.h"
+#include "Vector.h"
 
 class Object
 {
 protected:
 	//필요한 변수 있으면 추가하자고
-	INFO info;
+	VECTOR info;
 	float speed;
 
 	// void updateObject(); //나중에 필요하면 만들자
@@ -14,7 +14,7 @@ public:
 	Object();
 	virtual ~Object();
 
-	const INFO& getInfo()
+	const VECTOR& getInfo()
 	{
 		return info;
 	}

@@ -1,7 +1,7 @@
 #pragma once
-typedef struct __info
+typedef struct __vector
 {
 	float x;
 	float y;
 	float z;
-} INFO;
+} VECTOR;
