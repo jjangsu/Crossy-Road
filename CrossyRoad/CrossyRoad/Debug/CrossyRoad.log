@@ -1,2 +1,6 @@
-﻿  Main.cpp
+﻿  pch.cpp
+  Main.cpp
+  OBJLoader.cpp
+  Object.cpp
+  코드를 생성하고 있습니다...
   CrossyRoad.vcxproj -> C:\Users\수현\Desktop\Crossy Road\Crossy-Road\CrossyRoad\Debug\CrossyRoad.exe
