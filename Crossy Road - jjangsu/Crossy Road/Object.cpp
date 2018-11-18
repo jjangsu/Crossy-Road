@@ -3,7 +3,7 @@
 
 
 Object::Object()
-	:info({}),speed(0)
+	:info({}), speed(0)
 {
 }
 

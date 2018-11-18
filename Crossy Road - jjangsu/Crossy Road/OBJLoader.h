@@ -1,10 +1,3 @@
-//#ifndef __OpenGL_Test__ObjLoader__
-//#define __OpenGL_Test__ObjLoader__
-//
-//
-//
-//#endif /* defined(__OpenGL_Test__ObjLoader__) */
-
 #pragma once
 #include "stdafx.h"
 
