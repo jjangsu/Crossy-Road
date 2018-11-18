@@ -1,119 +1,89 @@
-#include "stdafx.h"
+// 표준 헤더 포함
+#include <stdio.h>
+#include <stdlib.h>
 
-void display();
-void MyReshape(int width, int height);
-void keyboard(unsigned char key, int x, int y);
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
-ObjLoader* chicken;
+#include <glm/glm.hpp>
 
 
-int main(int argc, char *argv[])
+static const GLfloat g_vertex_buffer_data[] = {
+   -1.0f, -1.0f, 0.0f,
+   1.0f, -1.0f, 0.0f,
+   0.0f,  1.0f, 0.0f,
+};
+
+
+
+int main()
 {
-	if (argc == 1)
+	if (!glfwInit())
 	{
-		cout << "Error!! : Please write file path" << endl;
-		//return 0;
-	}
-	else
-	{
-		cout << "Obj File Open" << endl;
-		cout << "W / S : Move model up / down" << endl;
-		cout << "A / D : Rotate left / right" << endl;
-		cout << "Q / E : Scale up / down" << endl;
-		cout << "ESC   : Exit Program" << endl;
+		fprintf(stderr, "GLFW 초기화 실패\n");
+		return -1;
 	}
 
-	// initialize and run program
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(640, 480);
-	glutCreateWindow("Cossy Road");
+	glfwWindowHint(GLFW_SAMPLES, 4); // 4x 안티에일리어싱
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // OpenGL 3.3 을 쓸 겁니다
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // MacOS 가 기분 좋아짐; 꼭 필요한 부분은 아님
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //옛날 OpenGL은 원하지 않아요
 
-	glutReshapeFunc(MyReshape);
-	glutDisplayFunc(display);
-	glutIdleFunc(display);
-	glutKeyboardFunc(keyboard);
+	// 새창을 열고, OpenGL 컨텍스트를 생성
+	GLFWwindow* window; // (후술되는 코드를 보면, 이 변수는 전역(Global)입니다.)
+	window = glfwCreateWindow(1024, 768, "Tutorial 01", NULL, NULL);
 
-	// GenList 등의 함수는 glutCreateWindow이후에 불러져야 한다.
-	// 안그러면 에러.
-	//loader->Open_ObjFile(argv[1]);
-	//loader->Open_ObjFile("character object/box.obj");
-	chicken = new ObjLoader();
-	chicken->Open_ObjFile("resource/character object/chicken.obj");
 
-	glutMainLoop();
-
-	//system("pause")
-
-	delete chicken;
-	return 0;
-}
-
-void keyboard(unsigned char key, int x, int y)
-{
-	switch (key) {
-	case KEY_ESCAPE:
-		exit(0);
-		break;
-
-	case 'a':
-		chicken->Rotate(1);
-		break;
-
-	case 'd':
-		chicken->Rotate(-1);
-		break;
-
-	case 'q':
-		chicken->Scale(-0.5);
-		break;
-	case 'e':
-		chicken->Scale(0.5);
-		break;
-
-	case 'w':
-		chicken->Move(0, 1);
-		break;
-
-	case 's':
-		chicken->Move(0, -1);
-		break;
-
-	default:
-		break;
+	if (window == NULL) {
+		fprintf(stderr, "GLFW 윈도우를 여는데 실패했습니다. Intel GPU 를 사용한다면, 3.3 지원을 하지 않습니다. 2.1 버전용 튜토리얼을 시도하세요.\n");
+		glfwTerminate();
+		return -1;
 	}
+	glfwMakeContextCurrent(window); // GLEW 초기화
+	glewExperimental = true; // 코어 프로파일을 위해 필요함
+	if (glewInit() != GLEW_OK) {
+		fprintf(stderr, "Failed to initialize GLEW\n");
+		return -1;
+	}
+
+	// 다른 OpenGL 호출이 일어나기 전, 즉 새 창을 생성했을 때 (= OpenGL 컨텍스트가 생성된 후) 한번 이부분을 수헹해주세요.
+	GLuint VertexArrayID;
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+
+	GLuint vertexbuffer;
+	// 버퍼를 하나 생성합니다. vertexbuffer 에 결과 식별자를 넣습니다
+	glGenBuffers(1, &vertexbuffer);
+	// 아래의 명령어들은 우리의 "vertexbuffer" 버퍼에 대해서 다룰겁니다
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	// 우리의 버텍스들을 OpenGL로 넘겨줍니다
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+
+	// 밑에서 Escape 키가 눌러지는 것을 감지할 수 있도록 할 것
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+	do {
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+		glVertexAttribPointer(
+			0,                  // 0번째 속성(attribute). 0 이 될 특별한 이유는 없지만, 쉐이더의 레이아웃(layout)와 반드시 맞추어야 합니다.
+			3,                  // 크기(size)
+			GL_FLOAT,           // 타입(type)
+			GL_FALSE,           // 정규화(normalized)?
+			0,                  // 다음 요소 까지 간격(stride)
+			(void*)0            // 배열 버퍼의 오프셋(offset; 옮기는 값)
+		);
+		// 삼각형 그리기!
+		glDrawArrays(GL_TRIANGLES, 0, 3); // 버텍스 0에서 시작해서; 총 3개의 버텍스로 -> 하나의 삼각형
+		glDisableVertexAttribArray(0);
+
+		// 버퍼들을 교체
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+
+	} // 만약 ESC 키가 눌러졌는지 혹은 창이 닫혔는지 체크 체크
+	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(window) == 0);
 }
-
-void display()
-{
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-	glLoadIdentity();
-
-	chicken->draw();
-
-	glutSwapBuffers();
-}
-
-void MyReshape(int width, int height)
-{
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, (GLfloat)width / (GLfloat)height, 0.1, 1000.0);
-	glMatrixMode(GL_MODELVIEW);
-}
-
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
-
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
-
