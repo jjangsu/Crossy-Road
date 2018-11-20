@@ -58,7 +58,7 @@ int main()
 	glfwPollEvents();
 	glfwSetCursorPos(window, 1024 / 2, 768 / 2);
 
-	// Dark blue background
+	//배경 색 정하기
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	// Enable depth test
@@ -112,11 +112,26 @@ int main()
 	bool res = loadOBJ("resource/character object/chicken.obj", vertices, uvs, normals);
 
 	// Load it into a VBO
+	// 작게 출력해보장
+	for (auto& v : vertices)
+		v *= 0.005;
+
+	std::vector< glm::vec3 > vertices_2;
+	bool res2 = loadOBJ("resource/character object/chicken.obj", vertices_2, uvs, normals);
+	vertices_2 = vertices;
+
+	for (auto& v : vertices_2)
+		v.x += 0.3;
 
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+
+	GLuint vertexbuffer2;
+	glGenBuffers(1, &vertexbuffer2);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+	glBufferData(GL_ARRAY_BUFFER, vertices_2.size() * sizeof(glm::vec3), &vertices_2[0], GL_STATIC_DRAW);
 
 	GLuint uvbuffer;
 	glGenBuffers(1, &uvbuffer);
@@ -127,6 +142,7 @@ int main()
 	glGenBuffers(1, &normalbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+		
 
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(programID);
@@ -151,7 +167,8 @@ int main()
 		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
 		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
-		glm::vec3 lightPos = glm::vec3(4, 4, 4);
+		// 조명의 위치
+		glm::vec3 lightPos = glm::vec3(5, 10, 10);
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
 		// Bind our texture in Texture Unit 0
@@ -199,10 +216,25 @@ int main()
 
 		// 삼각형 그리기!
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());  // 12*3 indices starting at 0 -> 12 triangles
+		
+		glEnableVertexAttribArray(3);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+		glVertexAttribPointer(
+			0,                  // 0번째 속성(attribute). 0 이 될 특별한 이유는 없지만, 쉐이더의 레이아웃(layout)와 반드시 맞추어야 합니다.
+			3,                  // 크기(size)
+			GL_FLOAT,           // 타입(type)
+			GL_FALSE,           // 정규화(normalized)?
+			0,                  // 다음 요소 까지 간격(stride)
+			(void*)0            // 배열 버퍼의 오프셋(offset; 옮기는 값)
+		);
+
+		
+		glDrawArrays(GL_TRIANGLES, 0, vertices_2.size());
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+		glDisableVertexAttribArray(3);
 
 		// 버퍼들을 교체
 		glfwSwapBuffers(window);
@@ -213,6 +245,7 @@ int main()
 		glfwWindowShouldClose(window) == 0);
 
 	glDeleteBuffers(1, &vertexbuffer);
+	glDeleteBuffers(1, &vertexbuffer2);
 	glDeleteBuffers(1, &uvbuffer);
 	glDeleteBuffers(1, &normalbuffer);
 	glDeleteProgram(programID);
