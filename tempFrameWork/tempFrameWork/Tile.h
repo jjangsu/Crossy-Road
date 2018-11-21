@@ -1,5 +1,6 @@
 #pragma once
-class Tile
+#include "ParentObject.h"
+class Tile:public ParentObject
 {
 public:
 	Tile();

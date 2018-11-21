@@ -1,5 +1,6 @@
 #pragma once
-class Car
+#include "ParentObject.h"
+class Car: public ParentObject
 {
 public:
 	Car();

@@ -1,5 +1,6 @@
 #pragma once
-class Character
+#include "ParentObject.h"
+class Character:public ParentObject
 {
 public:
 	Character();
