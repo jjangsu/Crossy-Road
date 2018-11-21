@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Car.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="IngameScene.h" />
     <ClInclude Include="ParentObject.h" />
     <ClInclude Include="ParentScene.h" />
