@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="objLoader">
+      <UniqueIdentifier>{af5f5d67-18c8-452a-8339-b4d028c80b27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Read me">
+      <UniqueIdentifier>{d8b117c6-5848-4ff6-bb76-ff7ebb876fff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{172154cb-1c0b-4120-a37e-4378aad3c989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ParentsScene">
+      <UniqueIdentifier>{e45d1ab6-aed5-468b-86a0-9ac5324cc276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\StartScene">
+      <UniqueIdentifier>{2dc6e3b8-c5e6-4f29-8ba2-380515b3bf21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\IngameScene">
+      <UniqueIdentifier>{0ff8f976-e003-4dd9-a595-ac8e9ea67870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\StoreScene">
+      <UniqueIdentifier>{dae2d4c0-66af-465e-bb91-1419fa517e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{6f3ad0c5-3e99-4206-90be-2915c7c9953c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Car">
+      <UniqueIdentifier>{16ac8daa-998b-4b89-829f-64ca99cfff84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\ParentObject">
+      <UniqueIdentifier>{e1626426-60e6-41e8-9a2e-aec5e7e0e642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Tile">
+      <UniqueIdentifier>{10bb87bf-4257-4226-a5ec-cfe0d2f77df3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Character">
+      <UniqueIdentifier>{acf11a72-3b0e-450c-bd5d-a7787476aaf9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ParentScene.h">
+      <Filter>Scene\ParentsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Scene\StartScene</Filter>
+    </ClInclude>
+    <ClInclude Include="IngameScene.h">
+      <Filter>Scene\IngameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreScene.h">
+      <Filter>Scene\StoreScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ParentObject.h">
+      <Filter>Object\ParentObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Object\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Object\Character</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="ParentScene.cpp">
+      <Filter>Scene\ParentsScene</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Scene\StartScene</Filter>
+    </ClCompile>
+    <ClCompile Include="IngameScene.cpp">
+      <Filter>Scene\IngameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreScene.cpp">
+      <Filter>Scene\StoreScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ParentObject.cpp">
+      <Filter>Object\ParentObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Object\Car</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Object\Character</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>Read me</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
