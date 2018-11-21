@@ -1,0 +1,12 @@
+﻿  controls.cpp
+d:\crossyroad\crossy-road\crossy road - jjangsu\crossy road\controls.cpp(10): fatal error C1083: 포함 파일을 열 수 없습니다. 'common/controls.hpp': No such file or directory
+  main.cpp
+d:\crossyroad\crossy-road\crossy road - jjangsu\crossy road\main.cpp(14): fatal error C1083: 포함 파일을 열 수 없습니다. 'common/shader.hpp': No such file or directory
+  objloader.cpp
+d:\crossyroad\crossy-road\crossy road - jjangsu\crossy road\objloader.cpp(9): fatal error C1083: 포함 파일을 열 수 없습니다. 'common/objloader.hpp': No such file or directory
+  shader.cpp
+d:\crossyroad\crossy-road\crossy road - jjangsu\crossy road\shader.cpp(15): fatal error C1083: 포함 파일을 열 수 없습니다. 'common/shader.hpp': No such file or directory
+  texture.cpp
+  vboindexer.cpp
+d:\crossyroad\crossy-road\crossy road - jjangsu\crossy road\vboindexer.cpp(6): fatal error C1083: 포함 파일을 열 수 없습니다. 'common/vboindexer.hpp': No such file or directory
+  코드를 생성하고 있습니다...
