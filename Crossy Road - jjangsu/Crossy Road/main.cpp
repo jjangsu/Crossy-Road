@@ -11,10 +11,10 @@ GLFWwindow* window; // (후술되는 코드를 보면, 이 변수는 전역(Global)입니다.)
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
-#include <common/shader.hpp>
-#include <common/texture.hpp>
-#include <common/controls.hpp>
-#include <common/objloader.hpp>
+#include "shader.hpp"
+#include "texture.hpp"
+#include "controls.hpp"
+#include "objloader.hpp"
 
 int main()
 {
@@ -34,7 +34,7 @@ int main()
 	window = glfwCreateWindow(1024, 768, "openGL Tutorial", NULL, NULL);
 	if (window == NULL) {
 		fprintf(stderr, "GLFW 윈도우를 여는데 실패했습니다. Intel GPU 를 사용한다면, 3.3 지원을 하지 않습니다. 2.1 버전용 튜토리얼을 시도하세요.\n");
-		getchar();
+		//getchar();
 		glfwTerminate();
 		return -1;
 	}
@@ -70,7 +70,7 @@ int main()
 
 
 	// 다른 OpenGL 호출이 일어나기 전, 즉 새 창을 생성했을 때 (= OpenGL 컨텍스트가 생성된 후) 한번 이부분을 수헹해주세요.
-	GLuint VertexArrayID;
+	GLuint VertexArrayID;   
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
@@ -116,15 +116,15 @@ int main()
 	for (auto& v : vertices)
 		v *= 0.005;
 
-	std::vector< glm::vec3 > vertices_2;
-	bool res2 = loadOBJ("resource/character object/chicken.obj", vertices_2, uvs, normals);
-	vertices_2 = vertices;
+	std::vector< glm::vec3 > vertices_2 = vertices; //아마 벡터는 이거 지원해줄걸 오버로딩되어있을거야
+	//bool res2 = loadOBJ("resource/character object/chicken.obj", vertices_2, uvs, normals);
+	//vertices_2 = vertices;
 
 	for (auto& v : vertices_2)
 		v.x += 0.3;
 
 	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
+	glGenBuffers(1, &vertexbuffer);   //1이 버퍼의 ID네요 나중에는 #define으로 바꿔서 합시다.
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
