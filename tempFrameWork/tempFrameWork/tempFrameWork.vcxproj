@@ -149,18 +149,25 @@
   <ItemGroup>
     <ClInclude Include="Car.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="controls.hpp" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="IngameScene.h" />
+    <ClInclude Include="objloader.hpp" />
     <ClInclude Include="ParentObject.h" />
     <ClInclude Include="ParentScene.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="shader.hpp" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="StoreScene.h" />
+    <ClInclude Include="tangentspace.hpp" />
+    <ClInclude Include="texture.hpp" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="vboindexer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="controls.cpp" />
     <ClCompile Include="IngameScene.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="ParentObject.cpp" />
@@ -172,9 +179,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="shader.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="StoreScene.cpp" />
+    <ClCompile Include="tangentspace.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="vboindexer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

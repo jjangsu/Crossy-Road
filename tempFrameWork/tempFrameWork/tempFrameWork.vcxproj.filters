@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="objLoader">
-      <UniqueIdentifier>{af5f5d67-18c8-452a-8339-b4d028c80b27}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Read me">
       <UniqueIdentifier>{d8b117c6-5848-4ff6-bb76-ff7ebb876fff}</UniqueIdentifier>
     </Filter>
@@ -49,6 +46,15 @@
     <Filter Include="Object\Character">
       <UniqueIdentifier>{acf11a72-3b0e-450c-bd5d-a7787476aaf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ObjLoad&amp;Mapping">
+      <UniqueIdentifier>{af5f5d67-18c8-452a-8339-b4d028c80b27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjLoad&amp;Mapping\cpp">
+      <UniqueIdentifier>{6df1031c-7eea-40c7-b777-cc88a64e0cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjLoad&amp;Mapping\hpp">
+      <UniqueIdentifier>{ec18d3bb-92c7-43a9-9a60-40a42a4413d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -81,6 +87,24 @@
     <ClInclude Include="Define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="controls.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="tangentspace.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vboindexer.hpp">
+      <Filter>ObjLoad&amp;Mapping\hpp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -88,9 +112,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjLoader.cpp">
-      <Filter>objLoader</Filter>
     </ClCompile>
     <ClCompile Include="ParentScene.cpp">
       <Filter>Scene\ParentsScene</Filter>
@@ -115,6 +136,24 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLoader.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="vboindexer.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="tangentspace.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="controls.cpp">
+      <Filter>ObjLoad&amp;Mapping\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
