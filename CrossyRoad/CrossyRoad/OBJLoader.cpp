@@ -1,138 +1,117 @@
-#include "stdafx.h"
-#include "ObjLoader.h"
+#include <vector>
+#include <stdio.h>
+#include <string>
+#include <cstring>
 
-ObjLoader::ObjLoader()
+#include "objloader.hpp"
+
+MeshIDData MeshManager::loadOBJ(const std::string path)
 {
-	isLoadSuccess = false;
-	rotate = 0.0;
-	scaleFactor = 3;
-	pos_x = 0.0;
-	pos_y = -20.0;
-	listIndex = glGenLists(1);
-}
-
-ObjLoader::~ObjLoader()
-{
-}
-
-void ObjLoader::Open_ObjFile(string filepath)
-{
-	ifstream file;
-
-	file.open(filepath.c_str(), ios::in);
-
-	if (!file.is_open())
+	auto iter = meshDatas.find(path);
+	if (iter == meshDatas.end())
 	{
-		isLoadSuccess = false;
+		printf("Loading OBJ file %s...\n", path.c_str());
 
-		cout << "File Load Failed" << endl;
-		return;
-	}
+		std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+		std::vector<glm::vec3> temp_vertices;
+		std::vector<glm::vec2> temp_uvs;
+		std::vector<glm::vec3> temp_normals;
 
-	faceCount = 0;
-	vertexCount = 0;
+		std::vector<glm::vec3> out_vertices;
+		std::vector<glm::vec2> out_uvs;
+		std::vector<glm::vec3> out_normals;
 
-	while (!file.eof())
-	{
-		getline(file, temp);
-		if (temp[0] == 'v' && temp[1] == ' ')
-			vertexCount++;
-		else if (temp[0] == 'f' && temp[1] == ' ')
-			faceCount++;
-	}
-	//cout << vertexCount << " " << faceCount << endl;
 
-	//glPointSize(2.0);
-
-	file.close();
-	file.open(filepath.c_str(), ios::in);
-
-	vertexs = new ObjStruct[vertexCount];
-	faces = new FACES[faceCount * 3];
-	faceCount = 0;
-	vertexCount = 0;
-
-	while (!file.eof())
-	{
-		getline(file, temp);
-		if (temp.c_str()[0] == 'v' && temp.c_str()[1] == ' ')
-		{
-			temp[0] = ' ';
-			sscanf_s(temp.c_str(), "%f %f %f"
-				, &objStruct.x
-				, &objStruct.y
-				, &objStruct.z);
-
-			//cout << "Draw Vertex3f : " << objStruct.x << " " << objStruct.y << " " << objStruct.z << endl;
-
-			//glVertex3f(objStruct.x, objStruct.y, objStruct.z);
-
-			vertexs[vertexCount] = objStruct;
-			vertexCount++;
-
+		FILE * file = fopen(path.c_str(), "r");
+		if (file == NULL) {
+			printf("Impossible to open the file!\n");
+			getchar();
+			return {};
 		}
-		if (temp.c_str()[0] == 'f' && temp.c_str()[1] == ' ')
-		{
 
-			sscanf_s(temp.c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d",
-				&tempF[0].v, &tempF[0].vt, &tempF[0].vn,
-				&tempF[1].v, &tempF[1].vt, &tempF[1].vn,
-				&tempF[2].v, &tempF[2].vt, &tempF[2].vn);
+		while (1) {
+			char lineHeader[128];
 
-			faces[faceCount] = tempF[0];
-			faces[faceCount + 1] = tempF[1];
-			faces[faceCount + 2] = tempF[2];
-			faceCount += 3;
+			int res = fscanf(file, "%s", lineHeader);
+			if (res == EOF)
+				break;
+
+			if (strcmp(lineHeader, "v") == 0)
+			{
+				glm::vec3 vertex;
+				fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+				temp_vertices.push_back(vertex);
+			}
+			else if (strcmp(lineHeader, "vt") == 0)
+			{
+				glm::vec2 uv;
+				fscanf(file, "%f %f\n", &uv.x, &uv.y);
+				uv.y = -uv.y;
+				temp_uvs.push_back(uv);
+			}
+			else if (strcmp(lineHeader, "vn") == 0)
+			{
+				glm::vec3 normal;
+				fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+				temp_normals.push_back(normal);
+			}
+			else if (strcmp(lineHeader, "f") == 0)
+			{
+				std::string vertex1, vertex2, vertex3;
+				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+				int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+				if (matches != 9) {
+					printf("File can't be read\n");
+				}
+				vertexIndices.push_back(vertexIndex[0]);
+				vertexIndices.push_back(vertexIndex[1]);
+				vertexIndices.push_back(vertexIndex[2]);
+				uvIndices.push_back(uvIndex[0]);
+				uvIndices.push_back(uvIndex[1]);
+				uvIndices.push_back(uvIndex[2]);
+				normalIndices.push_back(normalIndex[0]);
+				normalIndices.push_back(normalIndex[1]);
+				normalIndices.push_back(normalIndex[2]);
+			}
+			else
+			{
+				char stupidBuffer[1000];
+				fgets(stupidBuffer, 1000, file);
+			}
 		}
+
+		for (unsigned int i = 0; i < vertexIndices.size(); i++)
+		{
+			unsigned int vertexIndex = vertexIndices[i];
+			unsigned int uvIndex = uvIndices[i];
+			unsigned int normalIndex = normalIndices[i];
+
+			glm::vec3 vertex = temp_vertices[vertexIndex - 1];
+			glm::vec2 uv = temp_uvs[uvIndex - 1];
+			uv.y = 1 - uv.y;
+			glm::vec3 normal = temp_normals[normalIndex - 1];
+
+			out_vertices.push_back(vertex);
+			out_uvs.push_back(uv);
+			out_normals.push_back(normal);
+		}
+
+		for (auto& v : out_vertices)
+			v /= 400.f;
+
+		meshDatas.insert(std::pair<std::string, MeshIDData>(path, {out_vertices.size(), 0, 0, 0}));
+
+		glGenBuffers(1, &meshDatas[path].vertexbufferID);
+		glBindBuffer(GL_ARRAY_BUFFER, meshDatas[path].vertexbufferID);
+		glBufferData(GL_ARRAY_BUFFER, out_vertices.size() * sizeof(glm::vec3), &out_vertices[0], GL_STATIC_DRAW);
+
+		glGenBuffers(1, &meshDatas[path].uvbufferID);
+		glBindBuffer(GL_ARRAY_BUFFER, meshDatas[path].uvbufferID);
+		glBufferData(GL_ARRAY_BUFFER, out_uvs.size() * sizeof(glm::vec2), &out_uvs[0], GL_STATIC_DRAW);
+
+		glGenBuffers(1, &meshDatas[path].normalbufferID);
+		glBindBuffer(GL_ARRAY_BUFFER, meshDatas[path].normalbufferID);
+		glBufferData(GL_ARRAY_BUFFER, out_normals.size() * sizeof(glm::vec3), &out_normals[0], GL_STATIC_DRAW);
 	}
-
-	isLoadSuccess = true;
-}
-
-void ObjLoader::draw()
-{
-	if (!isLoadSuccess)
-	{
-		return;
-	}
-
-	glPushMatrix();
-	glTranslatef(pos_x, pos_y, -300);
-	glColor3f(1.0, 1.0, 1.0);
-	glScalef(scaleFactor, scaleFactor, scaleFactor);
-	glRotatef(rotate, 0, 1, 0);
-
-	//glCallList(listIndex);
-	glBegin(GL_TRIANGLES);
-	for (int i = 0; i < faceCount / 12 * 12; ++i)
-	{
-		//glColor3f(float(i) / faceCount, float(i) / faceCount, float(i) / faceCount);
-		glVertex3f(vertexs[faces[i].v - 1].x, vertexs[faces[i].v - 1].y, vertexs[faces[i].v - 1].z);
-	}
-	glEnd();
-
-	glPopMatrix();
-}
-
-void ObjLoader::Rotate(GLfloat amount)
-{
-	rotate += amount;
-
-	if (rotate < 0)
-		rotate = 360;
-	if (rotate > 360)
-		rotate = 0;
-}
-
-void ObjLoader::Scale(GLfloat amount)
-{
-	scaleFactor += amount;
-	if (scaleFactor < 1)
-		scaleFactor = 1;
-}
-
-void ObjLoader::Move(GLfloat amntX, GLfloat amntY)
-{
-	pos_x += amntX;
-	pos_y += amntY;
+	return meshDatas[path];
 }
