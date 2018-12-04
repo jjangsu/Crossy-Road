@@ -17,20 +17,16 @@ GameScene::~GameScene()
 void GameScene::initialize()
 {
 	//for (int i = 0; i < 400; ++i) {
-	for (int j = 0; j < 25; ++j) {
-		for (int k = 0; k < 25; ++k) {
-			grass[j][k].position = { -5.0f + (j)* 0.4f, -0.03f, -5.0f + (k + 1) * 0.4f };
+	for (int j = 0; j < 15; ++j) {
+		for (int k = 0; k < 50; ++k) {
+			grass[j][k].position = { -3.f + (j)* 0.4f, -0.03f, -14.f + (k + 1) * 0.4f };
 			grass[j][k].initialize();
 		}
 	}
 	//}
 
-	//for (auto& v : grass)
-	// v.initialize();
-	for (auto& v : babychicken)
-		v.initialize();
-	for (auto& v : chicken)
-		v.initialize();
+	//for (auto& v : chicken)
+	chicken.initialize();
 }
 
 void GameScene::update()
@@ -40,45 +36,33 @@ void GameScene::update()
 
 	computeMatricesFromInputs();
 
-	for (int j = 0; j < 25; ++j) {
-		for (int k = 0; k < 25; ++k) {
+	for (int j = 0; j < 15; ++j) {
+		for (int k = 0; k < 50; ++k) {
 			grass[j][k].update();
 		}
 	}
-	//for (auto& v : grass)
-	//	v.update();
-	for (auto& v : babychicken)
-		v.update();
-	for (auto& v : chicken)
-		v.update();
+	//for (auto& v : chicken)
+	chicken.update();
 }
 
 void GameScene::render()
 {
-	for (int j = 0; j < 25; ++j) {
-		for (int k = 0; k < 25; ++k) {
+	for (int j = 0; j < 15; ++j) {
+		for (int k = 0; k < 50; ++k) {
 			grass[j][k].render();
 		}
 	}
-	//for (auto& v : grass)
-	//	v.render();
-	for (auto& v : babychicken)
-		v.render();
-	for (auto& v : chicken)
-		v.render();
+	//for (auto& v : chicken)
+	chicken.render();
 }
 
 void GameScene::release()
 {
-	for (int j = 0; j < 25; ++j) {
-		for (int k = 0; k < 25; ++k) {
+	for (int j = 0; j < 15; ++j) {
+		for (int k = 0; k < 50; ++k) {
 			grass[j][k].release();
 		}
 	}
-	//for (auto& v : grass)
-	//	v.release();
-	for (auto& v : babychicken)
-		v.release();
-	for (auto& v : chicken)
-		v.release();
+	//for (auto& v : chicken)
+	chicken.release();
 }

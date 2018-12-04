@@ -58,7 +58,6 @@ public:
 		obj.setOBJ("resource/ground/grass 01.obj");
 		obj.initialize();
 		obj.setPosition(position.x, position.y, position.z);
-		//obj.setPosition(uid_10(dre), -0.05f, uid_10(dre) * 1.f);
 		obj.setRotation(0, 0, 0);
 		obj.setScale(5.f);
 	}
@@ -83,17 +82,16 @@ public:
 
 	void initialize()
 	{
-		static std::uniform_int_distribution<int> uid_360(1, 360);
-		static std::uniform_int_distribution<int> uid_200(-100, 100);
-		static std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
+		//static std::uniform_int_distribution<int> uid_360(1, 360);
+		//static std::uniform_int_distribution<int> uid_200(-100, 100);
+		//static std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
 		
 		obj.setBMP("resource/character object/chicken.bmp");
 		obj.setOBJ("resource/character object/chicken.obj");
 		obj.initialize();
-		obj.setPosition(uid_200(dre) / 20.f, 0, uid_200(dre) / 20.f);
-		//obj.setRotation(0, float(uid_360(dre)), 0);
-		obj.setRotation(0, 0, 0);
-		obj.setScale(2 + uid_200(dre) / 200.f);
+		obj.setPosition(0, 0, 5);
+		obj.setRotation(0, 1.57 * 2, 0);
+		obj.setScale(4.f);
 	}
 	void update()
 	{
@@ -144,9 +142,9 @@ public:
 
 class GameScene : public Scene
 {
-	Grass grass[25][25];
-	Chicken chicken[50];
-	BabyChicken babychicken[150];
+	Grass grass[15][50];
+	Chicken chicken;
+	//BabyChicken babychicken;
 public:
 	GameScene();
 	~GameScene();

@@ -121,7 +121,7 @@ int App::run()
 	return 0;
 }
 
-Scene* App::getScene()
+Scene* App::getScene() 
 {
 	return m_pScene;
 }
