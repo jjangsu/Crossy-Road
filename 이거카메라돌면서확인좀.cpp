@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(800, 600); // 윈도우의 크기 지정
 	glutTimerFunc(50, TimerFunction, 1); // 타이머 함수 설정 	
 
-	glutCreateWindow("1-16"); // 윈도우 생성 (윈도우 이름)
+	glutCreateWindow("Corry Road"); // 윈도우 생성 (윈도우 이름)
 	glEnable(GL_DEPTH_TEST);
 
 	glutDisplayFunc(drawScene); // 출력 함수의 지정
@@ -123,17 +123,22 @@ GLvoid drawScene(GLvoid)
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);	glLoadIdentity();
+
 	glPushMatrix();
-	glTranslated(3.0, 0.0, 0.0);
-	//glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	for (auto iter : info)
 	{
-		glColor3f(iter.color.r, iter.color.g, iter.color.b);
-		//cout << iter.color.r;
-		glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
-	}
-	glEnd();	glPopMatrix();
+		glRotatef(-90.f, 1.0, 0.0, 0.0);
+	glPushMatrix();
+	{
+		glTranslated(3.0, 0.0, 0.0);
+		//glColor3f(1, 1, 1);
+		glBegin(GL_QUADS);
+		for (auto iter : info)
+		{
+			glColor3f(iter.color.r, iter.color.g, iter.color.b);
+			//cout << iter.color.r;
+			glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
+		}
+		glEnd();	}	glPopMatrix();	}	glPopMatrix();
 	glutSwapBuffers(); // 화면에 출력하기
 }
 GLvoid Reshape(int w, int h)
