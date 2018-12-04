@@ -41,23 +41,26 @@ public:
 	}
 };
 
-class Hamburger
+class Grass
 {
 	Object3d obj;
+public:
+	glm::vec3 position;
 public:
 
 	void initialize()
 	{
-		static std::uniform_int_distribution<int> uid_360(1, 360);
-		static std::uniform_int_distribution<int> uid_200(-100, 100);
+		static std::uniform_int_distribution<int> uid_10(-5, 5);
+		//static std::uniform_int_distribution<int> uid_200(0, 10);
 		static std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
 
-		obj.setBMP("resources/chicken.bmp");
-		obj.setOBJ("resources/SM_Prop_LargeSign_Burger_01_Internal.obj");
+		obj.setBMP("resource/ground/grass 01.bmp");
+		obj.setOBJ("resource/ground/grass 01.obj");
 		obj.initialize();
-		obj.setPosition(uid_200(dre) / 20.f, 0, uid_200(dre) / 20.f);
-		obj.setRotation(0, float(uid_360(dre)), 0);
-		obj.setScale(2 + uid_200(dre) / 200.f);
+		obj.setPosition(position.x, position.y, position.z);
+		//obj.setPosition(uid_10(dre), -0.05f, uid_10(dre) * 1.f);
+		obj.setRotation(0, 0, 0);
+		obj.setScale(5.f);
 	}
 	void update()
 	{
@@ -88,7 +91,8 @@ public:
 		obj.setOBJ("resource/character object/chicken.obj");
 		obj.initialize();
 		obj.setPosition(uid_200(dre) / 20.f, 0, uid_200(dre) / 20.f);
-		obj.setRotation(0, float(uid_360(dre)), 0);
+		//obj.setRotation(0, float(uid_360(dre)), 0);
+		obj.setRotation(0, 0, 0);
 		obj.setScale(2 + uid_200(dre) / 200.f);
 	}
 	void update()
@@ -120,7 +124,8 @@ public:
 		obj.setOBJ("resource/character object/chickenbaby.obj");
 		obj.initialize();
 		obj.setPosition(uid_200(dre) / 20.f, 0, uid_200(dre) / 20.f);
-		obj.setRotation(0, float(uid_360(dre)), 0);
+		obj.setRotation(0, 0, 0);
+		//obj.setRotation(0, float(uid_360(dre)), 0);
 		obj.setScale(1 + uid_200(dre) / 200.f);
 	}
 	void update()
@@ -139,7 +144,7 @@ public:
 
 class GameScene : public Scene
 {
-	Tree tree[300];
+	Grass grass[25][25];
 	Chicken chicken[50];
 	BabyChicken babychicken[150];
 public:

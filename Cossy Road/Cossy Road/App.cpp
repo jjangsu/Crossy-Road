@@ -70,7 +70,7 @@ int App::GLFWinit()
 
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(104 / 255.f, 204 / 255.f, 236 / 255.f, 0.0f);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
