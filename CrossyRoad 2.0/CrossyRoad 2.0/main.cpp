@@ -6,6 +6,7 @@
 
 #include "Struct.h"
 #include "Object.h"
+#include "global variable.h"
 
 using namespace std;
 
@@ -16,14 +17,12 @@ GLvoid Reshape(int w, int h);
 
 
 
+
 //vector<PLYINFO> info;
 //vector<PLYINFO> carinfo;
 
-Object chicken{ {50,0,0} };
-Object puplecar{ {-50,0,0} };
-Object grass{ {50,0,-1} };
 
-vector<Object> objVectorContainer;
+
 
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
