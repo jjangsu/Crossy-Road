@@ -62,11 +62,12 @@ void Object::loadPLY(std::string path)
 
 				std::cout << numofvertex << std::endl;
 
-				while (strncmp("end_header", buffer, strlen("tend_header")) != 0)
+				while (strncmp("end_header", buffer, strlen("end_header")) != 0)
 				{
 					//system("pause");
 					fgets(buffer, 300, file);//계속 입력을 받겠죠?
 				}
+
 
 
 				PLYINFO temp;
