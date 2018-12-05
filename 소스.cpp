@@ -135,6 +135,9 @@ public:
 
 OBJECT chicken{ {50,0,0} };
 OBJECT puplecar{ {-50,0,0} };
+OBJECT grass{ {50,0,-1} };
+
+vector<OBJECT> objVectorContainer;
 
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
@@ -165,7 +168,11 @@ int main(int argc, char *argv[])
 
 	chicken.loadPLY("chicken.ply");
 	puplecar.loadPLY("puple car.ply");
+	grass.loadPLY("grass.ply");
 
+	objVectorContainer.push_back(chicken);
+	objVectorContainer.push_back(puplecar);
+	objVectorContainer.push_back(grass);
 	glutMainLoop();
 }
 // 윈도우 출력 함수
@@ -180,8 +187,10 @@ GLvoid drawScene(GLvoid)
 	glPushMatrix();
 	{
 		glRotatef(-90.f, 1.0, 0.0, 0.0);
-		chicken.draw();
-		puplecar.draw();
+		for (auto iter : objVectorContainer)
+		{
+			iter.draw();
+		}
 	}
 	glPopMatrix();
 
