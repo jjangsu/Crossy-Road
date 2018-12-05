@@ -1,4 +1,4 @@
 #pragma once
 
-#define ROW 20
-#define COL 30
+#define ROW 10
+#define COL 10

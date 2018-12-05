@@ -4,10 +4,7 @@
 #include <time.h>
 #include <vector>
 
-#include "Struct.h"
-#include "Object.h"
 #include "global variable.h"
-#include "Define.h"
 
 using namespace std;
 
@@ -27,7 +24,7 @@ int main(int argc, char *argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
 	glutInitWindowPosition(100, 100); // 윈도우의 위치지정
-	glutInitWindowSize(800, 600); // 윈도우의 크기 지정
+	glutInitWindowSize(width, height); // 윈도우의 크기 지정
 	glutTimerFunc(1000 / 60, TimerFunction, 1); // 타이머 함수 설정 	
 
 	glutCreateWindow("Corry Road"); // 윈도우 생성 (윈도우 이름)
@@ -35,38 +32,33 @@ int main(int argc, char *argv[])
 
 	glutDisplayFunc(drawScene); // 출력 함수의 지정
 
-	
+
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
 
 	chicken.loadPLY("resource/chicken.ply");
-	puplecar.loadPLY("resource/puple car.ply");
+	chicken.setRotation({ 0, 180, 0 });
+	pupleCar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/grass.ply");
 	usingGrassVector = grass.getVector();
 
-	objVectorContainer.push_back(chicken);
-	objVectorContainer.push_back(puplecar);
 	//objVectorContainer.push_back(grass);
-	//glOrtho(-400.0, 400.0, -300.0, 300.0, -400.0, 400.0);
 
 	for (int i = 0; i < COL; ++i)
-	{
-		for (int j = 0; j < ROW; ++j)
-		{
-			fixedObjectArray[i][j].setPos({ (j - 20) * 40,(i - 20) * 40,0 });
+		for (int j = 0; j < ROW; ++j) {
+			fixedObjectArray[i][j].setPos({ (j - 5) * 40, -1, (i - 5) * 40 });
 			fixedObjectArray[i][j].setVector(usingGrassVector);
 		}
-	}
 	cout << "성공" << endl;
 	glutMainLoop();
 }
 // 윈도우 출력 함수
 GLvoid drawScene(GLvoid)
 {
+	glClearColor(105 / 255.f, 204 / 255.f, 236 / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT);
+
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -77,19 +69,12 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
-		glRotatef(-90.f, 1.0, 0.0, 0.0);
-		for (auto iter : objVectorContainer)
-		{
-			iter.draw();
-		}
+		chicken.draw();
+		pupleCar.draw();
 
 		for (int i = 0; i < COL; ++i)
-		{
 			for (int j = 0; j < ROW; ++j)
-			{
 				fixedObjectArray[i][j].draw();
-			}
-		}
 	}
 	glPopMatrix();
 
@@ -125,6 +110,27 @@ void Keyboard(unsigned char key, int x, int y)
 	case 'q':
 		cameraAt.z -= 10.0;
 		break;
+	case 'x':
+		cameraPos.y += 1.0;
+		break;
+	case 'X':
+		cameraPos.y -= 1.0;
+		break;
+		// 카메라 y회전
+	case 'y':
+		cameraPos.x -= 1.0;
+		break;
+	case 'Y':
+		cameraPos.x += 1.0;
+		break;
+		// 카메라 z회전
+	case 'z':
+		cameraPos.z += 1.0;
+		break;
+	case 'Z':
+		cameraPos.z -= 1.0;
+
+		break;
 	case 27:
 		exit(1);
 	default:
@@ -142,14 +148,9 @@ void Mouse(int button, int state, int x, int y)
 GLvoid Reshape(int w, int h)
 {
 	glViewport(0, 0, w, h);
-	//gluLookAt(0, 100, 0, 0, 0, 0, 0, 0, 1);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0, w / h, 1, 1000);
-	glTranslated(0, -50, -300);
-
-	glMatrixMode(GL_MODELVIEW);
-	//gluLookAt(0, 0, 20, 0, 0, 0, 0, 1, 0);
-	glLoadIdentity();
+	gluPerspective(90.0, w / h, 0.1, 1000);
+	glTranslated(0, 0, -200);
 }

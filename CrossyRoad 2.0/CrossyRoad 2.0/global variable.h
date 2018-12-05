@@ -3,18 +3,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Struct.h"
 #include "Object.h"
 #include "Define.h"
 
-VECTOR3 cameraPos{ 0.f, 0.f, 20.f };
+#define width 800
+#define height 600
+
+VECTOR3 cameraPos{ 0.f, 20.f, 100.f };
 VECTOR3 cameraAt{ 0, 0, 0 };
 
-Object chicken{ {50,0,0} };
-Object puplecar{ {-50,0,0} };
-Object grass{ {50,0,-1} };
+Object chicken{ { 50, 0, 0 } };
+Object pupleCar{ { -50,0,0 } };
 
-std::vector<Object> objVectorContainer;
+Object grass{ {50, 0, -1} };
+
 Object fixedObjectArray[COL][ROW];
 
 std::vector<PLYINFO> usingGrassVector;
