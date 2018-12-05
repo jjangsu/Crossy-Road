@@ -92,3 +92,18 @@ void Object::loadPLY(std::string path)
 	}
 
 }
+
+void Object::setPos(VECTOR3 vec)
+{
+	position = vec;
+}
+
+std::vector<PLYINFO> Object::getVector()
+{
+	return info;
+}
+
+void Object::setVector(std::vector<PLYINFO> vect)
+{
+	info = vect;
+}

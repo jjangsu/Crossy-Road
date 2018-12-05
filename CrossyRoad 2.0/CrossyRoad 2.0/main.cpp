@@ -7,23 +7,12 @@
 #include "Struct.h"
 #include "Object.h"
 #include "global variable.h"
+#include "Define.h"
 
 using namespace std;
 
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
-
-
-
-
-
-
-//vector<PLYINFO> info;
-//vector<PLYINFO> carinfo;
-
-
-
-
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
 void TimerFunction(int value);
@@ -46,7 +35,7 @@ int main(int argc, char *argv[])
 
 	glutDisplayFunc(drawScene); // 출력 함수의 지정
 
-	glOrtho(-400.0, 400.0, -300.0, 300.0, -400.0, 400.0);
+	
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
@@ -54,10 +43,22 @@ int main(int argc, char *argv[])
 	chicken.loadPLY("resource/chicken.ply");
 	puplecar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/grass.ply");
+	usingGrassVector = grass.getVector();
 
 	objVectorContainer.push_back(chicken);
 	objVectorContainer.push_back(puplecar);
-	objVectorContainer.push_back(grass);
+	//objVectorContainer.push_back(grass);
+	//glOrtho(-400.0, 400.0, -300.0, 300.0, -400.0, 400.0);
+
+	for (int i = 0; i < COL; ++i)
+	{
+		for (int j = 0; j < ROW; ++j)
+		{
+			fixedObjectArray[i][j].setPos({ (j - 20) * 40,(i - 20) * 40,0 });
+			fixedObjectArray[i][j].setVector(usingGrassVector);
+		}
+	}
+	cout << "성공" << endl;
 	glutMainLoop();
 }
 // 윈도우 출력 함수
@@ -75,6 +76,14 @@ GLvoid drawScene(GLvoid)
 		for (auto iter : objVectorContainer)
 		{
 			iter.draw();
+		}
+
+		for (int i = 0; i < COL; ++i)
+		{
+			for (int j = 0; j < ROW; ++j)
+			{
+				fixedObjectArray[i][j].draw();
+			}
 		}
 	}
 	glPopMatrix();
@@ -96,7 +105,6 @@ GLvoid Reshape(int w, int h)
 
 void TimerFunction(int value)
 {
-
 	glutTimerFunc(500, TimerFunction, 1);
 	glutPostRedisplay();
 }

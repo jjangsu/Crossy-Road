@@ -19,5 +19,9 @@ public:
 	virtual ~Object();
 	void draw();
 	void loadPLY(std::string path);
+	void setPos(VECTOR3 vec);
+
+	std::vector<PLYINFO> getVector();
+	void setVector(std::vector<PLYINFO> vect);
 };
 
