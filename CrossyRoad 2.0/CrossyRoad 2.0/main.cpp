@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
 	glutInitWindowPosition(100, 100); // 윈도우의 위치지정
 	glutInitWindowSize(800, 600); // 윈도우의 크기 지정
-	glutTimerFunc(50, TimerFunction, 1); // 타이머 함수 설정 	
+	glutTimerFunc(1000 / 60, TimerFunction, 1); // 타이머 함수 설정 	
 
 	glutCreateWindow("Corry Road"); // 윈도우 생성 (윈도우 이름)
 	glEnable(GL_DEPTH_TEST);
@@ -68,7 +68,12 @@ GLvoid drawScene(GLvoid)
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glPushMatrix();
+
+	gluLookAt(
+		cameraPos.x, cameraPos.y, cameraPos.z,
+		cameraAt.x, cameraAt.y, cameraAt.z,
+		0.0, 1.0, 0.0);
 
 	glPushMatrix();
 	{
@@ -88,35 +93,63 @@ GLvoid drawScene(GLvoid)
 	}
 	glPopMatrix();
 
+	glPopMatrix();
 	glutSwapBuffers(); // 화면에 출력하기
-}
-GLvoid Reshape(int w, int h)
-{
-	glViewport(0, 0, w, h);
-	gluLookAt(0, 100, 0, 0, 0, 0, 0, 0, 1);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(90.0, w / h, 1, 1000);
-	glTranslated(0, -50, -300);
-	glMatrixMode(GL_MODELVIEW);
-	gluLookAt(0, 0, 20, 0, 0, 0, 0, 1, 0);
-	glLoadIdentity();
 }
 
 void TimerFunction(int value)
 {
-	glutTimerFunc(500, TimerFunction, 1);
 	glutPostRedisplay();
+	glutTimerFunc(1000 / 60, TimerFunction, 1);
 }
 
 void Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 27)
+	switch (key)
+	{
+	case 'w':
+		cameraAt.y += 10.0;
+		break;
+	case 's':
+		cameraAt.y -= 10.0;
+		break;
+	case 'a':
+		cameraAt.x += 10.0;
+		break;
+	case 'd':
+		cameraAt.x -= 10.0;
+		break;
+	case 'e':
+		cameraAt.z += 10.0;
+		break;
+	case 'q':
+		cameraAt.z -= 10.0;
+		break;
+	case 27:
 		exit(1);
+	default:
+		break;
+	}
+
 	glutPostRedisplay();
 }
 
 void Mouse(int button, int state, int x, int y)
 {
 
+}
+
+GLvoid Reshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+	//gluLookAt(0, 100, 0, 0, 0, 0, 0, 0, 1);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(90.0, w / h, 1, 1000);
+	glTranslated(0, -50, -300);
+
+	glMatrixMode(GL_MODELVIEW);
+	//gluLookAt(0, 0, 20, 0, 0, 0, 0, 1, 0);
+	glLoadIdentity();
 }
