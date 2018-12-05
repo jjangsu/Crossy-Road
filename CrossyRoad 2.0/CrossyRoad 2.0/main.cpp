@@ -45,9 +45,9 @@ int main(int argc, char *argv[])
 
 	//objVectorContainer.push_back(grass);
 
-	for (int i = 0; i < COL; ++i)
-		for (int j = 0; j < ROW; ++j) {
-			fixedObjectArray[i][j].setPos({ (j - 5) * 40, -1, (i - 5) * 40 });
+	for (int i = 0; i < ROW; ++i)  // x
+		for (int j = 0; j < COL; ++j){	// z
+			fixedObjectArray[i][j].setPos({ (i - ROW / 2) * 120, -1, -(j - 1) * 120 });
 			fixedObjectArray[i][j].setVector(usingGrassVector);
 		}
 	cout << "성공" << endl;
@@ -94,41 +94,47 @@ void Keyboard(unsigned char key, int x, int y)
 	{
 	case 'w':
 		cameraAt.y += 10.0;
+		cameraPos.y += 10.0;
 		break;
 	case 's':
 		cameraAt.y -= 10.0;
+		cameraPos.y -= 10.0;
 		break;
 	case 'a':
-		cameraAt.x += 10.0;
+		cameraAt.x -= 10.0;
+		cameraPos.x -= 10.0;
 		break;
 	case 'd':
-		cameraAt.x -= 10.0;
+		cameraAt.x += 10.0;
+		cameraPos.x += 10.0;
 		break;
 	case 'e':
 		cameraAt.z += 10.0;
+		cameraPos.z += 10.0;
 		break;
 	case 'q':
 		cameraAt.z -= 10.0;
+		cameraPos.z -= 10.0;
 		break;
 	case 'x':
-		cameraPos.y += 1.0;
+		cameraAt.y += 10.0;
 		break;
 	case 'X':
-		cameraPos.y -= 1.0;
+		cameraAt.y -= 10.0;
 		break;
 		// 카메라 y회전
 	case 'y':
-		cameraPos.x -= 1.0;
+		cameraAt.x -= 10.0;
 		break;
 	case 'Y':
-		cameraPos.x += 1.0;
+		cameraAt.x += 10.0;
 		break;
 		// 카메라 z회전
 	case 'z':
-		cameraPos.z += 1.0;
+		cameraAt.z += 10.0;
 		break;
 	case 'Z':
-		cameraPos.z -= 1.0;
+		cameraAt.z -= 10.0;
 
 		break;
 	case 27:
