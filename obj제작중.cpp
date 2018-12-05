@@ -57,14 +57,19 @@ public:
 
 	void draw()
 	{
-
-		glBegin(GL_QUADS);
-		for (auto iter : info)
+		glPushMatrix();
 		{
-			glColor3f(iter.color.r, iter.color.g, iter.color.b);
-			glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
+			glScalef(3.f, 3.f, 3.f);
+			glTranslatef(position.x, position.y, position.z);
+			glBegin(GL_QUADS);
+			for (auto iter : info)
+			{
+				glColor3f(iter.color.r, iter.color.g, iter.color.b);
+				glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
+			}
+			glEnd();
 		}
-		glEnd();
+		glPopMatrix();
 	}
 
 	void loadPLY(string path)
@@ -115,6 +120,10 @@ public:
 
 				cout << "-------------------------------------------------------------------------------------------" << endl;
 
+			}
+			else
+			{
+				cout << path.c_str() << "경로에서 파일을 찾는데 실패했습니다." << endl;
 			}
 		}
 	}
@@ -171,18 +180,8 @@ GLvoid drawScene(GLvoid)
 	glPushMatrix();
 	{
 		glRotatef(-90.f, 1.0, 0.0, 0.0);
-		glPushMatrix();
-		{
-			chicken.draw();
-
-		}
-		glPopMatrix();
-
-		glPushMatrix();
-		{
-			puplecar.draw();
-		}
-		glPopMatrix();
+		chicken.draw();
+		puplecar.draw();
 	}
 	glPopMatrix();
 
