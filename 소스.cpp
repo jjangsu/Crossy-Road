@@ -212,7 +212,7 @@ GLvoid Reshape(int w, int h)
 void TimerFunction(int value)
 {
 
-	glutTimerFunc(50, TimerFunction, 1);
+	glutTimerFunc(10, TimerFunction, 1);
 	glutPostRedisplay();
 }
 
