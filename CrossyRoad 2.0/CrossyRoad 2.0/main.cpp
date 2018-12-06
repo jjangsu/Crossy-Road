@@ -22,10 +22,6 @@ void spckeycallback(int key, int x, int y);
 
 
 
-
-
-
-
 int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
@@ -47,7 +43,7 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(spckeycallback);
 
 	chicken.loadPLY("resource/chicken.ply");
-	chicken.setRotation({ 0, 180, 0 });
+	//chicken.setRotation({ 0, 0, 0 });
 	chicken.setPos({ 0,0,0, });
 	pupleCar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/temproad.ply");
@@ -57,7 +53,7 @@ int main(int argc, char *argv[])
 
 	for (int i = 0; i < ROW; ++i)  // x
 		for (int j = 0; j < COL; ++j){	// z
-			fixedTileArray[i][j].setPos({ i* 40, -1, -j * 40 });
+			fixedTileArray[i][j].setPos({ i* 40, -1, j * 40 });
 			fixedTileArray[i][j].setVector(usingGrassVector);
 		}
 	//std::cout << "성공" << std::endl;
@@ -79,7 +75,6 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
-		
 		chicken.draw();
 		pupleCar.draw();
 
@@ -101,52 +96,51 @@ void TimerFunction(int value)
 
 void Keyboard(unsigned char key, int x, int y)
 {
-	
 	switch (key)
 	{
 	case 'w':
-		cameraAt.y += 10.0;
-		cameraPos.y += 10.0;
-		break;
-	case 's':
 		cameraAt.y -= 10.0;
 		cameraPos.y -= 10.0;
 		break;
-	case 'a':
-		cameraAt.x -= 10.0;
-		cameraPos.x -= 10.0;
+	case 's':
+		cameraAt.y += 10.0;
+		cameraPos.y += 10.0;
 		break;
-	case 'd':
+	case 'a':
 		cameraAt.x += 10.0;
 		cameraPos.x += 10.0;
 		break;
-	case 'e':
-		cameraAt.z += 10.0;
-		cameraPos.z += 10.0;
+	case 'd':
+		cameraAt.x -= 10.0;
+		cameraPos.x -= 10.0;
 		break;
-	case 'q':
+	case 'e':
 		cameraAt.z -= 10.0;
 		cameraPos.z -= 10.0;
 		break;
+	case 'q':
+		cameraAt.z += 10.0;
+		cameraPos.z += 10.0;
+		break;
 	case 'x':
-		cameraAt.y += 10.0;
+		cameraAt.y -= 10.0;
 		break;
 	case 'X':
-		cameraAt.y -= 10.0;
+		cameraAt.y += 10.0;
 		break;
 		// 카메라 y회전
 	case 'y':
-		cameraAt.x -= 10.0;
+		cameraAt.x += 10.0;
 		break;
 	case 'Y':
-		cameraAt.x += 10.0;
+		cameraAt.x -= 10.0;
 		break;
 		// 카메라 z회전
 	case 'z':
-		cameraAt.z += 10.0;
+		cameraAt.z -= 10.0;
 		break;
 	case 'Z':
-		cameraAt.z -= 10.0;
+		cameraAt.z += 10.0;
 
 		break;
 	case 27:
@@ -180,22 +174,26 @@ void spckeycallback(int key, int x, int y)
 	{
 	case KEYUP:
 		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		chicken.setRotation({ 0, 0, 0 });
 		break;
 
 	case KEYDOWN:
 		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		chicken.setRotation({ 0, 180, 0 });
 		break;
 
 	case KEYLEFT:
 		temp = chicken.getPos();
-		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		chicken.setRotation({ 0, 90, 0 });
 		break;
 
 	case KEYRIGHT:
 		temp = chicken.getPos();
-		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		chicken.setRotation({ 0, -90, 0 });
 		break;
 	}
 }

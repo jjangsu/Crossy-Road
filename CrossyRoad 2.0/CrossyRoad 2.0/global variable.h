@@ -10,8 +10,8 @@
 #define width 800
 #define height 600
 
-VECTOR3 cameraPos{ 0.f, 20.f, 100.f };
-VECTOR3 cameraAt{ 0, 0, 0 };
+VECTOR3 cameraPos{ 0.f, 20.f, -80.f };
+VECTOR3 cameraAt{ 0, 0, cameraPos.z + 20 };
 
 Character chicken{ { 0, 0, 0 } };
 Character pupleCar{ { -50,0,0 } };
