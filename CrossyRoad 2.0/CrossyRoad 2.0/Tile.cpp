@@ -20,11 +20,8 @@ void Tile::draw()
 {
 	glPushMatrix();
 	{
-		glTranslatef(position.x, position.y, position.z);
-		//glRotatef(angle.x, 1.0, 0.0, 0.0);
-		//glRotatef(angle.y, 0.0, 1.0, 0.0);
-		//glRotatef(angle.z, 0.0, 0.0, 1.0);
-		glScalef(25.f, 1.f, 1.f);
+		glTranslatef(position.x+20, position.y, position.z);
+		glScalef(40.f, 1.f, 1.f);
 		glBegin(GL_QUADS);
 		for (auto& iter : info)
 		{

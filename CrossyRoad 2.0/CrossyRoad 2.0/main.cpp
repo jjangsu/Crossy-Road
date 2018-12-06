@@ -18,6 +18,12 @@ void TimerFunction(int value);
 void Mouse(int button, int state, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
+void spckeycallback(int key, int x, int y);
+
+
+
+
+
 
 
 int main(int argc, char *argv[])
@@ -38,9 +44,11 @@ int main(int argc, char *argv[])
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
+	glutSpecialFunc(spckeycallback);
 
 	chicken.loadPLY("resource/chicken.ply");
 	chicken.setRotation({ 0, 180, 0 });
+	chicken.setPos({ 0,0,0, });
 	pupleCar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/temproad.ply");
 	usingGrassVector = grass.getVector();
@@ -49,10 +57,10 @@ int main(int argc, char *argv[])
 
 	for (int i = 0; i < ROW; ++i)  // x
 		for (int j = 0; j < COL; ++j){	// z
-			fixedTileArray[i][j].setPos({ (i - ROW / 2) * 40, -1, -(j - 1) * 40 });
+			fixedTileArray[i][j].setPos({ i* 40, -1, -j * 40 });
 			fixedTileArray[i][j].setVector(usingGrassVector);
 		}
-	cout << "성공" << endl;
+	//std::cout << "성공" << std::endl;
 	glutMainLoop();
 }
 // 윈도우 출력 함수
@@ -71,6 +79,7 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
+		
 		chicken.draw();
 		pupleCar.draw();
 
@@ -92,6 +101,7 @@ void TimerFunction(int value)
 
 void Keyboard(unsigned char key, int x, int y)
 {
+	
 	switch (key)
 	{
 	case 'w':
@@ -161,4 +171,31 @@ GLvoid Reshape(int w, int h)
 	glLoadIdentity();
 	gluPerspective(90.0, w / h, 0.1, 1000);
 	glTranslated(0, 0, -200);
+}
+
+void spckeycallback(int key, int x, int y)
+{
+	VECTOR3 temp;
+	switch (key)
+	{
+	case KEYUP:
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		break;
+
+	case KEYDOWN:
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		break;
+
+	case KEYLEFT:
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		break;
+
+	case KEYRIGHT:
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		break;
+	}
 }

@@ -21,5 +21,6 @@ public:
 
 	std::vector<PLYINFO> getVector();
 	void setVector(std::vector<PLYINFO> vect);
+	VECTOR3 getPos();
 };
 

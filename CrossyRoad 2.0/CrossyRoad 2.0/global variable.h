@@ -13,7 +13,7 @@
 VECTOR3 cameraPos{ 0.f, 20.f, 100.f };
 VECTOR3 cameraAt{ 0, 0, 0 };
 
-Character chicken{ { 50, 0, 0 } };
+Character chicken{ { 0, 0, 0 } };
 Character pupleCar{ { -50,0,0 } };
 
 Tile grass{ {50, 0, -1} };
