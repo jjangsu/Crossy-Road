@@ -1,23 +1,18 @@
 #pragma once
-
 #include <vector>
-#include <string>
-#include <gl/freeglut.h>
-#include <iostream>
-
 #include "Struct.h"
 
-class Object
+class Character
 {
-protected:
+private:
 	std::vector<PLYINFO> info;
 	VECTOR3 position; // push matrix ->포지션 위치만큼 translate 한 다음에 그리기 ->popmatrix
 	VECTOR3 angle;
 
 public:
-	Object();
-	Object(VECTOR3 vec);
-	virtual ~Object();
+	Character();
+	Character(VECTOR3 vec);
+	virtual ~Character();
 	void draw();
 	void loadPLY(std::string path);
 

@@ -13,16 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Struct">
-      <UniqueIdentifier>{34d008e5-aebd-4bdb-83a6-7ee8c62b0e12}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Object">
       <UniqueIdentifier>{5db7d968-41a3-4ba4-8f0f-86bea95c6ef0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object\BASE">
+    <Filter Include="소스 파일\Object\Tile">
       <UniqueIdentifier>{438218fb-5cdd-4704-ace9-7c14b6f3c503}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object\Object">
+    <Filter Include="소스 파일\Object\Character">
       <UniqueIdentifier>{b0e6f6e2-6088-4b2b-9f55-c9559f099d62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -30,22 +27,28 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Object\BASE</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>소스 파일\Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Struct.h">
-      <Filter>소스 파일\Struct</Filter>
-    </ClInclude>
     <ClInclude Include="global variable.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\Object\BASE</Filter>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>소스 파일\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

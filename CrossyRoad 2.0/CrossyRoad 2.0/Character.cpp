@@ -1,30 +1,30 @@
-#include "Object.h"
-
-
-Object::Object()
+#include "Character.h"
+#include <gl/freeglut.h>
+#include <iostream>
+Character::Character()
 {
 	position = { 0,0,0 };
 }
 
-Object::Object(VECTOR3 vec)
+Character::Character(VECTOR3 vec)
 {
 	position = vec;
 }
 
 
-Object::~Object()
+Character::~Character()
 {
 }
 
-void Object::draw()
+void Character::draw()
 {
 	glPushMatrix();
 	{
 		glTranslatef(position.x, position.y, position.z);
-		glRotatef(angle.x, 1.0, 0.0, 0.0);
-		glRotatef(angle.y, 0.0, 1.0, 0.0);
-		glRotatef(angle.z, 0.0, 0.0, 1.0);
-		glScalef(40.f, 1.f, 1.f);
+		//glRotatef(angle.x, 1.0, 0.0, 0.0);
+		//glRotatef(angle.y, 0.0, 1.0, 0.0);
+		//glRotatef(angle.z, 0.0, 0.0, 1.0);
+		glScalef(1.f, 1.f, 1.f);
 		glBegin(GL_QUADS);
 		for (auto& iter : info)
 		{
@@ -36,7 +36,7 @@ void Object::draw()
 	glPopMatrix();
 }
 
-void Object::loadPLY(std::string path)
+void Character::loadPLY(std::string path)
 {
 	char* exist = strstr((char*)path.c_str(), "ply");
 
@@ -77,7 +77,7 @@ void Object::loadPLY(std::string path)
 				fgets(buffer, 300, file);
 				sscanf(buffer, "%d %d %d %f %f %f", &temp.vec.x, &temp.vec.z, &temp.vec.y, &temp.color.r, &temp.color.g, &temp.color.b);
 				temp.vec.x = -temp.vec.x;
-				temp.vec.z = -temp.vec.z;  
+				temp.vec.z = -temp.vec.z;
 				// 왠지 모르겠지만 이렇게 해야지 저희 좌표계에서 정면 바라봐여
 				temp.color.r = temp.color.r / 255.0;
 				temp.color.g = temp.color.g / 255.0;
@@ -95,22 +95,22 @@ void Object::loadPLY(std::string path)
 	}
 }
 
-void Object::setPos(VECTOR3 vec)
+void Character::setPos(VECTOR3 vec)
 {
 	position = vec;
 }
 
-void Object::setRotation(VECTOR3 vec)
+void Character::setRotation(VECTOR3 vec)
 {
 	angle = vec;
 }
 
-std::vector<PLYINFO> Object::getVector()
+std::vector<PLYINFO> Character::getVector()
 {
 	return info;
 }
 
-void Object::setVector(std::vector<PLYINFO> vect)
+void Character::setVector(std::vector<PLYINFO> vect)
 {
 	info = vect;
 }

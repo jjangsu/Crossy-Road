@@ -3,8 +3,10 @@
 #include <iostream>
 #include <time.h>
 #include <vector>
+#include "Tile.h"
 
 #include "global variable.h"
+#include "Define.h"
 
 using namespace std;
 
@@ -37,9 +39,9 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
 
-	//chicken.loadPLY("resource/chicken.ply");
-	//chicken.setRotation({ 0, 180, 0 });
-	//pupleCar.loadPLY("resource/puple car.ply");
+	chicken.loadPLY("resource/chicken.ply");
+	chicken.setRotation({ 0, 180, 0 });
+	pupleCar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/temproad.ply");
 	usingGrassVector = grass.getVector();
 
@@ -47,8 +49,8 @@ int main(int argc, char *argv[])
 
 	for (int i = 0; i < ROW; ++i)  // x
 		for (int j = 0; j < COL; ++j){	// z
-			fixedObjectArray[i][j].setPos({ (i - ROW / 2) * 40, -1, -(j - 1) * 40 });
-			fixedObjectArray[i][j].setVector(usingGrassVector);
+			fixedTileArray[i][j].setPos({ (i - ROW / 2) * 40, -1, -(j - 1) * 40 });
+			fixedTileArray[i][j].setVector(usingGrassVector);
 		}
 	cout << "성공" << endl;
 	glutMainLoop();
@@ -74,7 +76,7 @@ GLvoid drawScene(GLvoid)
 
 		for (int i = 0; i < COL; ++i)
 			for (int j = 0; j < ROW; ++j)
-				fixedObjectArray[i][j].draw();
+				fixedTileArray[i][j].draw();
 	}
 	glPopMatrix();
 
