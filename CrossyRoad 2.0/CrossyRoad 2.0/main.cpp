@@ -37,17 +37,17 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
 
-	chicken.loadPLY("resource/chicken.ply");
-	chicken.setRotation({ 0, 180, 0 });
-	pupleCar.loadPLY("resource/puple car.ply");
-	grass.loadPLY("resource/grass.ply");
+	//chicken.loadPLY("resource/chicken.ply");
+	//chicken.setRotation({ 0, 180, 0 });
+	//pupleCar.loadPLY("resource/puple car.ply");
+	grass.loadPLY("resource/temproad.ply");
 	usingGrassVector = grass.getVector();
 
 	//objVectorContainer.push_back(grass);
 
 	for (int i = 0; i < ROW; ++i)  // x
 		for (int j = 0; j < COL; ++j){	// z
-			fixedObjectArray[i][j].setPos({ (i - ROW / 2) * 120, -1, -(j - 1) * 120 });
+			fixedObjectArray[i][j].setPos({ (i - ROW / 2) * 40, -1, -(j - 1) * 40 });
 			fixedObjectArray[i][j].setVector(usingGrassVector);
 		}
 	cout << "성공" << endl;
