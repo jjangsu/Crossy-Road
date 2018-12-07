@@ -15,6 +15,11 @@ Car::Car(VECTOR3 vec, int speed_)
 	speed = speed_;
 }
 
+Car::Car(VECTOR3 vec)
+{
+	position = vec;
+}
+
 Car::~Car()
 {
 }
@@ -54,4 +59,9 @@ void Car::setDir()
 int Car::getDirection()
 {
 	return direction;
+}
+
+void Car::setSpeed(int _speed)
+{
+	speed = _speed;
 }

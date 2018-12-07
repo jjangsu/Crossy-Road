@@ -75,8 +75,9 @@ int main(int argc, char *argv[])
 			fixedTileArray[i].setVector(usingRoadVector);
 		}
 		fixedTileArray[i].setCMake(clock());
-		fixedTileArray[i].setPeriod(rand() % 10* 100 + 1000 );
-		int tempdir = rand() % 2;
+		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+		int tempdir = TrueOrFalse(rd);
 		if(tempdir == 1)
 		{
 			cout << "¹¹´Ù³Ä";
@@ -152,14 +153,16 @@ void TimerFunction(int value)
 		if (i >= 0)
 		{
 			//cout << i << endl;
-			if ((double)currenttime - fixedTileArray[i].getCMake() > fixedTileArray->getPeriod())
+			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray->getPeriod())
 			{
 
-				Car tempcar{ {-500 + 1000 * -fixedTileArray[i].getDirection(), 0, i * 40 },3 + rand() % 5 };
+				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 }};
 				tempcar.setDir();
 				tempcar.setVector(usingCarVector);
+				tempcar.setSpeed(fixedTileArray->getCarSpeed());
 				CarArray.push_back(tempcar);
 				fixedTileArray[i].setCMake(clock());
+
 			}
 		}
 	}

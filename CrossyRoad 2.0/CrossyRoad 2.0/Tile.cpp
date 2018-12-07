@@ -141,3 +141,13 @@ void Tile::setDirection(int dir)
 {
 	direction = dir;
 }
+
+void Tile::setCarSpeed(int _speed)
+{
+	carSpeed = _speed;
+}
+
+int Tile::getCarSpeed()
+{
+	return carSpeed;
+}
