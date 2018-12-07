@@ -41,5 +41,7 @@ public:
 	void setDirection(int dir);
 	void setCarSpeed(int _speed);
 	int getCarSpeed();
+
+	int getType();
 };
 

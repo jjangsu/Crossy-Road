@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 	
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
-		int tempType = rand() % 2 +1;
+		int tempType = TrueOrFalse(rd) +1;
 		if (tempType == GRASS)
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
@@ -128,9 +128,10 @@ void TimerFunction(int value)
 {
 	for(auto& v: CarArray)
 		v.move();
+
 	for (auto iter = CarArray.begin();iter != CarArray.end();)
 	{
-		if (abs(character.getPos().z - iter->getPos().z) / 40 > 30)
+		if ((character.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - character.getPos().z) / 40 < -5)
 		{
 			iter = CarArray.erase(iter);
 		}
@@ -148,18 +149,18 @@ void TimerFunction(int value)
 	clock_t currenttime = clock();
 
 	//왜안만들어지지
-	for (int i = charz - 30; i < charz + 30; ++i)
+	for (int i = charz - 20; i < charz + 20; ++i)
 	{
 		if (i >= 0)
 		{
 			//cout << i << endl;
-			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray->getPeriod())
+			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() != GRASS)
 			{
 
-				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 }};
+				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
 				tempcar.setDir();
 				tempcar.setVector(usingCarVector);
-				tempcar.setSpeed(fixedTileArray->getCarSpeed());
+				tempcar.setSpeed(fixedTileArray[i].getCarSpeed());
 				CarArray.push_back(tempcar);
 				fixedTileArray[i].setCMake(clock());
 

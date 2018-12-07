@@ -151,3 +151,8 @@ int Tile::getCarSpeed()
 {
 	return carSpeed;
 }
+
+int Tile::getType()
+{
+	return type;
+}

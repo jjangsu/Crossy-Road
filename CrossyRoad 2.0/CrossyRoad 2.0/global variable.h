@@ -24,7 +24,7 @@ Tile road{ {0,0,0} };
 Tile fixedTileArray[COL];
 
 std::random_device rd;
-std::uniform_int_distribution<int> carSpeedRange(30, 70);
+std::uniform_int_distribution<int> carSpeedRange(5, 10);
 std::uniform_int_distribution<int> TrueOrFalse(0, 1);
 std::uniform_int_distribution<int> MakeCarPeriod(1000, 10000);
 
