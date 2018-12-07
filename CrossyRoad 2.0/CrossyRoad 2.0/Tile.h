@@ -16,7 +16,8 @@ private:
 	std::vector<PLYINFO> info;
 	VECTOR3 position; // push matrix ->포지션 위치만큼 translate 한 다음에 그리기 ->popmatrix
 	VECTOR3 angle;
-	time_t madeCarTime = 0;
+	clock_t CarMake = clock();
+	double period;
 
 public:
 	Tile();
@@ -30,5 +31,11 @@ public:
 
 	std::vector<PLYINFO> getVector();
 	void setVector(std::vector<PLYINFO> vect);
+	clock_t getCMake();
+	void setCMake(clock_t time);
+	double getPeriod();
+	void setPeriod(double cycle);
+
+	int getDirection();
 };
 

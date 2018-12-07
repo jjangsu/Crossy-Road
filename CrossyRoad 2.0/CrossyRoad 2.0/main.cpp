@@ -82,6 +82,8 @@ int main(int argc, char *argv[])
 		{
 			fixedTileArray[i].setVector(usingRoadVector);
 		}
+
+		fixedTileArray[i].setPeriod(rand() % 10);
 	}
 	//std::cout << "성공" << std::endl;
 	glutMainLoop();
@@ -125,13 +127,35 @@ void TimerFunction(int value)
 
 	for (auto iter = CarArray.begin();iter != CarArray.end();)
 	{
-		if (abs(iter->getPos().x) > RIGHTEDGE)
+		if (abs(character.getPos().z - iter->getPos().z) / 40 > 10)
+		{
+			iter = CarArray.erase(iter);
+		}
+		else if (abs(iter->getPos().x) > RIGHTEDGE)
 		{
 			iter = CarArray.erase(iter);
 		}
 		else
 		{
 			iter++;
+		}
+	}
+
+	int charz = character.getPos().z / 40 - 10 ;
+	clock_t currenttime = clock();
+
+	//왜안만들어지지
+	for (int i = charz; i < charz + 10; ++i)
+	{
+		if (i >= 0)
+		{
+			if ((double)currenttime - fixedTileArray[i].getCMake() > fixedTileArray->getPeriod())
+			{
+
+				Car tempcar{ {-500 + 1000 * -fixedTileArray[i].getDirection(), 0, i * 40 },3 + rand() % 5 };
+				tempcar.setDir();
+				CarArray.push_back(tempcar);
+			}
 		}
 	}
 	
