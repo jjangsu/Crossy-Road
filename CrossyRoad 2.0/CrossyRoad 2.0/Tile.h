@@ -42,6 +42,7 @@ public:
 	void setCarSpeed(int _speed);
 	int getCarSpeed();
 
+	void setType(int t);
 	int getType();
 };
 

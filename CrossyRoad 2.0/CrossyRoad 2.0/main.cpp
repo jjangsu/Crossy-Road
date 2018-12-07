@@ -47,10 +47,13 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(spckeycallback);
 
 	character.loadPLY("resource/chicken.ply");
-	
 	character.setPos({ 0,0,0, });
-	pupleCar.loadPLY("resource/blue mini car.ply");
+
+	pupleCar.loadPLY("resource/puple car.ply");
 	usingCarVector = pupleCar.getVector();
+
+	miniCar.loadPLY("resource/blue mini car.ply");
+	usingCarVector = miniCar.getVector();
 
 	grass.loadPLY("resource/temproad.ply");
 	usingRoadVector = grass.getVector();
@@ -58,10 +61,6 @@ int main(int argc, char *argv[])
 	road.loadPLY("resource/grass.ply");
 	usingGrassVector = road.getVector();
 	
-
-	std::uniform_int_distribution<int> uid(0, 1);
-	std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
-
 	
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
@@ -69,10 +68,12 @@ int main(int argc, char *argv[])
 		if (tempType == GRASS)
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
+			fixedTileArray[i].setType(GRASS);
 		}
 		else if (tempType == ROAD)
 		{
 			fixedTileArray[i].setVector(usingRoadVector);
+			fixedTileArray[i].setType(ROAD);
 		}
 		fixedTileArray[i].setCMake(clock());
 		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
 		int tempdir = TrueOrFalse(rd);
 		if(tempdir == 1)
 		{
-			cout << "뭐다냐";
+			//cout << "뭐다냐";
 			fixedTileArray[i].setDirection(1);
 		}
 		else
@@ -107,7 +108,6 @@ GLvoid drawScene(GLvoid)
 		0.0, 1.0, 0.0);
 
 
-
 	glPushMatrix();
 	{
 		character.draw();
@@ -126,6 +126,10 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
+	// 카메라 자동이동 
+	cameraPos.z += 1.0;
+	cameraAt.z = cameraPos.z + 20.f;
+
 	for(auto& v: CarArray)
 		v.move();
 

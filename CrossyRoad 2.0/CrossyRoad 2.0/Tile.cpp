@@ -152,6 +152,11 @@ int Tile::getCarSpeed()
 	return carSpeed;
 }
 
+void Tile::setType(int t)
+{
+	type = t;
+}
+
 int Tile::getType()
 {
 	return type;

@@ -10,13 +10,15 @@
 
 
 VECTOR3 cameraPos{ 0.f, 20.f, -60.f };
-VECTOR3 cameraAt{ 0, 0, cameraPos.z + 20 };
+VECTOR3 cameraAt{ 0, 10, cameraPos.z + 20 };
 
 Character character{ { 0, 0, 0 } };
 
 Car pupleCar{ { -500,0,0 }, 5 };
+Car miniCar;
 std::vector<Car> CarArray;
 std::vector<PLYINFO> usingCarVector;
+
 
 Tile grass{ {0, 0, 0} };
 Tile road{ {0,0,0} };
