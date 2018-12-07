@@ -12,5 +12,6 @@ public:
 	~Car();
 
 	void move();
+	void setDir();
 };
 

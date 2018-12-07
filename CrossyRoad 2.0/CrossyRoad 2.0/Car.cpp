@@ -12,7 +12,6 @@ Car::Car()
 Car::Car(VECTOR3 vec, int speed_)
 {
 	position = vec;
-	direction = -1;
 	speed = speed_;
 }
 
@@ -23,7 +22,15 @@ Car::~Car()
 void Car::move()
 {
 	position.x += direction * speed;
-	if (position.x < -800) {
+	if (position.x < -800 || position.x > 800) {
 		speed = 0;
 	}
+}
+
+void Car::setDir()
+{
+	if (position.x < 0)
+		direction = 1;
+	else
+		direction = -1;
 }

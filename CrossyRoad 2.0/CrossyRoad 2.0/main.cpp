@@ -2,6 +2,8 @@
 #include <GL/freeglut.h>
 #include <iostream>
 #include <time.h>
+#include <random>
+#include <chrono>
 #include <vector>
 #include "Tile.h"
 
@@ -45,12 +47,22 @@ int main(int argc, char *argv[])
 	chicken.loadPLY("resource/chicken.ply");
 	//chicken.setRotation({ 0, 0, 0 });
 	chicken.setPos({ 0,0,0, });
-	//pupleCar.loadPLY("resource/blue mini car.ply");
-	pupleCar.loadPLY("resource/puple car.ply");
+	pupleCar.loadPLY("resource/blue mini car.ply");
+	usingCarVector = pupleCar.getVector();
+
 	grass.loadPLY("resource/temproad.ply");
 	usingGrassVector = grass.getVector();
 
 	//objVectorContainer.push_back(grass);
+
+	std::uniform_int_distribution<int> uid(0, 1);
+	std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
+
+	for (int i = 0; i < PUPLE_NUM; ++i) {
+		fixedCarArray[i].setPos({-500 + 1000 * uid(dre), 0, i * 40 });
+		fixedCarArray[i].setDir();
+		fixedCarArray[i].setVector(usingCarVector);
+	}
 
 	for (int i = 0; i < ROW; ++i)  // x
 		for (int j = 0; j < COL; ++j){	// z
@@ -77,7 +89,9 @@ GLvoid drawScene(GLvoid)
 	glPushMatrix();
 	{
 		chicken.draw();
-		pupleCar.draw();
+		//pupleCar.draw();
+		for (auto& v : fixedCarArray)
+			v.draw();
 
 		for (int i = 0; i < COL; ++i)
 			for (int j = 0; j < ROW; ++j)
@@ -91,7 +105,8 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
-	pupleCar.move();
+	for(auto& v: fixedCarArray)
+		v.move();
 	
 
 	glutPostRedisplay();

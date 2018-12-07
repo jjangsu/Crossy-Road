@@ -6,6 +6,8 @@
 #define ROW 1
 #define COL 100
 
+#define PUPLE_NUM 10
+
 #define GRASS 1
 #define ROAD 2
 
