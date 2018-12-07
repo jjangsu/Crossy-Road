@@ -22,6 +22,9 @@
     <Filter Include="소스 파일\Object\Character">
       <UniqueIdentifier>{b0e6f6e2-6088-4b2b-9f55-c9559f099d62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Object\Car">
+      <UniqueIdentifier>{f29e1a73-f8a3-47bf-b8d1-0c723f39d8fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,7 +37,7 @@
       <Filter>소스 파일\Object\Character</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Object\Car</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +57,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Car.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Object\Car</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
