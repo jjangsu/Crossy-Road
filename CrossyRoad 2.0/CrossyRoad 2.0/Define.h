@@ -12,6 +12,12 @@
 #define GRASS 1
 #define ROAD 2
 
+// car type
+#define PUPLECAR 1
+#define MINICAR 2
+#define ORANGECAR 3
+#define TAXI 4
+
 //character move 
 #define MOVEDISTANCE 40
 #define KEYLEFT 100

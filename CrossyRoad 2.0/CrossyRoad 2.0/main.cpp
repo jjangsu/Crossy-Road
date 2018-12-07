@@ -46,15 +46,24 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
+	// 캐릭터
 	character.loadPLY("resource/chicken.ply");
 	character.setPos({ 0,0,0, });
 
+	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
 	usingCarVector = pupleCar.getVector();
 
 	miniCar.loadPLY("resource/blue mini car.ply");
-	usingCarVector = miniCar.getVector();
+	usingMiniCarVector = miniCar.getVector();
 
+	orangeCar.loadPLY("resource/orange car.ply");
+	usingOrangeCarVector = orangeCar.getVector();
+
+	taxi.loadPLY("resource/taxi.ply");
+	usingTaxiVector = taxi.getVector();
+
+	// 타일
 	grass.loadPLY("resource/temproad.ply");
 	usingRoadVector = grass.getVector();
 
@@ -64,7 +73,7 @@ int main(int argc, char *argv[])
 	
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
-		int tempType = TrueOrFalse(rd) +1;
+		int tempType = TrueOrFalse(rd) + 1;
 		if (tempType == GRASS)
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
@@ -158,12 +167,21 @@ void TimerFunction(int value)
 		if (i >= 0)
 		{
 			//cout << i << endl;
-			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() != GRASS)
+			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() == ROAD)
 			{
-
 				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
 				tempcar.setDir();
-				tempcar.setVector(usingCarVector);
+
+				int tempType = carType(rd);
+				if (tempType == PUPLECAR)
+					tempcar.setVector(usingCarVector);
+				else if (tempType == MINICAR)
+					tempcar.setVector(usingMiniCarVector);
+				else if (tempType == ORANGECAR)
+					tempcar.setVector(usingOrangeCarVector);
+				else if (tempType == TAXI)
+					tempcar.setVector(usingTaxiVector);
+
 				tempcar.setSpeed(fixedTileArray[i].getCarSpeed());
 				CarArray.push_back(tempcar);
 				fixedTileArray[i].setCMake(clock());
@@ -259,6 +277,12 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
 		character.setRotation({ 0, 0, 0 });
+		//temp = character.getPos();
+		if (height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > height / 2) {
+			int i = height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
+			cameraPos.z = temp.z + MOVEDISTANCE - 60;
+			cameraAt.z = cameraPos.z + 20.f;
+		}
 		break;
 
 	case KEYDOWN:
