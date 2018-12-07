@@ -9,7 +9,7 @@
 #include "Car.h"
 
 
-VECTOR3 cameraPos{ 0.f, 20.f, -80.f };
+VECTOR3 cameraPos{ 0.f, 20.f, -60.f };
 VECTOR3 cameraAt{ 0, 0, cameraPos.z + 20 };
 
 Character character{ { 0, 0, 0 } };
