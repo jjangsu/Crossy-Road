@@ -24,6 +24,6 @@ void Car::move()
 {
 	position.x += direction * speed;
 	if (position.x < -800) {
-		speed = 0;
+		setPos({ +800,position.y,position.z });
 	}
 }
