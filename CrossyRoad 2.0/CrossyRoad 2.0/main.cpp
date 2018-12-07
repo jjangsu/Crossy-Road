@@ -62,15 +62,7 @@ int main(int argc, char *argv[])
 	std::uniform_int_distribution<int> uid(0, 1);
 	std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
 
-	for (int i = 0; i < PUPLE_NUM; ++i) 
-	{
-		Car temp;
-		temp.setPos({-500 + 1000 * uid(dre), 0, i * 40 });
-		temp.setDir();
-		temp.setVector(usingCarVector);
-
-		CarArray.push_back(temp);
-	}
+	
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
 		int tempType = rand() % 2 +1;
@@ -82,8 +74,19 @@ int main(int argc, char *argv[])
 		{
 			fixedTileArray[i].setVector(usingRoadVector);
 		}
-
-		fixedTileArray[i].setPeriod(rand() % 10);
+		fixedTileArray[i].setCMake(clock());
+		fixedTileArray[i].setPeriod(rand() % 10* 100 + 1000 );
+		int tempdir = rand() % 2;
+		if(tempdir == 1)
+		{
+			cout << "뭐다냐";
+			fixedTileArray[i].setDirection(1);
+		}
+		else
+		{
+			fixedTileArray[i].setDirection(-1);
+		}
+		
 	}
 	//std::cout << "성공" << std::endl;
 	glutMainLoop();
@@ -124,10 +127,9 @@ void TimerFunction(int value)
 {
 	for(auto& v: CarArray)
 		v.move();
-
 	for (auto iter = CarArray.begin();iter != CarArray.end();)
 	{
-		if (abs(character.getPos().z - iter->getPos().z) / 40 > 10)
+		if (abs(character.getPos().z - iter->getPos().z) / 40 > 30)
 		{
 			iter = CarArray.erase(iter);
 		}
@@ -141,20 +143,23 @@ void TimerFunction(int value)
 		}
 	}
 
-	int charz = character.getPos().z / 40 - 10 ;
+	int charz = character.getPos().z / 40 ;
 	clock_t currenttime = clock();
 
 	//왜안만들어지지
-	for (int i = charz; i < charz + 10; ++i)
+	for (int i = charz - 30; i < charz + 30; ++i)
 	{
 		if (i >= 0)
 		{
+			//cout << i << endl;
 			if ((double)currenttime - fixedTileArray[i].getCMake() > fixedTileArray->getPeriod())
 			{
 
 				Car tempcar{ {-500 + 1000 * -fixedTileArray[i].getDirection(), 0, i * 40 },3 + rand() % 5 };
 				tempcar.setDir();
+				tempcar.setVector(usingCarVector);
 				CarArray.push_back(tempcar);
+				fixedTileArray[i].setCMake(clock());
 			}
 		}
 	}

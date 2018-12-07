@@ -37,5 +37,6 @@ public:
 	void setPeriod(double cycle);
 
 	int getDirection();
+	void setDirection(int dir);
 };
 

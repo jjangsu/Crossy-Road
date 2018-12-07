@@ -136,3 +136,8 @@ int Tile::getDirection()
 {
 	return direction;
 }
+
+void Tile::setDirection(int dir)
+{
+	direction = dir;
+}
