@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(spckeycallback);
 
 	// 캐릭터
-	character.loadPLY("resource/chicken.ply");
-	character.setPos({ 0,0,0, });
+	chicken.loadPLY("resource/chicken.ply");
+	chicken.setPos({ 0,0,0, });
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
-		int tempType = TrueOrFalse(rd) + 1;
+		int tempType = TileType(rd) + 1;
 		if (tempType == GRASS)
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 		fixedTileArray[i].setCMake(clock());
 		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
 		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
-		int tempdir = TrueOrFalse(rd);
+		int tempdir = TileType(rd);
 		if(tempdir == 1)
 		{
 			//cout << "뭐다냐";
@@ -119,7 +119,7 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
-		character.draw();
+		chicken.draw();
 		//pupleCar.draw();
 		for (auto& v : CarArray)
 			v.draw();
@@ -144,7 +144,7 @@ void TimerFunction(int value)
 
 	for (auto iter = CarArray.begin();iter != CarArray.end();)
 	{
-		if ((character.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - character.getPos().z) / 40 < -5)
+		if ((chicken.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - chicken.getPos().z) / 40 < -5)
 		{
 			iter = CarArray.erase(iter);
 		}
@@ -158,7 +158,7 @@ void TimerFunction(int value)
 		}
 	}
 
-	int charz = character.getPos().z / 40 ;
+	int charz = chicken.getPos().z / 40 ;
 	clock_t currenttime = clock();
 
 	//왜안만들어지지
@@ -274,10 +274,10 @@ void spckeycallback(int key, int x, int y)
 	switch (key)
 	{
 	case KEYUP:
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		character.setRotation({ 0, 0, 0 });
-		//temp = character.getPos();
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		chicken.setRotation({ 0, 0, 0 });
+		//temp = Object.getPos();
 		if (height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > height / 2) {
 			int i = height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
 			cameraPos.z = temp.z + MOVEDISTANCE - 60;
@@ -286,21 +286,21 @@ void spckeycallback(int key, int x, int y)
 		break;
 
 	case KEYDOWN:
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-		character.setRotation({ 0, 180, 0 });
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		chicken.setRotation({ 0, 180, 0 });
 		break;
 
 	case KEYLEFT:
-		temp = character.getPos();
-		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, 90, 0 });
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		chicken.setRotation({ 0, 90, 0 });
 		break;
 
 	case KEYRIGHT:
-		temp = character.getPos();
-		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, -90, 0 });
+		temp = chicken.getPos();
+		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		chicken.setRotation({ 0, -90, 0 });
 		break;
 	}
 }

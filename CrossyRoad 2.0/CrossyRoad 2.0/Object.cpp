@@ -1,23 +1,23 @@
-#include "Character.h"
+#include "Object.h"
 
 #include <iostream>
 
-Character::Character()
+Object::Object()
 {
 	position = { 0,0,0 };
 }
 
-Character::Character(VECTOR3 vec)
+Object::Object(VECTOR3 vec)
 {
 	position = vec;
 }
 
 
-Character::~Character()
+Object::~Object()
 {
 }
 
-void Character::draw()
+void Object::draw()
 {
 	glPushMatrix();
 	{
@@ -37,7 +37,7 @@ void Character::draw()
 	glPopMatrix();
 }
 
-void Character::loadPLY(std::string path)
+void Object::loadPLY(std::string path)
 {
 	char* exist = strstr((char*)path.c_str(), "ply");
 
@@ -96,27 +96,27 @@ void Character::loadPLY(std::string path)
 	}
 }
 
-void Character::setPos(VECTOR3 vec)
+void Object::setPos(VECTOR3 vec)
 {
 	position = vec;
 }
 
-void Character::setRotation(VECTOR3 vec)
+void Object::setRotation(VECTOR3 vec)
 {
 	angle = vec;
 }
 
-std::vector<PLYINFO> Character::getVector()
+std::vector<PLYINFO> Object::getVector()
 {
 	return info;
 }
 
-void Character::setVector(std::vector<PLYINFO> vect)
+void Object::setVector(std::vector<PLYINFO> vect)
 {
 	info = vect;
 }
 
-VECTOR3 Character::getPos()
+VECTOR3 Object::getPos()
 {
 	return position;
 }

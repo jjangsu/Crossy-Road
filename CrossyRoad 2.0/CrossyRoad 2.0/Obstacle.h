@@ -1,7 +1,7 @@
 #pragma once
-#include "Character.h"
+#include "Object.h"
 class Obstacle :
-	public Character
+	public Object
 {
 
 private: 

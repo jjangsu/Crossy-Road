@@ -11,6 +11,9 @@
 //tile type
 #define GRASS 1
 #define ROAD 2
+#define TREE 3
+#define TREELONG 4
+#define STONE 5
 
 // car type
 #define PUPLECAR 1
@@ -18,7 +21,7 @@
 #define ORANGECAR 3
 #define TAXI 4
 
-//character move 
+//Object move 
 #define MOVEDISTANCE 40
 #define KEYLEFT 100
 #define KEYUP 101

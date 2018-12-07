@@ -1,6 +1,7 @@
 #pragma once
-#include "Character.h"
-class Car : public Character
+#include "Object.h"
+
+class Car : public Object
 {
 private:
 	int direction;

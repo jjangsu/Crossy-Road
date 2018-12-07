@@ -142,14 +142,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Car.cpp" />
-    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Chicken.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h" />
-    <ClInclude Include="Character.h" />
+    <ClInclude Include="Chicken.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="global variable.h" />
     <ClInclude Include="Obstacle.h" />

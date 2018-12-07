@@ -36,14 +36,17 @@
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\Object\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>소스 파일\Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Car.cpp">
       <Filter>소스 파일\Object\Car</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>소스 파일\Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +59,6 @@
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\Object\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>소스 파일\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Struct.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -67,6 +67,12 @@
     </ClInclude>
     <ClInclude Include="Obstacle.h">
       <Filter>소스 파일\Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

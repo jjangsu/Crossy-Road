@@ -3,7 +3,7 @@
 #include <gl/freeglut.h>
 #include "Struct.h"
 
-class Character
+class Object
 {
 protected:
 	std::vector<PLYINFO> info;
@@ -12,9 +12,9 @@ protected:
 	int type;
 
 public:
-	Character();
-	Character(VECTOR3 vec);
-	virtual ~Character();
+	Object();
+	Object(VECTOR3 vec);
+	virtual ~Object();
 	void draw();
 	void loadPLY(std::string path);
 
