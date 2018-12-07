@@ -111,3 +111,28 @@ void Tile::setVector(std::vector<PLYINFO> vect)
 {
 	info = vect;
 }
+
+clock_t Tile::getCMake()
+{
+	return CarMake;
+}
+
+void Tile::setCMake(clock_t time)
+{
+	CarMake = time;
+}
+
+double Tile::getPeriod()
+{
+	return period;
+}
+
+void Tile::setPeriod(double cycle)
+{
+	period = cycle;
+}
+
+int Tile::getDirection()
+{
+	return direction;
+}

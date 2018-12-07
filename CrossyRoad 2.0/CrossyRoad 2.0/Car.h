@@ -8,10 +8,13 @@ private:
 public:
 	Car();
 	Car(VECTOR3 vec, int speed_);
+	
 	~Car();
 
 	void draw();
 	void move();
 	void setDir();
+
+	int getDirection();
 };
 
