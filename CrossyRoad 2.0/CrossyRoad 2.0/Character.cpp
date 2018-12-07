@@ -1,5 +1,5 @@
 #include "Character.h"
-#include <gl/freeglut.h>
+
 #include <iostream>
 
 Character::Character()

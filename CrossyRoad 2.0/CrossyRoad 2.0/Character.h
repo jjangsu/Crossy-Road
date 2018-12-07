@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <gl/freeglut.h>
 #include "Struct.h"
 
 class Character
@@ -8,6 +9,7 @@ protected:
 	std::vector<PLYINFO> info;
 	VECTOR3 position; // push matrix ->포지션 위치만큼 translate 한 다음에 그리기 ->popmatrix
 	VECTOR3 angle;
+	int type;
 
 public:
 	Character();

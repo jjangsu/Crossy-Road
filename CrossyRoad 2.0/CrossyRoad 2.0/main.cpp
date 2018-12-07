@@ -26,6 +26,8 @@ void spckeycallback(int key, int x, int y);
 
 int main(int argc, char *argv[])
 {
+
+	srand((unsigned int)time(nullptr));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
@@ -44,16 +46,18 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
-	chicken.loadPLY("resource/chicken.ply");
-	//chicken.setRotation({ 0, 0, 0 });
-	chicken.setPos({ 0,0,0, });
+	character.loadPLY("resource/chicken.ply");
+	
+	character.setPos({ 0,0,0, });
 	pupleCar.loadPLY("resource/blue mini car.ply");
 	usingCarVector = pupleCar.getVector();
 
 	grass.loadPLY("resource/temproad.ply");
-	usingGrassVector = grass.getVector();
+	usingRoadVector = grass.getVector();
 
-	//objVectorContainer.push_back(grass);
+	road.loadPLY("resource/grass.ply");
+	usingGrassVector = road.getVector();
+	
 
 	std::uniform_int_distribution<int> uid(0, 1);
 	std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -63,12 +67,18 @@ int main(int argc, char *argv[])
 		fixedCarArray[i].setDir();
 		fixedCarArray[i].setVector(usingCarVector);
 	}
-
-	for (int i = 0; i < ROW; ++i)  // x
-		for (int j = 0; j < COL; ++j){	// z
-			fixedTileArray[i][j].setPos({ i* 40, -1, j * 40 });
-			fixedTileArray[i][j].setVector(usingGrassVector);
+	for (int i = 0; i < COL; ++i) {	// z
+		fixedTileArray[i].setPos({ 0, -1, i * 40 });
+		int tempType = rand() % 2 +1;
+		if (tempType == GRASS)
+		{
+			fixedTileArray[i].setVector(usingGrassVector);
 		}
+		else if (tempType == ROAD)
+		{
+			fixedTileArray[i].setVector(usingRoadVector);
+		}
+	}
 	//std::cout << "¼º°ø" << std::endl;
 	glutMainLoop();
 }
@@ -88,14 +98,13 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
-		chicken.draw();
+		character.draw();
 		//pupleCar.draw();
 		for (auto& v : fixedCarArray)
 			v.draw();
 
 		for (int i = 0; i < COL; ++i)
-			for (int j = 0; j < ROW; ++j)
-				fixedTileArray[i][j].draw();
+			fixedTileArray[i].draw();
 	}
 	glPopMatrix();
 
@@ -192,27 +201,27 @@ void spckeycallback(int key, int x, int y)
 	switch (key)
 	{
 	case KEYUP:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		chicken.setRotation({ 0, 0, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		character.setRotation({ 0, 0, 0 });
 		break;
 
 	case KEYDOWN:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-		chicken.setRotation({ 0, 180, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		character.setRotation({ 0, 180, 0 });
 		break;
 
 	case KEYLEFT:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-		chicken.setRotation({ 0, 90, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, 90, 0 });
 		break;
 
 	case KEYRIGHT:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-		chicken.setRotation({ 0, -90, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, -90, 0 });
 		break;
 	}
 }

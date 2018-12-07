@@ -1,6 +1,5 @@
 #pragma once
 #include "Character.h"
-
 class Car : public Character
 {
 private:
@@ -11,6 +10,7 @@ public:
 	Car(VECTOR3 vec, int speed_);
 	~Car();
 
+	void draw();
 	void move();
 	void setDir();
 };
