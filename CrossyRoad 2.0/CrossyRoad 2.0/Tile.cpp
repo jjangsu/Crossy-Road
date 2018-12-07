@@ -20,7 +20,7 @@ void Tile::draw()
 {
 	glPushMatrix();
 	{
-		glTranslatef(position.x+20, position.y, position.z);
+		glTranslatef(position.x + 20, position.y, position.z);
 		glScalef(40.f, 1.f, 1.f);
 		glBegin(GL_QUADS);
 		for (auto& iter : info)

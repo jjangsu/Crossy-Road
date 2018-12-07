@@ -4,11 +4,13 @@
 class Car : public Character
 {
 private:
-	VECTOR3 direction;
-
+	int direction;
+	int speed;
 public:
 	Car();
-	Car(VECTOR3 vec);
+	Car(VECTOR3 vec, int speed_);
 	~Car();
+
+	void move();
 };
 

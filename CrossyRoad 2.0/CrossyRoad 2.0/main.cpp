@@ -91,7 +91,8 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
-
+	pupleCar.move();
+	
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, TimerFunction, 1);
