@@ -1,6 +1,6 @@
 ply
 format ascii 1.0
-comment : puple car
+comment : puple car1
 comment : MagicaVoxel @ Ephtracy
 element vertex 37056
 property float x

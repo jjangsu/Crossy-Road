@@ -1,6 +1,7 @@
 #include "Character.h"
 #include <gl/freeglut.h>
 #include <iostream>
+
 Character::Character()
 {
 	position = { 0,0,0 };

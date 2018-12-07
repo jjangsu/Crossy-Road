@@ -4,7 +4,7 @@
 
 class Character
 {
-private:
+protected:
 	std::vector<PLYINFO> info;
 	VECTOR3 position; // push matrix ->포지션 위치만큼 translate 한 다음에 그리기 ->popmatrix
 	VECTOR3 angle;

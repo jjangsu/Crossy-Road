@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 	chicken.loadPLY("resource/chicken.ply");
 	//chicken.setRotation({ 0, 0, 0 });
 	chicken.setPos({ 0,0,0, });
+	//pupleCar.loadPLY("resource/blue mini car.ply");
 	pupleCar.loadPLY("resource/puple car.ply");
 	grass.loadPLY("resource/temproad.ply");
 	usingGrassVector = grass.getVector();
@@ -90,6 +91,8 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
+
+
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, TimerFunction, 1);
 }
