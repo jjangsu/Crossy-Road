@@ -15,7 +15,7 @@ VECTOR3 cameraAt{ 0, 0, cameraPos.z + 20 };
 Character character{ { 0, 0, 0 } };
 
 Car pupleCar{ { -500,0,0 }, 5 };
-Car fixedCarArray[PUPLE_NUM];
+std::vector<Car> CarArray;
 std::vector<PLYINFO> usingCarVector;
 
 Tile grass{ {0, 0, 0} };

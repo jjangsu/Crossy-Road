@@ -2,6 +2,7 @@
 #include <GL/freeglut.h>
 #include <iostream>
 #include <time.h>
+#include <math.h>
 #include <random>
 #include <chrono>
 #include <vector>
@@ -61,10 +62,14 @@ int main(int argc, char *argv[])
 	std::uniform_int_distribution<int> uid(0, 1);
 	std::default_random_engine dre(std::chrono::steady_clock::now().time_since_epoch().count());
 
-	for (int i = 0; i < PUPLE_NUM; ++i) {
-		fixedCarArray[i].setPos({-500 + 1000 * uid(dre), 0, i * 40 });
-		fixedCarArray[i].setDir();
-		fixedCarArray[i].setVector(usingCarVector);
+	for (int i = 0; i < PUPLE_NUM; ++i) 
+	{
+		Car temp;
+		temp.setPos({-500 + 1000 * uid(dre), 0, i * 40 });
+		temp.setDir();
+		temp.setVector(usingCarVector);
+
+		CarArray.push_back(temp);
 	}
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0, -1, i * 40 });
@@ -95,11 +100,13 @@ GLvoid drawScene(GLvoid)
 		cameraAt.x, cameraAt.y, cameraAt.z,
 		0.0, 1.0, 0.0);
 
+
+
 	glPushMatrix();
 	{
 		character.draw();
 		//pupleCar.draw();
-		for (auto& v : fixedCarArray)
+		for (auto& v : CarArray)
 			v.draw();
 
 		for (int i = 0; i < COL; ++i)
@@ -113,8 +120,20 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
-	for(auto& v: fixedCarArray)
+	for(auto& v: CarArray)
 		v.move();
+
+	for (auto iter = CarArray.begin();iter != CarArray.end();)
+	{
+		if (abs(iter->getPos().x) > RIGHTEDGE)
+		{
+			iter = CarArray.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
+	}
 	
 
 	glutPostRedisplay();

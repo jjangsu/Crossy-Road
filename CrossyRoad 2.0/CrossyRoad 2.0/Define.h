@@ -24,3 +24,6 @@
 #define TREE2 2
 #define STONE1 3
 #define STONE2 4
+
+#define LEFTEDGE -800
+#define RIGHTEDGE 800

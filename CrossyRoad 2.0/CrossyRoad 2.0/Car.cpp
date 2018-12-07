@@ -24,9 +24,9 @@ void Car::draw()
 	glPushMatrix();
 	{
 		glTranslatef(position.x, position.y, position.z);
-		glRotatef(angle.x, 1.0, 0.0, 0.0);
+		/*glRotatef(angle.x, 1.0, 0.0, 0.0);
 		glRotatef(angle.y, 0.0, 1.0, 0.0);
-		glRotatef(angle.z, 0.0, 0.0, 1.0);
+		glRotatef(angle.z, 0.0, 0.0, 1.0);*/
 		glScalef(1.f, 1.f, 1.f);
 		glBegin(GL_QUADS);
 		for (auto& iter : info)
@@ -43,10 +43,6 @@ void Car::draw()
 void Car::move()
 {
 	position.x += direction * speed;
-	if (position.x < -800) 
-		setPos({ +800,position.y,position.z });
-	else if(position.x > 800)
-		setPos({ -800,position.y,position.z });
 }
 
 void Car::setDir()
