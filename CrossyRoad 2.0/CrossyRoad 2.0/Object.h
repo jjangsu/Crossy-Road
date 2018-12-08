@@ -10,7 +10,7 @@ protected:
 	VECTOR3 position; // push matrix ->포지션 위치만큼 translate 한 다음에 그리기 ->popmatrix
 	VECTOR3 angle;
 	int type;
-	int size;
+	VECTOR3 size;
 
 public:
 	Object();
@@ -26,8 +26,8 @@ public:
 	void setVector(std::vector<PLYINFO> vect);
 	VECTOR3 getPos();
 
-	int getSize();
-	void setSize(int _size);
+	VECTOR3 getSize();
+	void setSize(VECTOR3 _size);
 	
 };
 

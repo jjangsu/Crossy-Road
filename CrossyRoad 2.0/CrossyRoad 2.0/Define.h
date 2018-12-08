@@ -20,6 +20,8 @@
 #define MINICAR 2
 #define VEHICLE 3
 #define TAXI 4
+#define REDTRUCK 5
+#define BLUETRUCK 6
 
 //Object move 
 #define MOVEDISTANCE 40

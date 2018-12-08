@@ -21,15 +21,15 @@ void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
 void spckeycallback(int key, int x, int y);
 
-bool collide(VECTOR3 a,int sizeA, VECTOR3 b, int sizeB)
+bool collide(VECTOR3 a, VECTOR3 sizeA, VECTOR3 b, VECTOR3 sizeB)
 {
-	if (a.x - sizeA / 2 > b.x + sizeB / 2)
+	if (a.x - sizeA.x / 2 > b.x + sizeB.x / 2)
 		return false;
-	if (a.x + sizeA / 2 < b.x - sizeB / 2)
+	if (a.x + sizeA.x / 2 < b.x - sizeB.x / 2)
 		return false;
-	if (a.z - sizeA / 2 > b.z + sizeB / 2)
+	if (a.z - sizeA.z / 2 > b.z + sizeB.z / 2)
 		return false;
-	if (a.z + sizeA / 2 < b.z - sizeB / 2)
+	if (a.z + sizeA.z / 2 < b.z - sizeB.z / 2)
 		return false;
 
 	return true;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 	// 캐릭터
 	character.loadPLY("resource/chicken.ply");
 	character.setPos({ 0,0,0, });
-	character.setSize(20);
+	character.setSize({20, 40, 30});
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -90,6 +90,12 @@ int main(int argc, char *argv[])
 
 	taxi.loadPLY("resource/taxi.ply");
 	usingTaxiVector = taxi.getVector();
+
+	redTruck.loadPLY("resource/truck red.ply");
+	usingRedTruckVector = redTruck.getVector();
+
+	blueTruck.loadPLY("resource/truck red.ply");
+	usingBlueTruckVector = blueTruck.getVector();
 
 	// 타일
 	grass.loadPLY("resource/temproad.ply");
@@ -108,7 +114,7 @@ int main(int argc, char *argv[])
 			fixedTileArray[i].setVector(usingGrassVector);
 			fixedTileArray[i].setType(GRASS);
 		}
-		else if (tempType == ROAD)
+		else if (tempType == ROAD || tempType == TREE)
 		{
 			fixedTileArray[i].setVector(usingRoadVector);
 			fixedTileArray[i].setType(ROAD);
@@ -157,6 +163,7 @@ void TimerFunction(int value)
 	cameraPos.z += 1.0;
 	cameraAt.z = cameraPos.z + 20.f;
 
+	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar) {
 		VECTOR3 temp = character.getPos();
 		cameraPos.z += cameraMove * abs(cameraPos.z - temp.z);
@@ -164,7 +171,22 @@ void TimerFunction(int value)
 		if (abs(cameraPos.z - temp.z) < 60) {
 			cameraMoveToChar = false;
 		}
-		std::cout << cameraPos.z - temp.z << "   cameraMove: " << cameraMove << "  cameraPos.z: " << cameraPos.z << std::endl;
+		//std::cout << cameraMove * abs(cameraPos.z - temp.z) << std::endl;
+	}
+
+	//충돌체크?
+	for (auto& iter : CarArray)
+	{
+		if (abs(iter.getPos().z - character.getPos().z) <= 80)
+		{
+			VECTOR3 car = iter.getPos();
+			VECTOR3 carSize = iter.getSize();
+			VECTOR3 charac = character.getPos();
+			VECTOR3 characSize = character.getSize();
+
+			if (collide(car, carSize, charac, characSize))
+				exit(1);
+		}
 	}
 	
 	//update Car
@@ -188,8 +210,6 @@ void TimerFunction(int value)
 		}
 	}
 
-
-
 	int charz = character.getPos().z / 40 ;
 	clock_t currenttime = clock();
 
@@ -206,19 +226,27 @@ void TimerFunction(int value)
 				int tempType = carType(rd);
 				if (tempType == CAR) {
 					tempcar.setVector(usingCarVector);
-					tempcar.setSize(40);
+					tempcar.setSize({ 40, 40, 40 });
 				}
 				else if (tempType == MINICAR) {
 					tempcar.setVector(usingMiniCarVector);
-					tempcar.setSize(30);
+					tempcar.setSize({ 30, 40, 40 });
 				}
 				else if (tempType == VEHICLE) {
 					tempcar.setVector(usingvehicleVector);
-					tempcar.setSize(40);
+					tempcar.setSize({ 40, 40, 40 });
 				}
 				else if (tempType == TAXI) {
 					tempcar.setVector(usingTaxiVector);
-					tempcar.setSize(40);
+					tempcar.setSize({ 30, 40, 40 });
+				}
+				else if (tempType == REDTRUCK) {
+					tempcar.setVector(usingRedTruckVector);
+					tempcar.setSize({ 100, 40, 40 });
+				}
+				else if (tempType == BLUETRUCK) {
+					tempcar.setVector(usingBlueTruckVector);
+					tempcar.setSize({ 100, 40, 40 });
 				}
 
 				tempcar.setSpeed(fixedTileArray[i].getCarSpeed());
@@ -226,21 +254,6 @@ void TimerFunction(int value)
 				fixedTileArray[i].setCMake(clock());
 
 			}
-		}
-	}
-
-	//충돌체크?
-	for (auto& iter : CarArray)
-	{
-		if (abs(iter.getPos().z - character.getPos().z) <= 80)
-		{
-			VECTOR3 car = iter.getPos();
-			int carSize = iter.getSize();
-			VECTOR3 charac = character.getPos();
-			int characSize = character.getSize();
-
-			if (collide(car, carSize, charac, characSize))
-				exit(1);
 		}
 	}
 	
@@ -319,7 +332,7 @@ GLvoid Reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.0, (float)w / h, 0.1, 1000);
-	glTranslated(0, 0, -200);
+	glTranslated(0, 0, -120);
 }
 
 void spckeycallback(int key, int x, int y)

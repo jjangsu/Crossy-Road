@@ -121,12 +121,12 @@ VECTOR3 Object::getPos()
 	return position;
 }
 
-int Object::getSize()
+VECTOR3 Object::getSize()
 {
 	return size;
 }
 
-void Object::setSize(int _size)
+void Object::setSize(VECTOR3 _size)
 {
 	size = _size;
 }
