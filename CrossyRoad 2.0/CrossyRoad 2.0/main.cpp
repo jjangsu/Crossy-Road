@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
+	fixedTileArray = new Tile[COL]; 
+
 	// Ä³¸¯ÅÍ
 	chicken.loadPLY("resource/chicken.ply");
 	chicken.setPos({ 0,0,0, });
@@ -69,6 +71,7 @@ int main(int argc, char *argv[])
 
 	road.loadPLY("resource/grass.ply");
 	usingGrassVector = road.getVector();
+	
 	
 	
 	for (int i = 0; i < COL; ++i) {	// z
@@ -120,11 +123,11 @@ GLvoid drawScene(GLvoid)
 	glPushMatrix();
 	{
 		chicken.draw();
-		//pupleCar.draw();
+		
 		for (auto& v : CarArray)
 			v.draw();
 
-		for (int i = 0; i < COL; ++i)
+		for (int i = chicken.getPos().z/40 - 5; i < chicken.getPos().z / 40 + 30; ++i)
 			fixedTileArray[i].draw();
 	}
 	glPopMatrix();

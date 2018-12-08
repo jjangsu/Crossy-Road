@@ -35,7 +35,7 @@ Tile road{ {0,0,0} };
 std::vector<PLYINFO> usingGrassVector;
 std::vector<PLYINFO> usingRoadVector;
 
-Tile fixedTileArray[COL];
+Tile* fixedTileArray;
 
 std::random_device rd;
 std::uniform_int_distribution<int> carSpeedRange(5, 10);

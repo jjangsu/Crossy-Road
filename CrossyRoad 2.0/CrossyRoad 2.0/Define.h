@@ -4,7 +4,7 @@
 #define height 600
 
 #define ROW 40
-#define COL 100
+#define COL 1000
 
 #define PUPLE_NUM 10
 
