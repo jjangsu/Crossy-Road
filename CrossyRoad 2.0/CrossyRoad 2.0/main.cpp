@@ -154,12 +154,9 @@ GLvoid drawScene(GLvoid)
 void TimerFunction(int value)
 {
 	// 카메라 자동이동 
-	//cameraPos.z += 1.0;
-	//cameraAt.z = cameraPos.z + 20.f;
+	cameraPos.z += 1.0;
+	cameraAt.z = cameraPos.z + 20.f;
 	
-	for (auto& v : CarArray)
-		if (v.getSpeed() < 0.1)
-			std::cout << v.getSpeed() << std::endl;
 
 	//update Car
 	for(auto& v: CarArray)
@@ -326,8 +323,8 @@ void spckeycallback(int key, int x, int y)
 		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
 		character.setRotation({ 0, 0, 0 });
 		//temp = Object.getPos();
-		if (HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > HEIGHT / 2) {
-			float i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
+		if (temp.z + MOVEDISTANCE - cameraPos.z > 60.f) {
+			//float i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
 			cameraPos.z = temp.z + MOVEDISTANCE - 60;
 			cameraAt.z = cameraPos.z + 20.f;
 		}
