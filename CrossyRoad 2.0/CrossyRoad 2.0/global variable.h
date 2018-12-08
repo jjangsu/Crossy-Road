@@ -14,6 +14,8 @@ int currentScene = gaming;
 
 VECTOR3 cameraPos{ 0.f, 20.f, -60.f };
 VECTOR3 cameraAt{ 0, 10, cameraPos.z + 20 };
+bool cameraMoveToChar = false;
+float cameraMove = 0.1;
 
 Chicken character{ { 0, 0, 0 } };
 

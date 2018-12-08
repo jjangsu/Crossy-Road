@@ -156,8 +156,17 @@ void TimerFunction(int value)
 	// 카메라 자동이동 
 	cameraPos.z += 1.0;
 	cameraAt.z = cameraPos.z + 20.f;
-	
 
+	if (cameraMoveToChar) {
+		VECTOR3 temp = character.getPos();
+		cameraPos.z += cameraMove * abs(cameraPos.z - temp.z);
+		cameraAt.z = cameraPos.z + 20.f;
+		if (abs(cameraPos.z - temp.z) < 60) {
+			cameraMoveToChar = false;
+		}
+		std::cout << cameraPos.z - temp.z << "   cameraMove: " << cameraMove << "  cameraPos.z: " << cameraPos.z << std::endl;
+	}
+	
 	//update Car
 	for(auto& v: CarArray)
 		v.move();
@@ -322,11 +331,10 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
 		character.setRotation({ 0, 0, 0 });
-		//temp = Object.getPos();
-		if (temp.z + MOVEDISTANCE - cameraPos.z > 60.f) {
-			//float i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
-			cameraPos.z = temp.z + MOVEDISTANCE - 60;
-			cameraAt.z = cameraPos.z + 20.f;
+		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+			cameraMoveToChar = true;
+			//cameraPos.z = temp.z + MOVEDISTANCE - 60;
+			//cameraAt.z = cameraPos.z + 20.f;
 		}
 		break;
 
