@@ -36,22 +36,22 @@ void Tile::draw()
 
 void Tile::drawRail()
 {
-	for (int i = -10; i <= 10; ++i) {
-		glPushMatrix();
+
+	glPushMatrix();
+	{
+		glTranslatef(position.x + 20.f, position.y, position.z);
+		glScalef(16.0, 1.0, 1.0);
+		glBegin(GL_QUADS);
+		for (auto& iter : info)
 		{
-			glTranslatef(80 * i + 40, position.y, position.z);
-			glScalef(2.0, 1.0, 1.0);
-			glBegin(GL_QUADS);
-			for (auto& iter : info)
-			{
-				glColor3f(iter.color.r, iter.color.g, iter.color.b);
-				glNormal3f(0.0, 1.0, 0.0);
-				glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
-			}
-			glEnd();
+			glColor3f(iter.color.r, iter.color.g, iter.color.b);
+			glNormal3f(0.0, 1.0, 0.0);
+			glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
 		}
-		glPopMatrix();
+		glEnd();
 	}
+	glPopMatrix();
+
 }
 
 void Tile::loadPLY(std::string path)

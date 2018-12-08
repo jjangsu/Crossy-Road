@@ -7,11 +7,13 @@
 #include <chrono>
 #include <vector>
 #include "Tile.h"
+#include "Obstacle.h"
+#include "Time.h"
 
 #include "global variable.h"
 #include "Define.h"
 
-#include "Time.h"
+
 
 Time frame;
 
@@ -149,7 +151,7 @@ int main(int argc, char *argv[])
 	redTruck.loadPLY("resource/truck red.ply");
 	usingRedTruckVector = redTruck.getVector();
 
-	blueTruck.loadPLY("resource/truck red.ply");
+	blueTruck.loadPLY("resource/truck blue.ply");
 	usingBlueTruckVector = blueTruck.getVector();
 
 	// ≈∏¿œ
