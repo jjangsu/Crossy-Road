@@ -12,7 +12,7 @@
 #define GRASS 1
 #define ROAD 2
 #define TREE 3
-#define TREELONG 4
+#define RAIL 4
 #define STONE 5
 
 // car type

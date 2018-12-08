@@ -44,8 +44,12 @@ void gamingRander()
 		for (auto& v : CarArray)
 			v.draw();
 
-		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i)
-			fixedTileArray[i].draw();
+		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i) {
+			if (fixedTileArray[i].getType() == RAIL)
+				fixedTileArray[i].drawRail();
+			else
+				fixedTileArray[i].draw();
+		}
 	}
 	glPopMatrix();
 }
@@ -71,12 +75,12 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
-	fixedTileArray = new Tile[COL]; 
+	fixedTileArray = new Tile[COL];
 
 	// 캐릭터
 	character.loadPLY("resource/chicken.ply");
 	character.setPos({ 0,0,0, });
-	character.setSize({20, 40, 30});
+	character.setSize({ 20, 40, 30 });
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -98,17 +102,19 @@ int main(int argc, char *argv[])
 	usingBlueTruckVector = blueTruck.getVector();
 
 	// 타일
-	grass.loadPLY("resource/temproad.ply");
-	usingRoadVector = grass.getVector();
+	grass.loadPLY("resource/grass.ply");
+	usingGrassVector = grass.getVector();
 
-	road.loadPLY("resource/grass.ply");
-	usingGrassVector = road.getVector();
-	
-	
-	
+	road.loadPLY("resource/temproad.ply");
+	usingRoadVector = road.getVector();
+
+	rail.loadPLY("resource/railway.ply");
+	usingRailVector = rail.getVector();
+
+
 	for (int i = 0; i < COL; ++i) {	// z
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
-		int tempType = TileType(rd) + 1;
+		int tempType = TileType(rd);
 		if (tempType == GRASS)
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
@@ -119,11 +125,15 @@ int main(int argc, char *argv[])
 			fixedTileArray[i].setVector(usingRoadVector);
 			fixedTileArray[i].setType(ROAD);
 		}
+		else if (tempType == RAIL) {
+			fixedTileArray[i].setVector(usingRailVector);
+			fixedTileArray[i].setType(RAIL);
+		}
 		fixedTileArray[i].setCMake(clock());
 		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
 		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
 		int tempdir = TileType(rd);
-		if(tempdir == 1)
+		if (tempdir == 1)
 		{
 			fixedTileArray[i].setDirection(1);
 		}
@@ -160,8 +170,8 @@ GLvoid drawScene(GLvoid)
 void TimerFunction(int value)
 {
 	// 카메라 자동이동 
-	cameraPos.z += 1.0;
-	cameraAt.z = cameraPos.z + 20.f;
+	//cameraPos.z += 1.0;
+	//cameraAt.z = cameraPos.z + 20.f;
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar) {
@@ -188,15 +198,15 @@ void TimerFunction(int value)
 				exit(1);
 		}
 	}
-	
+
 	//update Car
-	for(auto& v: CarArray)
+	for (auto& v : CarArray)
 		v.move();
 
 	//Release Car
-	for (auto iter = CarArray.begin();iter != CarArray.end();)
+	for (auto iter = CarArray.begin(); iter != CarArray.end();)
 	{
-		if ((character.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - character.getPos().z) / 40 < -5)
+		if ((character.getPos().z - iter->getPos().z) / 40 > 20 || (iter->getPos().z - character.getPos().z) / 40 < -5)
 		{
 			iter = CarArray.erase(iter);
 		}
@@ -210,7 +220,7 @@ void TimerFunction(int value)
 		}
 	}
 
-	int charz = character.getPos().z / 40 ;
+	int charz = character.getPos().z / 40;
 	clock_t currenttime = clock();
 
 	//Making Car
@@ -256,7 +266,7 @@ void TimerFunction(int value)
 			}
 		}
 	}
-	
+
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, TimerFunction, 1);

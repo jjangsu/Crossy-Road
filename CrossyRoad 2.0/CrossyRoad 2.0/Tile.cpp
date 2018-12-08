@@ -33,6 +33,25 @@ void Tile::draw()
 	glPopMatrix();
 }
 
+void Tile::drawRail()
+{
+	for (int i = -10; i <= 10; ++i) {
+		glPushMatrix();
+		{
+			glTranslatef(80 * i + 40, position.y, position.z);
+			glScalef(2.0, 1.0, 1.0);
+			glBegin(GL_QUADS);
+			for (auto& iter : info)
+			{
+				glColor3f(iter.color.r, iter.color.g, iter.color.b);
+				glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
+			}
+			glEnd();
+		}
+		glPopMatrix();
+	}
+}
+
 void Tile::loadPLY(std::string path)
 {
 	char* exist = strstr((char*)path.c_str(), "ply");
@@ -74,7 +93,7 @@ void Tile::loadPLY(std::string path)
 				fgets(buffer, 300, file);
 				sscanf(buffer, "%f %f %f %f %f %f", &temp.vec.x, &temp.vec.z, &temp.vec.y, &temp.color.r, &temp.color.g, &temp.color.b);
 				temp.vec.x = -temp.vec.x;
-				temp.vec.z = -temp.vec.z;  
+				temp.vec.z = -temp.vec.z;
 				// 왠지 모르겠지만 이렇게 해야지 저희 좌표계에서 정면 바라봐여
 				temp.color.r = temp.color.r / 255.0;
 				temp.color.g = temp.color.g / 255.0;

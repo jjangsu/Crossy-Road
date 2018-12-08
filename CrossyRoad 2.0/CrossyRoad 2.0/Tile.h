@@ -10,7 +10,7 @@
 
 class Tile
 {
-private:
+protected:
 	int type;
 	int direction;
 	std::vector<PLYINFO> info;
@@ -25,6 +25,7 @@ public:
 	Tile(VECTOR3 vec);
 	virtual ~Tile();
 	void draw();
+	void drawRail();
 	void loadPLY(std::string path);
 
 	void setPos(VECTOR3 vec);

@@ -40,9 +40,11 @@ std::vector<PLYINFO> usingBlueTruckVector;
 
 Tile grass{ {0, 0, 0} };
 Tile road{ {0,0,0} };
+Tile rail{ {0, 0, 0} };
 
 std::vector<PLYINFO> usingGrassVector;
 std::vector<PLYINFO> usingRoadVector;
+std::vector<PLYINFO> usingRailVector;
 
 Tile* fixedTileArray;
 
@@ -50,7 +52,7 @@ std::random_device rd;
 std::uniform_real_distribution<float> carSpeedRange(0.1, 0.8);
 //std::uniform_int_distribution<int> carSpeedRange(1, 5);
 std::uniform_int_distribution<int> carType(1, 6);
-std::uniform_int_distribution<int> TileType(0, 2);
+std::uniform_int_distribution<int> TileType(1, 4);
  std::uniform_int_distribution<int> MakeCarPeriod(550, 8000);
 
 
