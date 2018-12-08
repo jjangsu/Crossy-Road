@@ -9,6 +9,8 @@
 #include "Chicken.h"
 #include "Car.h"
 
+enum scene {intro, chooseChar, gaming, gameover};
+int currentScene = gaming;
 
 VECTOR3 cameraPos{ 0.f, 20.f, -60.f };
 VECTOR3 cameraAt{ 0, 10, cameraPos.z + 20 };

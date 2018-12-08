@@ -37,6 +37,21 @@ bool collide(VECTOR3 a,int sizeA, VECTOR3 b, int sizeB)
 	return true;
 }
 
+void gamingRander()
+{
+	glPushMatrix();
+	{
+		character.draw();
+
+		for (auto& v : CarArray)
+			v.draw();
+
+		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i)
+			fixedTileArray[i].draw();
+	}
+	glPopMatrix();
+}
+
 int main(int argc, char *argv[])
 {
 	srand((unsigned int)time(nullptr));
@@ -132,18 +147,9 @@ GLvoid drawScene(GLvoid)
 		cameraAt.x, cameraAt.y, cameraAt.z,
 		0.0, 1.0, 0.0);
 
-
-	glPushMatrix();
-	{
-		character.draw();
-		
-		for (auto& v : CarArray)
-			v.draw();
-
-		for (int i = character.getPos().z/40 - 5; i < character.getPos().z / 40 + 30; ++i)
-			fixedTileArray[i].draw();
+	if (currentScene == gaming) {
+		gamingRander();
 	}
-	glPopMatrix();
 
 	glPopMatrix();
 	glutSwapBuffers(); // 화면에 출력하기
@@ -190,17 +196,24 @@ void TimerFunction(int value)
 			{
 				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
 				tempcar.setDir();
-				tempcar.setSize(40);
 
 				int tempType = carType(rd);
-				if (tempType == CAR)
+				if (tempType == CAR) {
 					tempcar.setVector(usingCarVector);
-				else if (tempType == MINICAR)
+					tempcar.setSize(40);
+				}
+				else if (tempType == MINICAR) {
 					tempcar.setVector(usingMiniCarVector);
-				else if (tempType == VEHICLE)
+					tempcar.setSize(30);
+				}
+				else if (tempType == VEHICLE) {
 					tempcar.setVector(usingvehicleVector);
-				else if (tempType == TAXI)
+					tempcar.setSize(40);
+				}
+				else if (tempType == TAXI) {
 					tempcar.setVector(usingTaxiVector);
+					tempcar.setSize(40);
+				}
 
 				tempcar.setSpeed(fixedTileArray[i].getCarSpeed());
 				CarArray.push_back(tempcar);
@@ -299,7 +312,7 @@ GLvoid Reshape(int w, int h)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(90.0, w / h, 0.1, 1000);
+	gluPerspective(90.0, (float)w / h, 0.1, 1000);
 	glTranslated(0, 0, -200);
 }
 

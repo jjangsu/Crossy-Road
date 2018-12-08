@@ -1,7 +1,7 @@
 #pragma once
 
 #define WIDTH 800
-#define HEIGHT 600
+#define HEIGHT 1000
 
 #define ROW 40
 #define COL 1000
