@@ -230,8 +230,8 @@ void TimerFunction(int value)
 
 
 	// 카메라 자동이동 
-	//cameraPos.z += 1.0;
-	//cameraAt.z = cameraPos.z + 20.f;
+	cameraPos.z += 1.0;
+	cameraAt.z = cameraPos.z + 20.f;
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar) 
@@ -258,21 +258,6 @@ void TimerFunction(int value)
 			MoveToCharX = false;
 		}
 	}
-	std::cout << cameraAt.x << std::endl;
-
-
-	//if (MoveToCharXminus)
-	//{
-	//	VECTOR3 temp = character.getPos();
-	//	cameraPos.x -= cameraMove * fabs(temp.x - cameraPos.x);
-	//	cameraAt.x = cameraPos.x + 20;
-	//	if (fabs(temp.x - cameraPos.x) < 40)
-	//	{
-	//		cameraPos.x = cameraPos.x - 40;
-	//		cameraAt.x = cameraPos.x + 20;
-	//		MoveToCharXminus = false;
-	//	}
-	//}
 
 	//충돌체크?
 	for (auto& iter : CarArray)
