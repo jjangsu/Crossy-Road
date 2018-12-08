@@ -17,6 +17,9 @@ VECTOR3 cameraPos{ -20.f, 35.f, -60.f };
 VECTOR3 cameraAt{ cameraPos.x + 5, 10, cameraPos.z + 20 };
 bool cameraMoveToChar = false;
 float cameraMove = 0.05;
+bool MoveToCharX = false;
+//float moveX = 0.05;
+bool MoveToCharXminus = false;
 
 Chicken character{ { 0, 0, 0 } };
 

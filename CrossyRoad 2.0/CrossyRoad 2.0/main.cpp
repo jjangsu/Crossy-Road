@@ -205,7 +205,6 @@ GLvoid drawScene(GLvoid)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	
-
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -214,7 +213,8 @@ GLvoid drawScene(GLvoid)
 		cameraAt.x, cameraAt.y, cameraAt.z,
 		0.0, 1.0, 0.0);
 
-	if (currentScene == gaming) {
+	if (currentScene == gaming) 
+	{
 		gamingRander();
 	}
 
@@ -234,14 +234,29 @@ void TimerFunction(int value)
 	cameraAt.z = cameraPos.z + 20.f;
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
-	if (cameraMoveToChar) {
+	if (cameraMoveToChar) 
+	{
 		VECTOR3 temp = character.getPos();
 		cameraPos.z += cameraMove * fabs(cameraPos.z - temp.z);
 		cameraAt.z = cameraPos.z + 20.f;
 		if (abs(cameraPos.z - temp.z) < 60) {
+			cameraPos.z = temp.z - 60;
+			cameraAt.z = cameraPos.z + 20;
 			cameraMoveToChar = false;
 		}
-		//std::cout << cameraMove * abs(cameraPos.z - temp.z) << std::endl;
+	}
+	
+	if (MoveToCharX)
+	{
+		VECTOR3 temp = character.getPos();
+		cameraPos.x += cameraMove * fabs(temp.x - cameraPos.x);
+		cameraAt.x = cameraPos.x + 20;
+		if (fabs(temp.x - cameraPos.x) < 40)
+		{
+			cameraPos.x = temp.x - 40;
+			cameraAt.x = cameraPos.x + 20;
+			MoveToCharX = false;
+		}
 	}
 
 	//충돌체크?
@@ -416,8 +431,6 @@ void spckeycallback(int key, int x, int y)
 		character.setRotation({ 0, 0, 0 });
 		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
 			cameraMoveToChar = true;
-			//cameraPos.z = temp.z + MOVEDISTANCE - 60;
-			//cameraAt.z = cameraPos.z + 20.f;
 		}
 		break;
 
@@ -431,12 +444,18 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, 90, 0 });
+		MoveToCharX = true;
+		//cameraPos.x = cameraPos.x - 40;
+		//cameraAt.x = cameraPos.x + 20;
 		break;
 
 	case KEYRIGHT:
 		temp = character.getPos();
 		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, -90, 0 });
+		MoveToCharXminus = true;
+		cameraPos.x = cameraPos.x - 40;
+		cameraAt.x = cameraPos.x + 20;
 		break;
 	}
 }
