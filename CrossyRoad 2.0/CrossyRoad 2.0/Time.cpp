@@ -1,11 +1,9 @@
 #include "Time.h"
-#include <Windows.h>
-#include <time.h>
 
 
 Time::Time()
 {
-	priviouTime = clock();
+	priviousTime = clock();
 }
 
 
@@ -17,7 +15,7 @@ Time::~Time()
 float Time::update()
 {
 	currentTime = clock();
-	frameTime = currentTime - priviouTime;
-	priviouTime = currentTime;
+	frameTime = (currentTime - priviousTime) / 1000.0;
+	priviousTime = currentTime;
 	return frameTime;
 }

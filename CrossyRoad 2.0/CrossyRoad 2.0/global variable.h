@@ -49,7 +49,7 @@ std::vector<PLYINFO> usingRailVector;
 Tile* fixedTileArray;
 
 std::random_device rd;
-std::uniform_real_distribution<float> carSpeedRange(0.1, 0.8);
+std::uniform_real_distribution<float> carSpeedRange(100, 250);
 //std::uniform_int_distribution<int> carSpeedRange(1, 5);
 std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
