@@ -39,6 +39,47 @@ void gamingRander()
 {
 	glPushMatrix();
 	{
+		glShadeModel(GL_SMOOTH);
+		glPushMatrix();
+		glColor3f(0, 0, 0);
+		glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
+		glRotatef(-90, 0.0, 0.0, 1.0);
+		glScalef(30.0, 20.0, 20.0);
+		glutSolidCube(1.0);
+
+		glColor3f(1, 0, 0);
+		glTranslatef(-30, 0, 0);
+		glutSolidCube(1.0);
+		glPopMatrix();
+		// 조명
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_NORMALIZE);
+
+		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
+
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos); //위치
+
+
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		glEnable(GL_COLOR_MATERIAL);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specref);
+		glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 64);
+
+		glEnable(GL_LIGHT0);
+
+		//glShadeModel(GL_FLAT);
+		//glEnable(GL_NORMALIZE);
+
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
 		character.draw();
 
 		for (auto& v : CarArray)
@@ -60,7 +101,7 @@ int main(int argc, char *argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-	glutInitWindowPosition(100, 100); // 윈도우의 위치지정
+	glutInitWindowPosition(400, 0); // 윈도우의 위치지정
 	glutInitWindowSize(WIDTH, HEIGHT); // 윈도우의 크기 지정
 	glutTimerFunc(1000 / 60, TimerFunction, 1); // 타이머 함수 설정 	
 
@@ -74,6 +115,7 @@ int main(int argc, char *argv[])
 	glutKeyboardFunc(Keyboard); // 키보드 입력 콜백 함수
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
+
 
 	fixedTileArray = new Tile[COL];
 
@@ -151,6 +193,7 @@ GLvoid drawScene(GLvoid)
 	glClearColor(105 / 255.f, 204 / 255.f, 236 / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -169,6 +212,11 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
+	lightPos[0] = character.getPos().x + 40;
+	lightPos[1] = character.getPos().y + 80;
+	lightPos[2] = character.getPos().z + 30;
+
+
 	// 카메라 자동이동 
 	//cameraPos.z += 1.0;
 	//cameraAt.z = cameraPos.z + 20.f;

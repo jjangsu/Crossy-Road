@@ -26,6 +26,7 @@ void Tile::draw()
 		for (auto& iter : info)
 		{
 			glColor3f(iter.color.r, iter.color.g, iter.color.b);
+			glNormal3f(0.0, 1.0, 0.0);
 			glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
 		}
 		glEnd();
@@ -44,6 +45,7 @@ void Tile::drawRail()
 			for (auto& iter : info)
 			{
 				glColor3f(iter.color.r, iter.color.g, iter.color.b);
+				glNormal3f(0.0, 1.0, 0.0);
 				glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
 			}
 			glEnd();
