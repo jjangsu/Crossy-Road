@@ -1,7 +1,7 @@
 #pragma once
 
-#define width 800
-#define height 600
+#define WIDTH 800
+#define HEIGHT 600
 
 #define ROW 40
 #define COL 1000
@@ -16,9 +16,9 @@
 #define STONE 5
 
 // car type
-#define PUPLECAR 1
+#define CAR 1
 #define MINICAR 2
-#define ORANGECAR 3
+#define VEHICLE 3
 #define TAXI 4
 
 //Object move 
@@ -36,3 +36,9 @@
 
 #define LEFTEDGE -800
 #define RIGHTEDGE 800
+
+//충돌체크를위해 절반만
+#define CARWIDTH 26
+#define VECHILEWIDTH 34
+#define TAXIWIDTH 26
+#define MINICARWIDTH 20

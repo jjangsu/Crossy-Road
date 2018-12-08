@@ -6,6 +6,7 @@ class Car : public Object
 private:
 	int direction;
 	int speed;
+	int width;
 public:
 	Car();
 	Car(VECTOR3 vec, int speed_);
@@ -19,5 +20,7 @@ public:
 
 	int getDirection();
 	void setSpeed(int _speed);
+	void setWidth(int _width);
+	int getWidth();
 };
 

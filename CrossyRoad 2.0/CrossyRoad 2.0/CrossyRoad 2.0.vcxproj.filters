@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\Object\Obstacle">
       <UniqueIdentifier>{28f5e941-4362-4558-9072-ba2755efdb19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Object\Object">
+      <UniqueIdentifier>{6c277e3a-6b1f-43a7-8628-a8b737091d0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,11 +45,11 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>소스 파일\Object\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Chicken.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,11 +71,11 @@
     <ClInclude Include="Obstacle.h">
       <Filter>소스 파일\Object\Obstacle</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Chicken.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Object\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

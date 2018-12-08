@@ -65,3 +65,13 @@ void Car::setSpeed(int _speed)
 {
 	speed = _speed;
 }
+
+void Car::setWidth(int _width)
+{
+	width = _width;
+}
+
+int Car::getWidth()
+{
+	return width;
+}

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
 	glutInitWindowPosition(100, 100); // 윈도우의 위치지정
-	glutInitWindowSize(width, height); // 윈도우의 크기 지정
+	glutInitWindowSize(WIDTH, HEIGHT); // 윈도우의 크기 지정
 	glutTimerFunc(1000 / 60, TimerFunction, 1); // 타이머 함수 설정 	
 
 	glutCreateWindow("Corry Road"); // 윈도우 생성 (윈도우 이름)
@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
 	fixedTileArray = new Tile[COL]; 
 
 	// 캐릭터
-	chicken.loadPLY("resource/chicken.ply");
-	chicken.setPos({ 0,0,0, });
+	character.loadPLY("resource/chicken.ply");
+	character.setPos({ 0,0,0, });
+	character.setSize(20);
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
 	usingMiniCarVector = miniCar.getVector();
 
 	orangeCar.loadPLY("resource/orange car.ply");
-	usingOrangeCarVector = orangeCar.getVector();
+	usingvehicleVector = orangeCar.getVector();
 
 	taxi.loadPLY("resource/taxi.ply");
 	usingTaxiVector = taxi.getVector();
@@ -122,12 +123,12 @@ GLvoid drawScene(GLvoid)
 
 	glPushMatrix();
 	{
-		chicken.draw();
+		character.draw();
 		
 		for (auto& v : CarArray)
 			v.draw();
 
-		for (int i = chicken.getPos().z/40 - 5; i < chicken.getPos().z / 40 + 30; ++i)
+		for (int i = character.getPos().z/40 - 5; i < character.getPos().z / 40 + 30; ++i)
 			fixedTileArray[i].draw();
 	}
 	glPopMatrix();
@@ -141,13 +142,15 @@ void TimerFunction(int value)
 	// 카메라 자동이동 
 	cameraPos.z += 1.0;
 	cameraAt.z = cameraPos.z + 20.f;
-
+	
+	//update Car
 	for(auto& v: CarArray)
 		v.move();
 
+	//Release Car
 	for (auto iter = CarArray.begin();iter != CarArray.end();)
 	{
-		if ((chicken.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - chicken.getPos().z) / 40 < -5)
+		if ((character.getPos().z - iter->getPos().z) / 40 > 20  || (iter->getPos().z - character.getPos().z) / 40 < -5)
 		{
 			iter = CarArray.erase(iter);
 		}
@@ -161,27 +164,28 @@ void TimerFunction(int value)
 		}
 	}
 
-	int charz = chicken.getPos().z / 40 ;
+
+
+	int charz = character.getPos().z / 40 ;
 	clock_t currenttime = clock();
 
-	//왜안만들어지지
+	//Making Car
 	for (int i = charz - 20; i < charz + 20; ++i)
 	{
 		if (i >= 0)
 		{
-			//cout << i << endl;
 			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() == ROAD)
 			{
 				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
 				tempcar.setDir();
 
 				int tempType = carType(rd);
-				if (tempType == PUPLECAR)
+				if (tempType == CAR)
 					tempcar.setVector(usingCarVector);
 				else if (tempType == MINICAR)
 					tempcar.setVector(usingMiniCarVector);
-				else if (tempType == ORANGECAR)
-					tempcar.setVector(usingOrangeCarVector);
+				else if (tempType == VEHICLE)
+					tempcar.setVector(usingvehicleVector);
 				else if (tempType == TAXI)
 					tempcar.setVector(usingTaxiVector);
 
@@ -189,6 +193,26 @@ void TimerFunction(int value)
 				CarArray.push_back(tempcar);
 				fixedTileArray[i].setCMake(clock());
 
+			}
+		}
+	}
+
+	//충돌체크?
+	for (auto& iter : CarArray)
+	{
+		if (abs(iter.getPos().z - character.getPos().z) <= 80)
+		{
+			int carx = iter.getPos().x;
+			int carz = iter.getPos().z;
+			int carsize = iter.getSize();
+			int charx = character.getPos().x;
+			int charz = character.getPos().z;
+			int charsize = character.getSize();
+
+			if (carx - carsize < charx + charsize && carz + carsize < charz - charsize
+				&& carx + carsize > charx - charsize && carz - carsize > charz + charsize)
+			{
+				exit(1);
 			}
 		}
 	}
@@ -277,33 +301,33 @@ void spckeycallback(int key, int x, int y)
 	switch (key)
 	{
 	case KEYUP:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		chicken.setRotation({ 0, 0, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		character.setRotation({ 0, 0, 0 });
 		//temp = Object.getPos();
-		if (height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > height / 2) {
-			int i = height * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
+		if (HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > HEIGHT / 2) {
+			int i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
 			cameraPos.z = temp.z + MOVEDISTANCE - 60;
 			cameraAt.z = cameraPos.z + 20.f;
 		}
 		break;
 
 	case KEYDOWN:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-		chicken.setRotation({ 0, 180, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		character.setRotation({ 0, 180, 0 });
 		break;
 
 	case KEYLEFT:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-		chicken.setRotation({ 0, 90, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, 90, 0 });
 		break;
 
 	case KEYRIGHT:
-		temp = chicken.getPos();
-		chicken.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-		chicken.setRotation({ 0, -90, 0 });
+		temp = character.getPos();
+		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, -90, 0 });
 		break;
 	}
 }

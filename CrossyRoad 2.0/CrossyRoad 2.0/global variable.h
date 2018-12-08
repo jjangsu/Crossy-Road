@@ -13,9 +13,9 @@
 VECTOR3 cameraPos{ 0.f, 20.f, -60.f };
 VECTOR3 cameraAt{ 0, 10, cameraPos.z + 20 };
 
-Chicken chicken{ { 0, 0, 0 } };
+Chicken character{ { 0, 0, 0 } };
 
-Car pupleCar{ { -500,0,0 }, 5 };
+Car pupleCar;
 std::vector<Car> CarArray;
 std::vector<PLYINFO> usingCarVector;
 
@@ -23,7 +23,7 @@ Car miniCar;
 std::vector<PLYINFO> usingMiniCarVector;
 
 Car orangeCar;
-std::vector<PLYINFO> usingOrangeCarVector;
+std::vector<PLYINFO> usingvehicleVector;
 
 Car taxi;
 std::vector<PLYINFO> usingTaxiVector;
@@ -41,6 +41,6 @@ std::random_device rd;
 std::uniform_int_distribution<int> carSpeedRange(5, 10);
 std::uniform_int_distribution<int> carType(1, 4);
 std::uniform_int_distribution<int> TileType(0, 1);
-std::uniform_int_distribution<int> MakeCarPeriod(1000, 10000);
+std::uniform_int_distribution<int> MakeCarPeriod(500, 5000);
 
 
