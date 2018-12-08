@@ -11,6 +11,10 @@
 #include "global variable.h"
 #include "Define.h"
 
+#include "Time.h"
+
+Time frame;
+
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
 GLvoid drawScene(GLvoid);
@@ -46,10 +50,6 @@ void gamingRander()
 		glRotatef(-90, 0.0, 0.0, 1.0);
 		glScalef(30.0, 20.0, 20.0);
 		glutSolidCube(1.0);
-
-		glColor3f(1, 0, 0);
-		glTranslatef(-30, 0, 0);
-		glutSolidCube(1.0);
 		glPopMatrix();
 		// 조명
 
@@ -77,6 +77,14 @@ void gamingRander()
 
 	}
 	glPopMatrix();
+
+	//glPushMatrix();
+	//glColor3f(0, 0, 0);
+	//glTranslatef(character.getPos().x, character.getPos().y+30, character.getPos().z);
+	////glRotatef(-90, 0.0, 0.0, 1.0);
+	////glScalef(30.0, 20.0, 20.0);
+	//glutSolidSphere(20.0, 16, 16);
+	//glPopMatrix();
 
 	glPushMatrix();
 	{
@@ -116,6 +124,7 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
+	cameraPos = { -20.f, 35.f, -60.f };
 
 	fixedTileArray = new Tile[COL];
 
@@ -193,7 +202,9 @@ GLvoid drawScene(GLvoid)
 	glClearColor(105 / 255.f, 204 / 255.f, 236 / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_CW);
+
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -218,13 +229,13 @@ void TimerFunction(int value)
 
 
 	// 카메라 자동이동 
-	//cameraPos.z += 1.0;
-	//cameraAt.z = cameraPos.z + 20.f;
+	cameraPos.z += 1.0;
+	cameraAt.z = cameraPos.z + 20.f;
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar) {
 		VECTOR3 temp = character.getPos();
-		cameraPos.z += cameraMove * abs(cameraPos.z - temp.z);
+		cameraPos.z += cameraMove * fabs(cameraPos.z - temp.z);
 		cameraAt.z = cameraPos.z + 20.f;
 		if (abs(cameraPos.z - temp.z) < 60) {
 			cameraMoveToChar = false;
