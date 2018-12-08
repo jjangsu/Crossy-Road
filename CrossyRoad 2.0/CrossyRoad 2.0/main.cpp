@@ -6,6 +6,8 @@
 #include <random>
 #include <chrono>
 #include <vector>
+#include "SceneBase.h"
+#include "InGameScene.h"
 #include "Tile.h"
 #include "Obstacle.h"
 #include "Time.h"
@@ -26,20 +28,6 @@ void Mouse(int button, int state, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
 void spckeycallback(int key, int x, int y);
-
-bool collide(VECTOR3 a, VECTOR3 sizeA, VECTOR3 b, VECTOR3 sizeB)
-{
-	if (a.x - sizeA.x / 2 > b.x + sizeB.x / 2)
-		return false;
-	if (a.x + sizeA.x / 2 < b.x - sizeB.x / 2)
-		return false;
-	if (a.z - sizeA.z / 2 > b.z + sizeB.z / 2)
-		return false;
-	if (a.z + sizeA.z / 2 < b.z - sizeB.z / 2)
-		return false;
-
-	return true;
-}
 
 void gamingRander()
 {
@@ -74,19 +62,8 @@ void gamingRander()
 
 		glEnable(GL_LIGHT0);
 
-		//glShadeModel(GL_FLAT);
-		//glEnable(GL_NORMALIZE);
-
 	}
 	glPopMatrix();
-
-	//glPushMatrix();
-	//glColor3f(0, 0, 0);
-	//glTranslatef(character.getPos().x, character.getPos().y+30, character.getPos().z);
-	////glRotatef(-90, 0.0, 0.0, 1.0);
-	////glScalef(30.0, 20.0, 20.0);
-	//glutSolidSphere(20.0, 16, 16);
-	//glPopMatrix();
 
 	glPushMatrix();
 	{
@@ -103,6 +80,43 @@ void gamingRander()
 		}
 	}
 	glPopMatrix();
+}
+
+void changeScene(SceneBase::SceneType type)
+{
+	//if (currentScene)
+	//{
+	//	delete currentScene;
+	//	currentScene = NULL;
+	//}
+	//
+	//switch (type)
+	//{
+	//case SceneBase::inGame:
+	//	currentScene = new InGameScene();
+	//	break;
+	//default:
+	//	break;
+	//} 
+	//
+	//if (currentScene)
+	//{
+	//	currentScene->initialize();
+	//}
+}
+
+bool collide(VECTOR3 a, VECTOR3 sizeA, VECTOR3 b, VECTOR3 sizeB)
+{
+	if (a.x - sizeA.x / 2 > b.x + sizeB.x / 2)
+		return false;
+	if (a.x + sizeA.x / 2 < b.x - sizeB.x / 2)
+		return false;
+	if (a.z - sizeA.z / 2 > b.z + sizeB.z / 2)
+		return false;
+	if (a.z + sizeA.z / 2 < b.z - sizeB.z / 2)
+		return false;
+
+	return true;
 }
 
 int main(int argc, char *argv[])
@@ -213,7 +227,7 @@ GLvoid drawScene(GLvoid)
 		cameraAt.x, cameraAt.y, cameraAt.z,
 		0.0, 1.0, 0.0);
 
-	if (currentScene == gaming) 
+	//if (currentScene == gaming) 
 	{
 		gamingRander();
 	}
@@ -234,7 +248,7 @@ void TimerFunction(int value)
 	cameraAt.z = cameraPos.z + 20.f;
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
-	if (cameraMoveToChar) 
+	if (cameraMoveToChar)
 	{
 		VECTOR3 temp = character.getPos();
 		cameraPos.z += cameraMove * fabs(cameraPos.z - temp.z);
@@ -245,7 +259,7 @@ void TimerFunction(int value)
 			cameraMoveToChar = false;
 		}
 	}
-	
+
 	if (MoveToCharX)
 	{
 		VECTOR3 temp = character.getPos();
@@ -342,6 +356,9 @@ void TimerFunction(int value)
 		}
 	}
 
+
+	//if (currentScene) currentScene->update();
+	//if (currentScene) currentScene->render();
 
 	glutPostRedisplay();
 	glutTimerFunc(1000 / 60, TimerFunction, 1);
@@ -445,8 +462,6 @@ void spckeycallback(int key, int x, int y)
 		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, 90, 0 });
 		MoveToCharX = true;
-		//cameraPos.x = cameraPos.x - 40;
-		//cameraAt.x = cameraPos.x + 20;
 		break;
 
 	case KEYRIGHT:
