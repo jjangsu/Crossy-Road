@@ -202,8 +202,8 @@ GLvoid drawScene(GLvoid)
 	glClearColor(105 / 255.f, 204 / 255.f, 236 / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_CW);
+	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_CW);
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
