@@ -7,11 +7,13 @@
 #include <chrono>
 #include <vector>
 #include "Tile.h"
+#include "Obstacle.h"
+#include "Time.h"
 
 #include "global variable.h"
 #include "Define.h"
 
-#include "Time.h"
+
 
 Time frame;
 

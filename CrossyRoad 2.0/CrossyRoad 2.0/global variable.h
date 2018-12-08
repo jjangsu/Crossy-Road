@@ -8,6 +8,7 @@
 #include "Object.h"
 #include "Chicken.h"
 #include "Car.h"
+#include "Obstacle.h"
 
 enum scene {intro, chooseChar, gaming, gameover};
 int currentScene = gaming;
@@ -45,22 +46,27 @@ Tile grass{ {0, 0, 0} };
 Tile road{ {0,0,0} };
 Tile rail{ {0, 0, 0} };
 
+
 std::vector<PLYINFO> usingGrassVector;
 std::vector<PLYINFO> usingRoadVector;
 std::vector<PLYINFO> usingRailVector;
 
 Tile* fixedTileArray;
 
+Obstacle fixedObstaceArray;
+
 std::random_device rd;
 std::uniform_real_distribution<float> carSpeedRange(100, 250);
 //std::uniform_int_distribution<int> carSpeedRange(1, 5);
 std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
- std::uniform_int_distribution<int> MakeCarPeriod(550, 8000);
+std::uniform_int_distribution<int> MakeCarPeriod(700, 8000);
+
+
 
 
  GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
- GLfloat DiffuseLight[] = { 0.1, 0.1, 0.1, 0.0 };
+ GLfloat DiffuseLight[] = { 1.f, 0.1, 0.1, 0.0 };
  GLfloat SpecularLight[] = { 0.5, 0.5, 0.5, 1.0 };  
  GLfloat lightPos[] = { 200, 100.0, cameraPos.z + 300, 1.0 };
  int Specular = 60;

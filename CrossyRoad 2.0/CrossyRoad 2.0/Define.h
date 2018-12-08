@@ -30,12 +30,14 @@
 #define KEYRIGHT 102
 #define KEYDOWN 103
 
+//Obstacle type
 #define NONE 0
 #define TREE1 1
 #define TREE2 2
 #define STONE1 3
 #define STONE2 4
 
+//왼쪽오른쪽
 #define LEFTEDGE -800
 #define RIGHTEDGE 800
 

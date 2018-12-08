@@ -1,6 +1,6 @@
 ply
 format ascii 1.0
-comment : tree light
+comment : small tree
 comment : MagicaVoxel @ Ephtracy
 element vertex 28480
 property float x
