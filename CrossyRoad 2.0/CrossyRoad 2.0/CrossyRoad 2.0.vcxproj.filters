@@ -31,6 +31,9 @@
     <Filter Include="소스 파일\Object\Object">
       <UniqueIdentifier>{6c277e3a-6b1f-43a7-8628-a8b737091d0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\BASE">
+      <UniqueIdentifier>{b64cab3c-3160-4fc2-af93-40b1e672f267}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>소스 파일\BASE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>소스 파일\BASE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

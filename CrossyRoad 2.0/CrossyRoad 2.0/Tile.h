@@ -18,7 +18,7 @@ private:
 	VECTOR3 angle;
 	clock_t CarMake = clock();
 	double period;
-	int carSpeed;
+	float carSpeed;
 
 public:
 	Tile();
@@ -39,8 +39,8 @@ public:
 
 	int getDirection();
 	void setDirection(int dir);
-	void setCarSpeed(int _speed);
-	int getCarSpeed();
+	void setCarSpeed(float _speed);
+	float getCarSpeed();
 
 	void setType(int t);
 	int getType();

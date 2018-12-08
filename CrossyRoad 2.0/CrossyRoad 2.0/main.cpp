@@ -11,8 +11,6 @@
 #include "global variable.h"
 #include "Define.h"
 
-using namespace std;
-
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
 GLvoid drawScene(GLvoid);
@@ -103,7 +101,7 @@ int main(int argc, char *argv[])
 	
 	
 	for (int i = 0; i < COL; ++i) {	// z
-		fixedTileArray[i].setPos({ 0, -1, i * 40 });
+		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
 		int tempType = TileType(rd) + 1;
 		if (tempType == GRASS)
 		{
@@ -121,16 +119,14 @@ int main(int argc, char *argv[])
 		int tempdir = TileType(rd);
 		if(tempdir == 1)
 		{
-			//cout << "뭐다냐";
 			fixedTileArray[i].setDirection(1);
 		}
 		else
 		{
 			fixedTileArray[i].setDirection(-1);
 		}
-		
 	}
-	//std::cout << "성공" << std::endl;
+
 	glutMainLoop();
 }
 // 윈도우 출력 함수
@@ -158,9 +154,13 @@ GLvoid drawScene(GLvoid)
 void TimerFunction(int value)
 {
 	// 카메라 자동이동 
-	cameraPos.z += 1.0;
-	cameraAt.z = cameraPos.z + 20.f;
+	//cameraPos.z += 1.0;
+	//cameraAt.z = cameraPos.z + 20.f;
 	
+	for (auto& v : CarArray)
+		if (v.getSpeed() < 0.1)
+			std::cout << v.getSpeed() << std::endl;
+
 	//update Car
 	for(auto& v: CarArray)
 		v.move();
@@ -194,7 +194,7 @@ void TimerFunction(int value)
 		{
 			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() == ROAD)
 			{
-				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
+				Car tempcar{ { 700.f * -fixedTileArray[i].getDirection(), 0.f, i * 40.f } };
 				tempcar.setDir();
 
 				int tempType = carType(rd);
@@ -327,7 +327,7 @@ void spckeycallback(int key, int x, int y)
 		character.setRotation({ 0, 0, 0 });
 		//temp = Object.getPos();
 		if (HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1) > HEIGHT / 2) {
-			int i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
+			float i = HEIGHT * (temp.z + MOVEDISTANCE) / (RIGHTEDGE * 1);
 			cameraPos.z = temp.z + MOVEDISTANCE - 60;
 			cameraAt.z = cameraPos.z + 20.f;
 		}

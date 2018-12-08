@@ -30,7 +30,7 @@ void Object::draw()
 		for (auto& iter : info)
 		{
 			glColor3f(iter.color.r, iter.color.g, iter.color.b);
-			glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
+			glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
 		}
 		glEnd();
 	}
@@ -76,7 +76,7 @@ void Object::loadPLY(std::string path)
 			for (int i = 0; i < numofvertex; ++i)
 			{
 				fgets(buffer, 300, file);
-				sscanf(buffer, "%d %d %d %f %f %f", &temp.vec.x, &temp.vec.z, &temp.vec.y, &temp.color.r, &temp.color.g, &temp.color.b);
+				sscanf(buffer, "%f %f %f %f %f %f", &temp.vec.x, &temp.vec.z, &temp.vec.y, &temp.color.r, &temp.color.g, &temp.color.b);
 				temp.vec.x = -temp.vec.x;
 				temp.vec.z = -temp.vec.z;
 				// 왠지 모르겠지만 이렇게 해야지 저희 좌표계에서 정면 바라봐여

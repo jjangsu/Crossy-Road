@@ -1,15 +1,19 @@
 #pragma once
+
 #include "Object.h"
+#include "Time.h"
 
 class Car : public Object
 {
 private:
 	int direction;
-	int speed;
+	float speed;
 	int width;
+
+	Time frame;
 public:
 	Car();
-	Car(VECTOR3 vec, int speed_);
+	Car(VECTOR3 vec, float speed_);
 	Car(VECTOR3 vec);
 	
 	~Car();
@@ -19,7 +23,8 @@ public:
 	void setDir();
 
 	int getDirection();
-	void setSpeed(int _speed);
+	void setSpeed(float _speed);
+	float getSpeed();
 	void setWidth(int _width);
 	int getWidth();
 };

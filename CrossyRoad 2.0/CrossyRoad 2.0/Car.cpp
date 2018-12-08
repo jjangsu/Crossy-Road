@@ -1,15 +1,14 @@
 #include "Car.h"
 #include <iostream>
 
-
 Car::Car()
 {
 	position = { 0, 0, 0 };
 	direction = 1;
-	speed = rand() % 5 + 3;
+	speed = 0.5;
 }
 
-Car::Car(VECTOR3 vec, int speed_)
+Car::Car(VECTOR3 vec, float speed_)
 {
 	position = vec;
 	speed = speed_;
@@ -35,7 +34,7 @@ void Car::draw()
 		for (auto& iter : info)
 		{
 			glColor3f(iter.color.r, iter.color.g, iter.color.b);
-			glVertex3i(iter.vec.x, iter.vec.y, iter.vec.z);
+			glVertex3f(iter.vec.x, iter.vec.y, iter.vec.z);
 		}
 		glEnd();
 	}
@@ -45,7 +44,7 @@ void Car::draw()
 
 void Car::move()
 {
-	position.x += direction * speed;
+	position.x += direction * speed * frame.update();
 }
 
 void Car::setDir()
@@ -61,9 +60,14 @@ int Car::getDirection()
 	return direction;
 }
 
-void Car::setSpeed(int _speed)
+void Car::setSpeed(float _speed)
 {
 	speed = _speed;
+}
+
+float Car::getSpeed()
+{
+	return speed;
 }
 
 void Car::setWidth(int _width)

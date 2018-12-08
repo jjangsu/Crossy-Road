@@ -40,7 +40,8 @@ std::vector<PLYINFO> usingRoadVector;
 Tile* fixedTileArray;
 
 std::random_device rd;
-std::uniform_int_distribution<int> carSpeedRange(5, 10);
+std::uniform_real_distribution<float> carSpeedRange(0.5, 2.0);
+//std::uniform_int_distribution<int> carSpeedRange(1, 5);
 std::uniform_int_distribution<int> carType(1, 4);
 std::uniform_int_distribution<int> TileType(0, 1);
 std::uniform_int_distribution<int> MakeCarPeriod(500, 5000);

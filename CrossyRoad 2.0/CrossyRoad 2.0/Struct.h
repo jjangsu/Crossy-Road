@@ -10,15 +10,15 @@ struct COLOR
 
 struct VECTOR2
 {
-	int x;
-	int y;
+	float x;
+	float y;
 };
 
 struct VECTOR3
 {
-	int x;
-	int y;
-	int z;
+	float x;
+	float y;
+	float z;
 };
 
 struct PLYINFO
