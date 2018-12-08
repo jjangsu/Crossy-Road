@@ -13,7 +13,7 @@
 #define ROAD 2
 #define TREE 3
 #define RAIL 4
-#define STONE 5
+
 
 // car type
 #define CAR 1
@@ -31,10 +31,9 @@
 #define KEYDOWN 103
 
 //Obstacle type
-#define NONE 0
-#define TREE1 1
-#define TREE2 2
-#define STONE1 3
+#define BIGTREE 1
+#define SMALLTREE 2
+#define BIGSTONE 3
 #define STONE2 4
 
 //왼쪽오른쪽

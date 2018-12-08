@@ -50,7 +50,7 @@ std::vector<PLYINFO> usingRailVector;
 
 Tile* fixedTileArray;
 
-Obstacle fixedObstaceArray;
+Obstacle** fixedObstace;
 
 std::random_device rd;
 std::uniform_real_distribution<float> carSpeedRange(100, 250);
@@ -58,6 +58,7 @@ std::uniform_real_distribution<float> carSpeedRange(100, 250);
 std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
 std::uniform_int_distribution<int> MakeCarPeriod(700, 8000);
+std::uniform_int_distribution<int> MakeObstacleRange(-10, 4);
 
 
 
