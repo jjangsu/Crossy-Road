@@ -23,7 +23,19 @@ void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
 void spckeycallback(int key, int x, int y);
 
+bool collide(VECTOR3 a,int sizeA, VECTOR3 b, int sizeB)
+{
+	if (a.x - sizeA / 2 > b.x + sizeB / 2)
+		return false;
+	if (a.x + sizeA / 2 < b.x - sizeB / 2)
+		return false;
+	if (a.z - sizeA / 2 > b.z + sizeB / 2)
+		return false;
+	if (a.z + sizeA / 2 < b.z - sizeB / 2)
+		return false;
 
+	return true;
+}
 
 int main(int argc, char *argv[])
 {
@@ -178,6 +190,7 @@ void TimerFunction(int value)
 			{
 				Car tempcar{ { 700 * -fixedTileArray[i].getDirection(), 0, i * 40 } };
 				tempcar.setDir();
+				tempcar.setSize(40);
 
 				int tempType = carType(rd);
 				if (tempType == CAR)
@@ -202,18 +215,13 @@ void TimerFunction(int value)
 	{
 		if (abs(iter.getPos().z - character.getPos().z) <= 80)
 		{
-			int carx = iter.getPos().x;
-			int carz = iter.getPos().z;
-			int carsize = iter.getSize();
-			int charx = character.getPos().x;
-			int charz = character.getPos().z;
-			int charsize = character.getSize();
+			VECTOR3 car = iter.getPos();
+			int carSize = iter.getSize();
+			VECTOR3 charac = character.getPos();
+			int characSize = character.getSize();
 
-			if (carx - carsize < charx + charsize && carz + carsize < charz - charsize
-				&& carx + carsize > charx - charsize && carz - carsize > charz + charsize)
-			{
+			if (collide(car, carSize, charac, characSize))
 				exit(1);
-			}
 		}
 	}
 	
