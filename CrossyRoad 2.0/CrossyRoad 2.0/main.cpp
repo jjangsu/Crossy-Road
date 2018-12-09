@@ -289,52 +289,50 @@ void gameInit()
 	smallTree.loadPLY("resource/small tree.ply");
 	usingSmallTreeVector = smallTree.getVector();
 
+	train.loadPLY("resource/train.ply");
+	usingTrainVector = train.getVector();
 
 
-	//for (int i = 0; i < COL; ++i)
-	//{
-	//	for (int j = 0; j < ROW; ++j)
-	//	{
-	//		std::cout << i << " " << j << " 되냐?" << std::endl;
-	//		int tempType = MakeObstacleRange(rd);
-	//		if (tempType <= 0)
-	//		{
-	//			fixedObstacle[i][j].setType(NONE);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//		}
-	//		else if (tempType == BIGTREE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingBigTreeVector);
-	//		}
+	for (int i = 0; i < COL; ++i) {	// z
 
-	//		else if (tempType == SMALLTREE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingSmallTreeVector);
-	//		}
-
-	//		else if (tempType == BIGSTONE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingBigStoneVector);
-	//		}
-
-	//		else //if (tempType == SMALLSTONE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingSmallStoneVector);
-	//		}
-
-	//	
-	//	}
-	//}
-
-	int listI = 0, listJ = 0;
+		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
+		int tempType = TileType(rd);
+		if (tempType == GRASS)
+		{
+			fixedTileArray[i].setVector(usingGrassVector);
+			fixedTileArray[i].setType(GRASS);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+			fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+		}
+		else if (tempType == ROAD || tempType == TREE)
+		{
+			fixedTileArray[i].setVector(usingRoadVector);
+			fixedTileArray[i].setType(ROAD);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+			fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+		}
+		else if (tempType == RAIL) {
+			fixedTileArray[i].setVector(usingRailVector);
+			fixedTileArray[i].setType(RAIL);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeTrainPeriod(rd));
+			fixedTileArray[i].setCarSpeed(trainSpeedRange(rd));
+		}
+		
+		int tempdir = TileType(rd);
+		if (tempdir == 1)
+		{
+			fixedTileArray[i].setDirection(1);
+		}
+		else
+		{
+			fixedTileArray[i].setDirection(-1);
+		}
+	}
+	
+	
 
 	for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end();)
 	{
@@ -342,38 +340,41 @@ void gameInit()
 		{
 			for (int j = 0; j < ROW; ++j)
 			{
-				int tempType = MakeObstacleRange(rd);
-				if (tempType <= 0)
+				if (fixedTileArray[i].getType() == GRASS)
 				{
-					iter->setType(NONE);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-				}
-				else if (tempType == BIGTREE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingBigTreeVector);
-				}
+					int tempType = MakeObstacleRange(rd);
+					if (tempType <= 0)
+					{
+						iter->setType(NONE);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					}
+					else if (tempType == BIGTREE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 
-				else if (tempType == SMALLTREE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingSmallTreeVector);
-				}
+					}
 
-				else if (tempType == BIGSTONE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingBigStoneVector);
-				}
+					else if (tempType == SMALLTREE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 
-				else //if (tempType == SMALLSTONE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingSmallStoneVector);
+					}
+
+					else if (tempType == BIGSTONE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == SMALLSTONE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
 				}
 				++iter;
 			}
@@ -381,9 +382,9 @@ void gameInit()
 	}
 
 	std::cout << "오냐?" << std::endl;
-
+	
 	for (int i = 0; i < COL; ++i) {	// z
-
+		
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
 		int tempType = TileType(rd);
 		if (tempType == GRASS)
@@ -413,6 +414,8 @@ void gameInit()
 			fixedTileArray[i].setDirection(-1);
 		}
 	}
+	
+	glutMainLoop();
 }
 
 void gamingRander()
@@ -463,12 +466,23 @@ void gamingRander()
 		for (auto& v : CarArray)
 			v.draw();
 
-		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i) {
+		for (int i = character.getPos().z / 40 - 10; i < character.getPos().z / 40 + 30; ++i)
+		{
 			if (fixedTileArray[i].getType() == RAIL)
 				fixedTileArray[i].drawRail();
 			else
 				fixedTileArray[i].draw();
 		}
+
+		for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end(); ++iter)
+		{
+			if (character.getPos().z / 40 - iter->getPos().z / 40 < 10 && character.getPos().z / 40 - iter->getPos().z / 40 > -30)
+			{
+				iter->draw();
+			}
+		}
+
+
 	}
 	glPopMatrix();
 }
@@ -590,18 +604,28 @@ void gamingUpdate()
 				fixedTileArray[i].setCMake(clock());
 
 			}
+
+			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() == RAIL)
+			{
+				Car tempC1 = { {799.f *-fixedTileArray[i].getDirection() , 0.f, i * 40.f } };
+				Car tempC2 = { {(799.f - 126.f) *-fixedTileArray[i].getDirection() , 0.f, i * 40.f } };
+				tempC1.setVector(usingTrainVector);
+				tempC2.setVector(usingTrainVector);
+				tempC1.setSize({ 126 ,60, 40 });
+				tempC2.setSize({ 126 ,60, 40 });
+				tempC1.setSpeed(fixedTileArray[i].getCarSpeed());
+				tempC2.setSpeed(fixedTileArray[i].getCarSpeed());
+				tempC1.setDir();
+				tempC2.setDir();
+				CarArray.push_back(tempC1);
+				CarArray.push_back(tempC2);
+				fixedTileArray[i].setCMake(clock());
+			}
 		}
 	}
 
 }
 
-void introInit()
-{
-	cameraPos = { 5.f, 10.f, 0.f };
-	cameraAt = { 0, 5, -10 };
-
-	crossy.loadPLY_X("resource/crossy.ply");
-	crossy.setPos({ 0,0,0, });
 }
 
 void introRander()

@@ -1,15 +1,17 @@
 #pragma once
 
+#include <list>
+
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Object.h"
+#include "Obstacle.h"
 #include "Tile.h"
 #include "Define.h"
-#include "Object.h"
 #include "Chicken.h"
 #include "Car.h"
-#include "Obstacle.h"
-#include <list>
+
 
 enum CURRENTSCENE {intro, gaming, gameover};
 int currentScene = intro;
@@ -47,6 +49,9 @@ std::vector<PLYINFO> usingRedTruckVector;
 Car blueTruck;
 std::vector<PLYINFO> usingBlueTruckVector;
 
+Car train;
+std::vector<PLYINFO> usingTrainVector;
+
 Tile grass{ {0, 0, 0} };
 Tile road{ {0,0,0} };
 Tile rail{ {0, 0, 0} };
@@ -56,17 +61,21 @@ std::vector<PLYINFO> usingGrassVector;
 std::vector<PLYINFO> usingRoadVector;
 std::vector<PLYINFO> usingRailVector;
 
+
 Obstacle bigTree;
-std::vector<PLYINFO> usingBigTreeVector;
 
 Obstacle smallTree;
-std::vector<PLYINFO> usingSmallTreeVector;
 
 Obstacle bigStone;
-std::vector<PLYINFO> usingBigStoneVector;
 
 Obstacle smallStone;
+
+std::vector<PLYINFO> usingBigTreeVector;
+std::vector<PLYINFO> usingSmallTreeVector;
+std::vector<PLYINFO> usingBigStoneVector;
 std::vector<PLYINFO> usingSmallStoneVector;
+
+
 
 
 Tile* fixedTileArray;
@@ -78,8 +87,10 @@ std::uniform_real_distribution<float> carSpeedRange(100, 250);
 //std::uniform_int_distribution<int> carSpeedRange(1, 5);
 std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
-std::uniform_int_distribution<int> MakeCarPeriod(700, 8000);
-std::uniform_int_distribution<int> MakeObstacleRange(-10, 4);
+std::uniform_int_distribution<int> MakeCarPeriod(1300, 8000);
+std::uniform_int_distribution<int> MakeObstacleRange(-30, 4);
+std::uniform_int_distribution<int> trainSpeedRange(300, 800);
+std::uniform_int_distribution<int> MakeTrainPeriod(3000, 8000);
 
 GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
 GLfloat DiffuseLight[] = { 0.5, 0.5, 0.5, 1.0 };

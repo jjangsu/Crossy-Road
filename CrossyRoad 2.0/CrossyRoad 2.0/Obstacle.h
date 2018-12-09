@@ -1,9 +1,12 @@
 #pragma once
+#include <GL/freeglut.h>
+#include "Define.h"
 #include "Object.h"
-class Obstacle :
-	public Object
+
+
+class Obstacle : public Object
 {
-private: 
+public: 
 
 public:
 	Obstacle();
@@ -13,6 +16,8 @@ public:
 
 	void setType(int _type);
 	int getType();
+
+	void draw();
 	
 };
 
