@@ -202,44 +202,63 @@ void spckeycallback(int key, int x, int y)
 	int charzindex = (int)(character.getPos().z / 40);
 	std::cout << fixedObstacle[charzindex + 1][charxindex].getType() << std::endl;
 
-	//std::cout << charzindex << " " << charxindex << " " << fixedObstacle[charzindex][charxindex].getType() << std::endl;
-
+	
 	if (!finish)
 	{
 		switch (key)
 		{
 		case KEYUP:
-			if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
-			{
-				temp = character.getPos();
-				character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-				character.setRotation({ 0, 0, 0 });
-				if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
-					cameraMoveToChar = true;
+			if (charzindex < 1000) {
+				if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+				{
+					temp = character.getPos();
+					character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+					character.setRotation({ 0, 0, 0 });
+					if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+						cameraMoveToChar = true;
+					}
 				}
 			}
 			break;
 
 		case KEYDOWN:
-			temp = character.getPos();
-			character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-			character.setRotation({ 0, 180, 0 });
+			if (charzindex > 0) 
+			{
+				if (fixedObstacle[charzindex - 1][charxindex].getType() == NONE) 
+				{
+					temp = character.getPos();
+					character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+					character.setRotation({ 0, 180, 0 });
+				}
+			}
 			break;
 
 		case KEYLEFT:
-			temp = character.getPos();
-			character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-			character.setRotation({ 0, 90, 0 });
-			MoveToCharX = true;
-			break;
+			if (charxindex < 39)
+			{
+				if (fixedObstacle[charzindex ][charxindex + 1].getType() == NONE)
+				{
+					temp = character.getPos();
+					character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+					character.setRotation({ 0, 90, 0 });
+					MoveToCharX = true;
+					break;
+				}
+			}
 
 		case KEYRIGHT:
-			temp = character.getPos();
-			character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-			character.setRotation({ 0, -90, 0 });
-			MoveToCharXminus = true;
-			cameraPos.x = cameraPos.x - 40;
-			cameraAt.x = cameraPos.x + 5;
+			if (charxindex > 0)
+			{
+				if (fixedObstacle[charzindex][charxindex-1].getType() == NONE)
+				{
+					temp = character.getPos();
+					character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+					character.setRotation({ 0, -90, 0 });
+					MoveToCharXminus = true;
+					cameraPos.x = cameraPos.x - 40;
+					cameraAt.x = cameraPos.x + 5;
+				}
+			}
 			break;
 		}
 	}
@@ -401,15 +420,7 @@ void gameInit()
 		}
 	}
 
-	for (int i = 0; i < 10; ++i)
-	{
-		for (int j = 0; j < ROW; ++j)
-		{
-			std::cout << fixedObstacle[i][j].getType();
-		}
-		std::cout << std::endl;
-	}
-
+	
 	std::cout << "¿À³Ä?" << std::endl;
 
 }

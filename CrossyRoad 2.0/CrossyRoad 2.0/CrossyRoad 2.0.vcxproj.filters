@@ -31,14 +31,14 @@
     <Filter Include="소스 파일\Object\Object">
       <UniqueIdentifier>{6c277e3a-6b1f-43a7-8628-a8b737091d0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\BASE">
-      <UniqueIdentifier>{b64cab3c-3160-4fc2-af93-40b1e672f267}</UniqueIdentifier>
+    <Filter Include="소스 파일\Object\Time">
+      <UniqueIdentifier>{b6eeaafb-dbfb-428e-8559-f1bae1cb68dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{b841ea61-603c-4c82-b971-4ce9745da1a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\Object\Tile</Filter>
     </ClCompile>
@@ -51,11 +51,14 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>소스 파일\BASE</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>소스 파일\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>소스 파일\Object\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,11 +83,11 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>소스 파일\BASE</Filter>
-    </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>소스 파일\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>소스 파일\Object\Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
