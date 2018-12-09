@@ -233,6 +233,104 @@ void Keyboard(unsigned char key, int x, int y)
 
 	switch (key)
 	{
+	case ' ':
+		finish = false;
+		firstPerson = false;
+
+		
+
+		for (int i = 0; i < COL; ++i) {	// z
+
+			fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
+			int tempType = TileType(rd);
+			if (tempType == GRASS)
+			{
+				fixedTileArray[i].setVector(usingGrassVector);
+				fixedTileArray[i].setType(GRASS);
+				fixedTileArray[i].setCMake(clock());
+				fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+				fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+			}
+			else if (tempType == ROAD || tempType == TREE)
+			{
+				fixedTileArray[i].setVector(usingRoadVector);
+				fixedTileArray[i].setType(ROAD);
+				fixedTileArray[i].setCMake(clock());
+				fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+				fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+			}
+			else if (tempType == RAIL) {
+				fixedTileArray[i].setVector(usingRailVector);
+				fixedTileArray[i].setType(RAIL);
+				fixedTileArray[i].setCMake(clock());
+				fixedTileArray[i].setPeriod(MakeTrainPeriod(rd));
+				fixedTileArray[i].setCarSpeed(trainSpeedRange(rd));
+			}
+
+			int tempdir = TileType(rd);
+			if (tempdir == 1)
+			{
+				fixedTileArray[i].setDirection(1);
+			}
+			else
+			{
+				fixedTileArray[i].setDirection(-1);
+			}
+		}
+
+		int tempType;
+
+		for (int i = 0; i < COL; ++i)
+		{
+			for (int j = 0; j < ROW; ++j) //x
+			{
+				tempType = MakeObstacleRange(rd);
+
+				if (fixedTileArray[i].getType() == GRASS)
+				{
+
+					if (tempType == BIGTREE)
+					{
+						fixedObstacle[i][j].setType(1);
+						fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
+
+					}
+
+					else if (tempType == SMALLTREE)
+					{
+						fixedObstacle[i][j].setType(2);
+						fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == BIGSTONE)
+					{
+						fixedObstacle[i][j].setType(3);
+						fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == SMALLSTONE)
+					{
+						fixedObstacle[i][j].setType(4);
+						fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					}
+					else
+					{
+						fixedObstacle[i][j].setType(NONE);
+						fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
+					}
+				}
+				else
+					fixedObstacle[i][j].setType(0);
+			}
+		}
+		character.setPos({ 0, 0, 0 });
+
+		cameraPos.x = - 20;
+		cameraPos.y = + 40;
+		cameraPos.z = - 60;
+		break;
 	case 27:
 		exit(1);
 	default:
