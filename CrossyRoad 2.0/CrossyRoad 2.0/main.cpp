@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
 	glutSpecialFunc(spckeycallback);
 
 
+	gameInit();
+	//introInit();
 
-	introInit();
 
-	
 	glutMainLoop();
 }
 // 윈도우 출력 함수
@@ -84,10 +84,10 @@ GLvoid drawScene(GLvoid)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
+	gamingRander();
 	switch (currentScene)
 	{
 	case gaming:
-		gamingRander();
 		break;
 	case intro:
 		introRander();
@@ -114,7 +114,7 @@ void TimerFunction(int value)
 	default:
 		break;
 	}
-	
+
 
 	glutPostRedisplay();
 	glutTimerFunc(1, TimerFunction, 1);
@@ -204,7 +204,7 @@ void spckeycallback(int key, int x, int y)
 	switch (key)
 	{
 	case KEYUP:
-		
+
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
 		character.setRotation({ 0, 0, 0 });
@@ -321,7 +321,7 @@ void gameInit()
 			fixedTileArray[i].setPeriod(MakeTrainPeriod(rd));
 			fixedTileArray[i].setCarSpeed(trainSpeedRange(rd));
 		}
-		
+
 		int tempdir = TileType(rd);
 		if (tempdir == 1)
 		{
@@ -332,60 +332,61 @@ void gameInit()
 			fixedTileArray[i].setDirection(-1);
 		}
 	}
-	
-	
 
-	for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end();)
+	fixedObstacle = new Obstacle*[COL];
+	for (int i = 0; i < COL; ++i)
 	{
-		for (int i = 0; i < COL; ++i)
+		fixedObstacle[i] = new Obstacle[ ROW];
+	}
+
+
+	for (int i = 0; i < COL; ++i)
+	{
+		for (int j = 0; j < ROW; ++j)
 		{
-			for (int j = 0; j < ROW; ++j)
+			if (fixedTileArray[i].getType() == GRASS)
 			{
-				if (fixedTileArray[i].getType() == GRASS)
+				int tempType = MakeObstacleRange(rd);
+				if (tempType <= 0)
 				{
-					int tempType = MakeObstacleRange(rd);
-					if (tempType <= 0)
-					{
-						iter->setType(NONE);
-						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
-					}
-					else if (tempType == BIGTREE)
-					{
-						iter->setType(tempType);
-						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
-
-					}
-
-					else if (tempType == SMALLTREE)
-					{
-						iter->setType(tempType);
-						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
-
-					}
-
-					else if (tempType == BIGSTONE)
-					{
-						iter->setType(tempType);
-						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
-
-					}
-
-					else if (tempType == SMALLSTONE)
-					{
-						iter->setType(tempType);
-						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
-
-					}
+					fixedObstacle[i][j].setType(NONE);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 				}
-				++iter;
+				else if (tempType == BIGTREE)
+				{
+					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+				}
+
+				else if (tempType == SMALLTREE)
+				{
+					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+				}
+
+				else if (tempType == BIGSTONE)
+				{
+					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+				}
+
+				else if (tempType == SMALLSTONE)
+				{
+					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+				}
 			}
 		}
+
 	}
 
 	std::cout << "오냐?" << std::endl;
-	
+
 	for (int i = 0; i < COL; ++i) {	// z
-		
+
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
 		int tempType = TileType(rd);
 		if (tempType == GRASS)
@@ -415,7 +416,7 @@ void gameInit()
 			fixedTileArray[i].setDirection(-1);
 		}
 	}
-	
+
 	glutMainLoop();
 }
 
@@ -483,7 +484,7 @@ void gamingRander()
 					fixedObstacle[i][j].draw();
 			}
 		}
-		
+
 
 
 	}
@@ -628,6 +629,9 @@ void gamingUpdate()
 	}
 
 }
+
+void introInit()
+{
 
 }
 

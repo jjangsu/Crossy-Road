@@ -14,7 +14,7 @@
 
 
 enum CURRENTSCENE {intro, gaming, gameover};
-int currentScene = intro;
+int currentScene = gaming;
 
 Time frame;
 
@@ -74,8 +74,6 @@ std::vector<PLYINFO> usingBigTreeVector;
 std::vector<PLYINFO> usingSmallTreeVector;
 std::vector<PLYINFO> usingBigStoneVector;
 std::vector<PLYINFO> usingSmallStoneVector;
-
-
 
 
 Tile* fixedTileArray;
