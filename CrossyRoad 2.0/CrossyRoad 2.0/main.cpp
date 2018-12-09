@@ -159,17 +159,25 @@ void Keyboard(unsigned char key, int x, int y)
 			cameraPos.z += 10.0;
 			break;
 		case 'x':
-			cameraAt.y -= 10.0;
+			cameraAt.x -= 10.0;
+			if (firstPerson)
+			{
+				firstPersonAt.x -= 10.0;
+			}
 			break;
 		case 'X':
-			cameraAt.y += 10.0;
+			cameraAt.x += 10.0;
+			if (firstPerson)
+			{
+				firstPersonAt.x += 10.0;
+			}
 			break;
 			// 카메라 y회전
 		case 'y':
-			cameraAt.x += 10.0;
+			cameraAt.y += 10.0;
 			break;
 		case 'Y':
-			cameraAt.x -= 10.0;
+			cameraAt.y -= 10.0;
 			break;
 			// 카메라 z회전
 		case 'z':
@@ -188,9 +196,9 @@ void Keyboard(unsigned char key, int x, int y)
 			character.setVector(knight.getVector());
 			break;
 		case '4':
-			DiffuseLight[0] = 0.3;
-			DiffuseLight[1] = 0.3;
-			DiffuseLight[2] = 0.3;
+			DiffuseLight[0] = 1.0;
+			DiffuseLight[1] = 1.0;
+			DiffuseLight[2] = 1.0;
 			break;
 		case '5':
 			DiffuseLight[0] = 1.0;
@@ -209,6 +217,14 @@ void Keyboard(unsigned char key, int x, int y)
 				cameraPos.x = character.getPos().x - 20;
 				cameraPos.y = character.getPos().y + 40;
 				cameraPos.z = character.getPos().z - 60;
+			}
+			else
+			{
+				cameraPos = character.getPos();
+				cameraPos.y += 10;
+				cameraPos.z += 150;
+				cameraAt.x = cameraPos.x;
+				cameraAt.z = cameraPos.z + 20;
 			}
 			break;
 		default:
@@ -276,6 +292,7 @@ void spckeycallback(int key, int x, int y)
 					break;
 				}
 			}
+			
 			break;
 		case KEYRIGHT:
 			if (charxindex > 0)
@@ -575,9 +592,10 @@ void gamingUpdate()
 		cameraPos = character.getPos();
 		cameraPos.y += 10;
 		cameraPos.z += 150;
-		cameraAt.x = cameraPos.x;
+		cameraAt.x = cameraPos.x + firstPersonAt.x;
 		cameraAt.z = cameraPos.z + 20;
 	}
+
 
 	//충돌체크?
 	for (auto& iter : CarArray)

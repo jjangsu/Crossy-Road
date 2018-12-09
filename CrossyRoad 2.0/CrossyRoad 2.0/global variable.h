@@ -110,3 +110,5 @@ bool finish = false;
 std::string score = "123";
 
 bool firstPerson = false;
+
+VECTOR3 firstPersonAt;
