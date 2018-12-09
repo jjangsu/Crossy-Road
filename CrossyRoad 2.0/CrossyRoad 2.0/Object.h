@@ -19,6 +19,7 @@ public:
 	virtual ~Object();
 	void draw();
 	void loadPLY(std::string path);
+	void loadPLY_X(std::string path);
 
 	void setPos(VECTOR3 vec);
 	void setRotation(VECTOR3 vec);
