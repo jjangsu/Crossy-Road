@@ -105,7 +105,7 @@ void TimerFunction(int value)
 
 	if (finish)
 	{
-		character.setScale({1.0, 0.1, 1.0});
+		character.setScale({ 1.0, 0.1, 1.0 });
 	}
 
 	glutPostRedisplay();
@@ -132,52 +132,54 @@ void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	//case 'w':
-	//	cameraAt.y -= 10.0;
-	//	cameraPos.y -= 10.0;
-	//	break;
-	//case 's':
-	//	cameraAt.y += 10.0;
-	//	cameraPos.y += 10.0;
-	//	break;
-	//case 'a':
-	//	cameraAt.x += 10.0;
-	//	cameraPos.x += 10.0;
-	//	break;
-	//case 'd':
-	//	cameraAt.x -= 10.0;
-	//	cameraPos.x -= 10.0;
-	//	break;
-	//case 'e':
-	//	cameraAt.z -= 10.0;
-	//	cameraPos.z -= 10.0;
-	//	break;
-	//case 'q':
-	//	cameraAt.z += 10.0;
-	//	cameraPos.z += 10.0;
-	//	break;
-	//case 'x':
-	//	cameraAt.y -= 10.0;
-	//	break;
-	//case 'X':
-	//	cameraAt.y += 10.0;
-	//	break;
-	//	// 카메라 y회전
-	//case 'y':
-	//	cameraAt.x += 10.0;
-	//	break;
-	//case 'Y':
-	//	cameraAt.x -= 10.0;
-	//	break;
-	//	// 카메라 z회전
-	//case 'z':
-	//	cameraAt.z -= 10.0;
-	//	break;
-	//case 'Z':
-	//	cameraAt.z += 10.0;
-	//	break;
-
+	case 'w':
+		cameraAt.y -= 10.0;
+		cameraPos.y -= 10.0;
+		break;
+	case 's':
+		cameraAt.y += 10.0;
+		cameraPos.y += 10.0;
+		break;
+	case 'a':
+		cameraAt.x += 10.0;
+		cameraPos.x += 10.0;
+		break;
+	case 'd':
+		cameraAt.x -= 10.0;
+		cameraPos.x -= 10.0;
+		break;
+	case 'e':
+		cameraAt.z -= 10.0;
+		cameraPos.z -= 10.0;
+		break;
+	case 'q':
+		cameraAt.z += 10.0;
+		cameraPos.z += 10.0;
+		break;
+	case 'x':
+		cameraAt.y -= 10.0;
+		break;
+	case 'X':
+		cameraAt.y += 10.0;
+		break;
+		// 카메라 y회전
+	case 'y':
+		cameraAt.x += 10.0;
+		break;
+	case 'Y':
+		cameraAt.x -= 10.0;
+		break;
+		// 카메라 z회전
+	case 'z':
+		cameraAt.z -= 10.0;
+		break;
+	case 'Z':
+		cameraAt.z += 10.0;
+		break;
 	case '1':
+		character.setVector(chicken.getVector());
+		break;
+	case'2':
 		character.setVector(granPa.getVector());
 		break;
 	case 27:
@@ -193,10 +195,10 @@ void spckeycallback(int key, int x, int y)
 {
 	VECTOR3 temp;
 	int charxindex = (int)(800 - character.getPos().x) / 40;
-	int charzindex = (int)(character.getPos().z / 40) ;
+	int charzindex = (int)(character.getPos().z / 40);
 
 	std::cout << charzindex << " " << charxindex << std::endl;
-	if (!finish) 
+	if (!finish)
 	{
 		switch (key)
 		{
@@ -248,14 +250,13 @@ void gameInit()
 	fixedTileArray = new Tile[COL];
 
 	// 캐릭터
-	character.loadPLY("resource/chicken.ply");
-	character.setPos({ 0,0,0, });
-	character.setSize({ 20, 40, 30 });
+	chicken.loadPLY("resource/chicken.ply");
 
 	granPa.loadPLY("resource/granPa.ply");
-	
-	
 
+	character.setVector(chicken.getVector());
+	character.setPos({ 0,0,0, });
+	character.setSize({ 40, 40, 30 });
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -404,11 +405,10 @@ void gamingRander()
 
 	score = std::to_string((int)character.getPos().z / 40);
 
-
 	glColor3f(1.0, 0.0, 0.0);
 	glRasterPos3f(character.getPos().x, character.getPos().y + 50, character.getPos().z);
 	int len = (int)score.length();
-	for (int i = 0; i < len; i++) 
+	for (int i = 0; i < len; i++)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score[i]);
 
 	glPushMatrix();
@@ -448,7 +448,7 @@ void gamingRander()
 	glPushMatrix();
 	{
 		//if (!finish)
-			character.draw();
+		character.draw();
 
 		for (auto& v : CarArray)
 			v.draw();
@@ -507,7 +507,7 @@ void gamingUpdate()
 	}
 
 	// 카메라 자동이동 
-	if (!finish) 
+	if (!finish)
 	{
 		cameraPos.z += 3.0;
 		cameraAt.z = cameraPos.z + 20.f;

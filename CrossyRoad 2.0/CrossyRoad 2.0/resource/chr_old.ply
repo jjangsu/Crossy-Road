@@ -1,6 +1,6 @@
 ply
 format ascii 1.0
-comment : granPa
+comment : chr_old
 comment : MagicaVoxel @ Ephtracy
 element vertex 16240
 property float x

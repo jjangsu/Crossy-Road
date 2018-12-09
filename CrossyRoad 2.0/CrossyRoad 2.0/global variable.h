@@ -27,6 +27,7 @@ bool MoveToCharX = false;
 bool MoveToCharXminus = false;
 
 Character character{ { 0, 0, 0 } };
+Character chicken{ { 0, 0, 0 } };
 Character granPa{ {0, 0, 0} };
 
 std::vector<PLYINFO> usingCharVector;
@@ -95,8 +96,8 @@ std::uniform_int_distribution<int> trainSpeedRange(600, 1000);
 std::uniform_int_distribution<int> MakeTrainPeriod(3000, 8000);
 
 GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
-GLfloat DiffuseLight[] = { 0.5, 0.5, 0.5, 1.0 };
-GLfloat SpecularLight[] = { 0.5, 0.5, 0.5, 1.0 };
+GLfloat DiffuseLight[] = {0.3, 0.3, 0.3, 0.5 };
+GLfloat SpecularLight[] = { 0.3, 0.3, 0.3, 1.0 };
 GLfloat lightPos[] = { 200, 100.0, cameraPos.z + 0, 1.0 };
 int Specular = 60;
 GLfloat specref[] = { 1.0f, 1.0f, 1.0f, 1.0f };
