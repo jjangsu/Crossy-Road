@@ -182,6 +182,9 @@ void Keyboard(unsigned char key, int x, int y)
 	case'2':
 		character.setVector(granPa.getVector());
 		break;
+	case '3':
+		character.setVector(knight.getVector());
+		break;
 	case 27:
 		exit(1);
 	default:
@@ -194,32 +197,33 @@ void Keyboard(unsigned char key, int x, int y)
 void spckeycallback(int key, int x, int y)
 {
 	VECTOR3 temp;
-	int charxindex = (int)(800 - character.getPos().x) / 40;
-	int charzindex = (int)(character.getPos().z / 40);
 
-	std::cout << charzindex << " " << charxindex << std::endl;
+	int charxindex = (int)((800 + character.getPos().x) / 40);
+	int charzindex = (int)(character.getPos().z / 40);
+	std::cout << fixedObstacle[charzindex + 1][charxindex].getType() << std::endl;
+
+	//std::cout << charzindex << " " << charxindex << " " << fixedObstacle[charzindex][charxindex].getType() << std::endl;
+
 	if (!finish)
 	{
 		switch (key)
 		{
 		case KEYUP:
-			//if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
-		{
-			temp = character.getPos();
-			character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-			character.setRotation({ 0, 0, 0 });
-			if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
-				cameraMoveToChar = true;
+			if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+			{
+				temp = character.getPos();
+				character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+				character.setRotation({ 0, 0, 0 });
+				if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+					cameraMoveToChar = true;
+				}
 			}
-			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
-		}
-		break;
+			break;
 
 		case KEYDOWN:
 			temp = character.getPos();
 			character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
 			character.setRotation({ 0, 180, 0 });
-			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 			break;
 
 		case KEYLEFT:
@@ -227,7 +231,6 @@ void spckeycallback(int key, int x, int y)
 			character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 			character.setRotation({ 0, 90, 0 });
 			MoveToCharX = true;
-			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 			break;
 
 		case KEYRIGHT:
@@ -240,6 +243,8 @@ void spckeycallback(int key, int x, int y)
 			break;
 		}
 	}
+
+
 }
 
 void gameInit()
@@ -251,8 +256,8 @@ void gameInit()
 
 	// 캐릭터
 	chicken.loadPLY("resource/chicken.ply");
-
 	granPa.loadPLY("resource/granPa.ply");
+	knight.loadPLY("resource/knight.ply");
 
 	character.setVector(chicken.getVector());
 	character.setPos({ 0,0,0, });
@@ -348,48 +353,61 @@ void gameInit()
 		fixedObstacle[i] = new Obstacle[ROW];
 	}
 
+	int tempType;
 
 	for (int i = 0; i < COL; ++i)
 	{
-		for (int j = 0; j < ROW; ++j)
+		for (int j = 0; j < ROW; ++j) //x
 		{
+			tempType = MakeObstacleRange(rd);
+
 			if (fixedTileArray[i].getType() == GRASS)
 			{
-				int tempType = MakeObstacleRange(rd);
-				if (tempType <= 0)
+
+				if (tempType == BIGTREE)
 				{
-					fixedObstacle[i][j].setType(NONE);
-					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
-				}
-				else if (tempType == BIGTREE)
-				{
-					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setType(1);
 					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
 
 				}
 
 				else if (tempType == SMALLTREE)
 				{
-					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setType(2);
 					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 
 				}
 
 				else if (tempType == BIGSTONE)
 				{
-					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setType(3);
 					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 
 				}
 
 				else if (tempType == SMALLSTONE)
 				{
-					fixedObstacle[i][j].setType(tempType);
+					fixedObstacle[i][j].setType(4);
 					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
 				}
+				else
+				{
+					fixedObstacle[i][j].setType(NONE);
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
+				}
 			}
+			else
+				fixedObstacle[i][j].setType(0);
 		}
+	}
 
+	for (int i = 0; i < 10; ++i)
+	{
+		for (int j = 0; j < ROW; ++j)
+		{
+			std::cout << fixedObstacle[i][j].getType();
+		}
+		std::cout << std::endl;
 	}
 
 	std::cout << "오냐?" << std::endl;
@@ -509,8 +527,8 @@ void gamingUpdate()
 	// 카메라 자동이동 
 	if (!finish)
 	{
-		cameraPos.z += 3.0;
-		cameraAt.z = cameraPos.z + 20.f;
+		//cameraPos.z += 3.0;
+		//cameraAt.z = cameraPos.z + 20.f;
 	}
 
 	//충돌체크?
@@ -529,8 +547,8 @@ void gamingUpdate()
 	}
 
 	//update Car
-	for (auto& v : CarArray)
-		v.move();
+	//for (auto& v : CarArray)
+	//	v.move();
 
 	//Release Car
 	for (auto iter = CarArray.begin(); iter != CarArray.end();)

@@ -29,6 +29,7 @@ bool MoveToCharXminus = false;
 Character character{ { 0, 0, 0 } };
 Character chicken{ { 0, 0, 0 } };
 Character granPa{ {0, 0, 0} };
+Character knight{ {0, 0, 0} };
 
 std::vector<PLYINFO> usingCharVector;
 

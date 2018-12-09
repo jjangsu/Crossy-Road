@@ -6,8 +6,8 @@
 
 class Obstacle : public Object
 {
-public: 
-
+private: 
+	int type;
 public:
 	Obstacle();
 	virtual ~Obstacle();
