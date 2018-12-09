@@ -189,15 +189,22 @@ void Keyboard(unsigned char key, int x, int y)
 void spckeycallback(int key, int x, int y)
 {
 	VECTOR3 temp;
+	int charxindex = (int)(800 - character.getPos().x) / 40;
+	int charzindex = (int)(character.getPos().z / 40) ;
+
+	std::cout << charzindex << " " << charxindex << std::endl;
 	switch (key)
 	{
 	case KEYUP:
-
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		character.setRotation({ 0, 0, 0 });
-		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
-			cameraMoveToChar = true;
+		if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+		{
+			temp = character.getPos();
+			character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+			character.setRotation({ 0, 0, 0 });
+			if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+				cameraMoveToChar = true;
+			}
+			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		}
 		break;
 
@@ -205,6 +212,7 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
 		character.setRotation({ 0, 180, 0 });
+		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYLEFT:
@@ -212,6 +220,7 @@ void spckeycallback(int key, int x, int y)
 		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, 90, 0 });
 		MoveToCharX = true;
+		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYRIGHT:
