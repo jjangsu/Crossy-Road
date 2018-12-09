@@ -12,7 +12,7 @@
 #include <list>
 
 enum CURRENTSCENE {intro, gaming, gameover};
-int currentScene = gaming;
+int currentScene = intro;
 
 Time frame;
 
@@ -25,6 +25,8 @@ bool MoveToCharX = false;
 bool MoveToCharXminus = false;
 
 Chicken character{ { 0, 0, 0 } };
+
+Object crossy;
 
 Car pupleCar;
 std::vector<Car> CarArray;
