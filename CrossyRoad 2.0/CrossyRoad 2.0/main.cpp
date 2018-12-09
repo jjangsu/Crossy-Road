@@ -201,15 +201,20 @@ void Keyboard(unsigned char key, int x, int y)
 void spckeycallback(int key, int x, int y)
 {
 	VECTOR3 temp;
+	int charxindex = (int)(800 - character.getPos().x) / 40;
+	int charzindex = (int)(character.getPos().x / 40) + 19;
 	switch (key)
 	{
 	case KEYUP:
-
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		character.setRotation({ 0, 0, 0 });
-		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
-			cameraMoveToChar = true;
+		if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+		{
+			temp = character.getPos();
+			character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+			character.setRotation({ 0, 0, 0 });
+			if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+				cameraMoveToChar = true;
+			}
+			std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		}
 		break;
 
@@ -217,6 +222,7 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
 		character.setRotation({ 0, 180, 0 });
+		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYLEFT:
@@ -224,6 +230,7 @@ void spckeycallback(int key, int x, int y)
 		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, 90, 0 });
 		MoveToCharX = true;
+		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYRIGHT:
@@ -233,6 +240,7 @@ void spckeycallback(int key, int x, int y)
 		MoveToCharXminus = true;
 		cameraPos.x = cameraPos.x - 40;
 		cameraAt.x = cameraPos.x + 20;
+		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 	}
 }
@@ -385,37 +393,6 @@ void gameInit()
 
 	std::cout << "¿À³Ä?" << std::endl;
 
-	for (int i = 0; i < COL; ++i) {	// z
-
-		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
-		int tempType = TileType(rd);
-		if (tempType == GRASS)
-		{
-			fixedTileArray[i].setVector(usingGrassVector);
-			fixedTileArray[i].setType(GRASS);
-		}
-		else if (tempType == ROAD || tempType == TREE)
-		{
-			fixedTileArray[i].setVector(usingRoadVector);
-			fixedTileArray[i].setType(ROAD);
-		}
-		else if (tempType == RAIL) {
-			fixedTileArray[i].setVector(usingRailVector);
-			fixedTileArray[i].setType(RAIL);
-		}
-		fixedTileArray[i].setCMake(clock());
-		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
-		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
-		int tempdir = TileType(rd);
-		if (tempdir == 1)
-		{
-			fixedTileArray[i].setDirection(1);
-		}
-		else
-		{
-			fixedTileArray[i].setDirection(-1);
-		}
-	}
 
 	glutMainLoop();
 }
