@@ -10,6 +10,9 @@ public:
 	virtual ~Obstacle();
 
 	Obstacle(VECTOR3 vec, int type);
+
+	void setType(int _type);
+	int getType();
 	
 };
 

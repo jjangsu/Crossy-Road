@@ -9,6 +9,7 @@
 #include "Chicken.h"
 #include "Car.h"
 #include "Obstacle.h"
+#include <list>
 
 enum scene {intro, chooseChar, gaming, gameover};
 int currentScene = gaming;
@@ -51,9 +52,22 @@ std::vector<PLYINFO> usingGrassVector;
 std::vector<PLYINFO> usingRoadVector;
 std::vector<PLYINFO> usingRailVector;
 
-Tile* fixedTileArray;
+Obstacle bigTree;
+std::vector<PLYINFO> usingBigTreeVector;
 
-Obstacle** fixedObstace;
+Obstacle smallTree;
+std::vector<PLYINFO> usingSmallTreeVector;
+
+Obstacle bigStone;
+std::vector<PLYINFO> usingBigStoneVector;
+
+Obstacle smallStone;
+std::vector<PLYINFO> usingSmallStoneVector;
+
+
+Tile* fixedTileArray;
+//std::vector< std::vector<Obstacle> > fixedObstacle (COL,std::vector<Obstacle>(ROW));
+std::list<Obstacle> fixedObstacle(ROW*COL);
 
 std::random_device rd;
 std::uniform_real_distribution<float> carSpeedRange(100, 250);

@@ -164,8 +164,113 @@ int main(int argc, char *argv[])
 	rail.loadPLY("resource/railway.ply");
 	usingRailVector = rail.getVector();
 
+	bigStone.loadPLY("resource/large stone.ply");
+	usingBigStoneVector = bigStone.getVector();
 
+	smallStone.loadPLY("resource/stone.ply");
+	usingSmallStoneVector = smallStone.getVector();
+
+	bigTree.loadPLY("resource/long tree.ply");
+	usingBigTreeVector = bigTree.getVector();
+
+	smallTree.loadPLY("resource/small tree.ply");
+	usingSmallTreeVector = smallTree.getVector();
+
+
+	
+	//for (int i = 0; i < COL; ++i)
+	//{
+	//	for (int j = 0; j < ROW; ++j)
+	//	{
+	//		std::cout << i << " " << j << " 되냐?" << std::endl;
+	//		int tempType = MakeObstacleRange(rd);
+	//		if (tempType <= 0)
+	//		{
+	//			fixedObstacle[i][j].setType(NONE);
+	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+	//		}
+	//		else if (tempType == BIGTREE)
+	//		{
+	//			fixedObstacle[i][j].setType(tempType);
+	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+	//			fixedObstacle[i][j].setVector(usingBigTreeVector);
+	//		}
+
+	//		else if (tempType == SMALLTREE)
+	//		{
+	//			fixedObstacle[i][j].setType(tempType);
+	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+	//			fixedObstacle[i][j].setVector(usingSmallTreeVector);
+	//		}
+
+	//		else if (tempType == BIGSTONE)
+	//		{
+	//			fixedObstacle[i][j].setType(tempType);
+	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+	//			fixedObstacle[i][j].setVector(usingBigStoneVector);
+	//		}
+
+	//		else //if (tempType == SMALLSTONE)
+	//		{
+	//			fixedObstacle[i][j].setType(tempType);
+	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+	//			fixedObstacle[i][j].setVector(usingSmallStoneVector);
+	//		}
+
+	//	
+	//	}
+	//}
+
+	int listI = 0, listJ = 0;
+
+	for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end();)
+	{
+		for (int i = 0; i < COL; ++i)
+		{
+			for (int j = 0; j < ROW; ++j)
+			{
+				int tempType = MakeObstacleRange(rd);
+				if (tempType <= 0)
+				{
+					iter->setType(NONE);
+					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+				}
+				else if (tempType == BIGTREE)
+				{
+					iter->setType(tempType);
+					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+					//iter->setVector(usingBigTreeVector);
+				}
+
+				else if (tempType == SMALLTREE)
+				{
+					iter->setType(tempType);
+					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+					//iter->setVector(usingSmallTreeVector);
+				}
+
+				else if (tempType == BIGSTONE)
+				{
+					iter->setType(tempType);
+					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+					//iter->setVector(usingBigStoneVector);
+				}
+
+				else //if (tempType == SMALLSTONE)
+				{
+					iter->setType(tempType);
+					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
+					//iter->setVector(usingSmallStoneVector);
+				}
+				++iter;
+			}
+		}
+	}
+
+	std::cout << "오냐?" << std::endl;
+	
 	for (int i = 0; i < COL; ++i) {	// z
+		
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
 		int tempType = TileType(rd);
 		if (tempType == GRASS)
@@ -195,7 +300,7 @@ int main(int argc, char *argv[])
 			fixedTileArray[i].setDirection(-1);
 		}
 	}
-
+	
 	glutMainLoop();
 }
 // 윈도우 출력 함수

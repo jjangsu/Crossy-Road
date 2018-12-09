@@ -9,6 +9,7 @@
 #define PUPLE_NUM 10
 
 //tile type
+#define NONE 0
 #define GRASS 1
 #define ROAD 2
 #define TREE 3
@@ -34,7 +35,7 @@
 #define BIGTREE 1
 #define SMALLTREE 2
 #define BIGSTONE 3
-#define STONE2 4
+#define SMALLSTONE 4
 
 //왼쪽오른쪽
 #define LEFTEDGE -800

@@ -16,3 +16,13 @@ Obstacle::Obstacle(VECTOR3 vec, int _type)
 	position = vec;
 	type = _type;
 }
+
+void Obstacle::setType(int _type)
+{
+	type = _type;
+}
+
+int Obstacle::getType()
+{
+	return type;
+}
