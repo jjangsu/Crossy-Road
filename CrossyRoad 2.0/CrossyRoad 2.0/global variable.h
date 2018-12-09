@@ -27,6 +27,9 @@ bool MoveToCharX = false;
 bool MoveToCharXminus = false;
 
 Character character{ { 0, 0, 0 } };
+Character granPa{ {0, 0, 0} };
+
+std::vector<Car> usingCharVector;
 
 Object crossy;
 
@@ -98,3 +101,8 @@ GLfloat lightPos[] = { 200, 100.0, cameraPos.z + 0, 1.0 };
 int Specular = 60;
 GLfloat specref[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 GLfloat gray[] = { 0.75f, 0.75f, 0.75f, 1.0f };
+
+
+bool finish = false;
+
+std::string score = "123";

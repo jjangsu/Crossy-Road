@@ -12,6 +12,7 @@ protected:
 	VECTOR3 angle;
 	int type;
 	VECTOR3 size;
+	VECTOR3 scale = { 1, 1, 1 };
 
 public:
 	Object();
@@ -31,6 +32,6 @@ public:
 	VECTOR3 getSize();
 	void setSize(VECTOR3 _size);
 	
-	
+	void setScale(VECTOR3 vec);
 };
 

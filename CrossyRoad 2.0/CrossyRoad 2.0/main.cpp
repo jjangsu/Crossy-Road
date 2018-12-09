@@ -101,18 +101,12 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
-	switch (currentScene)
-	{
-	case gaming:
-		gamingUpdate();
-		break;
-	case intro:
-		introUpdate();
-		break;
-	default:
-		break;
-	}
+	gamingUpdate();
 
+	if (finish)
+	{
+		character.setScale({1.0, 0.1, 1.0});
+	}
 
 	glutPostRedisplay();
 	glutTimerFunc(1, TimerFunction, 1);
@@ -183,10 +177,6 @@ void Keyboard(unsigned char key, int x, int y)
 		cameraAt.z += 10.0;
 
 		break;
-	case '1':
-		currentScene = gaming;
-		gameInit();
-		break;
 	case 27:
 		exit(1);
 	default:
@@ -246,6 +236,11 @@ void gameInit()
 	character.loadPLY("resource/chicken.ply");
 	character.setPos({ 0,0,0, });
 	character.setSize({ 20, 40, 30 });
+
+	granPa.loadPLY("resource/granPa.ply");
+	granPa.setPos({ 0,0,0, });
+	granPa.setSize({ 40, 40, 30 });
+
 
 	// 차
 	pupleCar.loadPLY("resource/puple car.ply");
@@ -392,6 +387,15 @@ void gamingRander()
 		cameraAt.x, cameraAt.y, cameraAt.z,
 		0.0, 1.0, 0.0);
 
+	score = std::to_string((int)character.getPos().z / 40);
+
+
+	glColor3f(1.0, 0.0, 0.0);
+	glRasterPos3f(character.getPos().x, character.getPos().y + 50, character.getPos().z);
+	int len = (int)score.length();
+	for (int i = 0; i < len; i++) 
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, score[i]);
+
 	glPushMatrix();
 	{
 		glShadeModel(GL_SMOOTH);
@@ -428,7 +432,8 @@ void gamingRander()
 
 	glPushMatrix();
 	{
-		character.draw();
+		//if (!finish)
+			character.draw();
 
 		for (auto& v : CarArray)
 			v.draw();
@@ -490,8 +495,11 @@ void gamingUpdate()
 	}
 
 	// 카메라 자동이동 
-	cameraPos.z += 1.0;
-	cameraAt.z = cameraPos.z + 20.f;
+	if (!finish) 
+	{
+		cameraPos.z += 3.0;
+		cameraAt.z = cameraPos.z + 20.f;
+	}
 
 	//충돌체크?
 	for (auto& iter : CarArray)
@@ -504,7 +512,7 @@ void gamingUpdate()
 			VECTOR3 characSize = character.getSize();
 
 			if (collide(car, carSize, charac, characSize))
-				exit(1);
+				finish = true;
 		}
 	}
 

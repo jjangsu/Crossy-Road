@@ -25,7 +25,7 @@ void Object::draw()
 		glRotatef(angle.x, 1.0, 0.0, 0.0);
 		glRotatef(angle.y, 0.0, 1.0, 0.0);
 		glRotatef(angle.z, 0.0, 0.0, 1.0);
-		//glScalef(1.f, 1.f, 1.f);
+		glScalef(scale.x, scale.y, scale.z);
 		glBegin(GL_QUADS);
 		for (auto& iter : info)
 		{
@@ -191,3 +191,8 @@ void Object::setSize(VECTOR3 _size)
 	size = _size;
 }
 
+
+void Object::setScale(VECTOR3 vec)
+{
+	scale = vec;
+}
