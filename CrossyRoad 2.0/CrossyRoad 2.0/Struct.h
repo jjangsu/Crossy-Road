@@ -8,11 +8,7 @@ struct COLOR
 };
 
 
-struct VECTOR2
-{
-	float x;
-	float y;
-};
+
 
 struct VECTOR3
 {

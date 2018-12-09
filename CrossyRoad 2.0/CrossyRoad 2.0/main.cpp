@@ -67,10 +67,8 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
-
-	gameInit();
 	//introInit();
-
+	gameInit();
 
 	glutMainLoop();
 }
@@ -84,10 +82,10 @@ GLvoid drawScene(GLvoid)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
-	gamingRander();
 	switch (currentScene)
 	{
 	case gaming:
+		gamingRander();
 		break;
 	case intro:
 		introRander();
@@ -186,8 +184,8 @@ void Keyboard(unsigned char key, int x, int y)
 
 		break;
 	case '1':
-		gameInit();
 		currentScene = gaming;
+		gameInit();
 		break;
 	case 27:
 		exit(1);
@@ -202,7 +200,9 @@ void spckeycallback(int key, int x, int y)
 {
 	VECTOR3 temp;
 	int charxindex = (int)(800 - character.getPos().x) / 40;
-	int charzindex = (int)(character.getPos().x / 40) + 19;
+	int charzindex = (int)(character.getPos().z / 40) ;
+
+	std::cout << charzindex << " " << charxindex << std::endl;
 	switch (key)
 	{
 	case KEYUP:
@@ -214,7 +214,7 @@ void spckeycallback(int key, int x, int y)
 			if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
 				cameraMoveToChar = true;
 			}
-			std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		}
 		break;
 
@@ -222,7 +222,7 @@ void spckeycallback(int key, int x, int y)
 		temp = character.getPos();
 		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
 		character.setRotation({ 0, 180, 0 });
-		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYLEFT:
@@ -230,7 +230,7 @@ void spckeycallback(int key, int x, int y)
 		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
 		character.setRotation({ 0, 90, 0 });
 		MoveToCharX = true;
-		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
 		break;
 
 	case KEYRIGHT:
@@ -239,8 +239,7 @@ void spckeycallback(int key, int x, int y)
 		character.setRotation({ 0, -90, 0 });
 		MoveToCharXminus = true;
 		cameraPos.x = cameraPos.x - 40;
-		cameraAt.x = cameraPos.x + 20;
-		std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+		cameraAt.x = cameraPos.x + 5;
 		break;
 	}
 }
@@ -344,7 +343,7 @@ void gameInit()
 	fixedObstacle = new Obstacle*[COL];
 	for (int i = 0; i < COL; ++i)
 	{
-		fixedObstacle[i] = new Obstacle[ ROW];
+		fixedObstacle[i] = new Obstacle[ROW];
 	}
 
 
@@ -358,12 +357,12 @@ void gameInit()
 				if (tempType <= 0)
 				{
 					fixedObstacle[i][j].setType(NONE);
-					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
 				}
 				else if (tempType == BIGTREE)
 				{
 					fixedObstacle[i][j].setType(tempType);
-					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
 
 				}
 
@@ -393,8 +392,6 @@ void gameInit()
 
 	std::cout << "¿À³Ä?" << std::endl;
 
-
-	glutMainLoop();
 }
 
 void gamingRander()
@@ -609,7 +606,11 @@ void gamingUpdate()
 
 void introInit()
 {
+	cameraPos = { 5.f, 10.f, 0.f };
+	cameraAt = { 0, 5, -10 };
 
+	crossy.loadPLY_X("resource/crossy.ply");
+	crossy.setPos({ 0,0,0, });
 }
 
 void introRander()
@@ -628,5 +629,5 @@ void introRander()
 
 void introUpdate()
 {
-
+	//currentScene = gaming;
 }
