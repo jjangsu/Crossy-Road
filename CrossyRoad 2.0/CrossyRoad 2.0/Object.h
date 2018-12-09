@@ -29,5 +29,6 @@ public:
 	VECTOR3 getSize();
 	void setSize(VECTOR3 _size);
 	
+	
 };
 

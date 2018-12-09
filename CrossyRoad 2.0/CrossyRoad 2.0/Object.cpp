@@ -131,3 +131,4 @@ void Object::setSize(VECTOR3 _size)
 {
 	size = _size;
 }
+
