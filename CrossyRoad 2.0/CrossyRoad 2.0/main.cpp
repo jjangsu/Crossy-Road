@@ -67,10 +67,8 @@ int main(int argc, char *argv[])
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(spckeycallback);
 
-
-	gameInit();
 	//introInit();
-
+	gameInit();
 
 	glutMainLoop();
 }
@@ -84,10 +82,10 @@ GLvoid drawScene(GLvoid)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
-	gamingRander();
 	switch (currentScene)
 	{
 	case gaming:
+		gamingRander();
 		break;
 	case intro:
 		introRander();
@@ -186,8 +184,8 @@ void Keyboard(unsigned char key, int x, int y)
 
 		break;
 	case '1':
-		gameInit();
 		currentScene = gaming;
+		gameInit();
 		break;
 	case 27:
 		exit(1);
@@ -232,7 +230,7 @@ void spckeycallback(int key, int x, int y)
 		character.setRotation({ 0, -90, 0 });
 		MoveToCharXminus = true;
 		cameraPos.x = cameraPos.x - 40;
-		cameraAt.x = cameraPos.x + 20;
+		cameraAt.x = cameraPos.x + 5;
 		break;
 	}
 }
@@ -336,7 +334,7 @@ void gameInit()
 	fixedObstacle = new Obstacle*[COL];
 	for (int i = 0; i < COL; ++i)
 	{
-		fixedObstacle[i] = new Obstacle[ ROW];
+		fixedObstacle[i] = new Obstacle[ROW];
 	}
 
 
@@ -350,12 +348,12 @@ void gameInit()
 				if (tempType <= 0)
 				{
 					fixedObstacle[i][j].setType(NONE);
-					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
 				}
 				else if (tempType == BIGTREE)
 				{
 					fixedObstacle[i][j].setType(tempType);
-					fixedObstacle[i][j].setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					fixedObstacle[i][j].setPos({ (j - 20) * 40.f, 0.f, i * 40.f });
 
 				}
 
@@ -385,39 +383,6 @@ void gameInit()
 
 	std::cout << "¿À³Ä?" << std::endl;
 
-	for (int i = 0; i < COL; ++i) {	// z
-
-		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
-		int tempType = TileType(rd);
-		if (tempType == GRASS)
-		{
-			fixedTileArray[i].setVector(usingGrassVector);
-			fixedTileArray[i].setType(GRASS);
-		}
-		else if (tempType == ROAD || tempType == TREE)
-		{
-			fixedTileArray[i].setVector(usingRoadVector);
-			fixedTileArray[i].setType(ROAD);
-		}
-		else if (tempType == RAIL) {
-			fixedTileArray[i].setVector(usingRailVector);
-			fixedTileArray[i].setType(RAIL);
-		}
-		fixedTileArray[i].setCMake(clock());
-		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
-		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
-		int tempdir = TileType(rd);
-		if (tempdir == 1)
-		{
-			fixedTileArray[i].setDirection(1);
-		}
-		else
-		{
-			fixedTileArray[i].setDirection(-1);
-		}
-	}
-
-	glutMainLoop();
 }
 
 void gamingRander()
@@ -632,7 +597,11 @@ void gamingUpdate()
 
 void introInit()
 {
+	cameraPos = { 5.f, 10.f, 0.f };
+	cameraAt = { 0, 5, -10 };
 
+	crossy.loadPLY_X("resource/crossy.ply");
+	crossy.setPos({ 0,0,0, });
 }
 
 void introRander()
@@ -651,5 +620,5 @@ void introRander()
 
 void introUpdate()
 {
-
+	//currentScene = gaming;
 }
