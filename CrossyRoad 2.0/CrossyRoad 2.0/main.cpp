@@ -130,61 +130,93 @@ GLvoid Reshape(int w, int h)
 
 void Keyboard(unsigned char key, int x, int y)
 {
+	if (!finish)
+		switch (key)
+		{
+
+		case 'w':
+			cameraAt.y -= 10.0;
+			cameraPos.y -= 10.0;
+			break;
+		case 's':
+			cameraAt.y += 10.0;
+			cameraPos.y += 10.0;
+			break;
+		case 'a':
+			cameraAt.x += 10.0;
+			cameraPos.x += 10.0;
+			break;
+		case 'd':
+			cameraAt.x -= 10.0;
+			cameraPos.x -= 10.0;
+			break;
+		case 'e':
+			cameraAt.z -= 10.0;
+			cameraPos.z -= 10.0;
+			break;
+		case 'q':
+			cameraAt.z += 10.0;
+			cameraPos.z += 10.0;
+			break;
+		case 'x':
+			cameraAt.y -= 10.0;
+			break;
+		case 'X':
+			cameraAt.y += 10.0;
+			break;
+			// 카메라 y회전
+		case 'y':
+			cameraAt.x += 10.0;
+			break;
+		case 'Y':
+			cameraAt.x -= 10.0;
+			break;
+			// 카메라 z회전
+		case 'z':
+			cameraAt.z -= 10.0;
+			break;
+		case 'Z':
+			cameraAt.z += 10.0;
+			break;
+		case '1':
+			character.setVector(chicken.getVector());
+			break;
+		case'2':
+			character.setVector(granPa.getVector());
+			break;
+		case '3':
+			character.setVector(knight.getVector());
+			break;
+		case '4':
+			DiffuseLight[0] = 0.3;
+			DiffuseLight[1] = 0.3;
+			DiffuseLight[2] = 0.3;
+			break;
+		case '5':
+			DiffuseLight[0] = 1.0;
+			DiffuseLight[1] = 0.0;
+			DiffuseLight[2] = 0.0;
+			break;
+		case '6':
+			DiffuseLight[0] = 0.0;
+			DiffuseLight[1] = 0.0;
+			DiffuseLight[2] = 1.0;
+			break;
+		case '7':
+			firstPerson = !firstPerson;
+			if (!firstPerson)
+			{
+				cameraPos.x = character.getPos().x - 20;
+				cameraPos.y = character.getPos().y + 40;
+				cameraPos.z = character.getPos().z - 60;
+			}
+			break;
+		default:
+			break;
+		}
+
 	switch (key)
 	{
-	case 'w':
-		cameraAt.y -= 10.0;
-		cameraPos.y -= 10.0;
-		break;
-	case 's':
-		cameraAt.y += 10.0;
-		cameraPos.y += 10.0;
-		break;
-	case 'a':
-		cameraAt.x += 10.0;
-		cameraPos.x += 10.0;
-		break;
-	case 'd':
-		cameraAt.x -= 10.0;
-		cameraPos.x -= 10.0;
-		break;
-	case 'e':
-		cameraAt.z -= 10.0;
-		cameraPos.z -= 10.0;
-		break;
-	case 'q':
-		cameraAt.z += 10.0;
-		cameraPos.z += 10.0;
-		break;
-	case 'x':
-		cameraAt.y -= 10.0;
-		break;
-	case 'X':
-		cameraAt.y += 10.0;
-		break;
-		// 카메라 y회전
-	case 'y':
-		cameraAt.x += 10.0;
-		break;
-	case 'Y':
-		cameraAt.x -= 10.0;
-		break;
-		// 카메라 z회전
-	case 'z':
-		cameraAt.z -= 10.0;
-		break;
-	case 'Z':
-		cameraAt.z += 10.0;
-		break;
-	case '1':
-		character.setVector(chicken.getVector());
-		break;
-	case'2':
-		character.setVector(granPa.getVector());
-		break;
-	case '3':
-		character.setVector(knight.getVector());
-		break;
 	case 27:
 		exit(1);
 	default:
@@ -200,9 +232,8 @@ void spckeycallback(int key, int x, int y)
 
 	int charxindex = (int)((800 + character.getPos().x) / 40);
 	int charzindex = (int)(character.getPos().z / 40);
-	std::cout << fixedObstacle[charzindex + 1][charxindex].getType() << std::endl;
 
-	
+
 	if (!finish)
 	{
 		switch (key)
@@ -222,9 +253,9 @@ void spckeycallback(int key, int x, int y)
 			break;
 
 		case KEYDOWN:
-			if (charzindex > 0) 
+			if (charzindex > 0)
 			{
-				if (fixedObstacle[charzindex - 1][charxindex].getType() == NONE) 
+				if (fixedObstacle[charzindex - 1][charxindex].getType() == NONE)
 				{
 					temp = character.getPos();
 					character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
@@ -236,7 +267,7 @@ void spckeycallback(int key, int x, int y)
 		case KEYLEFT:
 			if (charxindex < 39)
 			{
-				if (fixedObstacle[charzindex ][charxindex + 1].getType() == NONE)
+				if (fixedObstacle[charzindex][charxindex + 1].getType() == NONE)
 				{
 					temp = character.getPos();
 					character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
@@ -245,11 +276,11 @@ void spckeycallback(int key, int x, int y)
 					break;
 				}
 			}
-
+			break;
 		case KEYRIGHT:
 			if (charxindex > 0)
 			{
-				if (fixedObstacle[charzindex][charxindex-1].getType() == NONE)
+				if (fixedObstacle[charzindex][charxindex - 1].getType() == NONE)
 				{
 					temp = character.getPos();
 					character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
@@ -419,10 +450,6 @@ void gameInit()
 				fixedObstacle[i][j].setType(0);
 		}
 	}
-
-	
-	std::cout << "오냐?" << std::endl;
-
 }
 
 void gamingRander()
@@ -444,11 +471,11 @@ void gamingRander()
 	{
 		glShadeModel(GL_SMOOTH);
 		glPushMatrix();
-		glColor3f(0, 0, 0);
+		glColor3f(DiffuseLight[0], DiffuseLight[1], DiffuseLight[2]);
 		glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
-		glRotatef(-90, 0.0, 0.0, 1.0);
-		glScalef(30.0, 20.0, 20.0);
-		glutSolidCube(1.0);
+		glRotatef(-90, 1.0, 0.0, 0.0);
+		glScalef(20.0, 20.0, 20.0);
+		glutSolidCone(0.5, 1.0, 10, 10);
 		glPopMatrix();
 		// 조명
 
@@ -476,7 +503,6 @@ void gamingRander()
 
 	glPushMatrix();
 	{
-		//if (!finish)
 		character.draw();
 
 		for (auto& v : CarArray)
@@ -510,36 +536,47 @@ void gamingUpdate()
 
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
-	if (cameraMoveToChar)
-	{
-		VECTOR3 temp = character.getPos();
-		cameraPos.z += cameraMove * fabs(cameraPos.z - temp.z);
-		cameraAt.z = cameraPos.z + 20.f;
-		if (abs(cameraPos.z - temp.z) < 60) {
-			cameraPos.z = temp.z - 60;
-			cameraAt.z = cameraPos.z + 20;
-			cameraMoveToChar = false;
-		}
-	}
-	// 왼쪽으로 따라가기
-	if (MoveToCharX)
-	{
-		VECTOR3 temp = character.getPos();
-		cameraPos.x += cameraMove * fabs(temp.x - cameraPos.x);
-		cameraAt.x = cameraPos.x + 5;
-		if (fabs(temp.x - cameraPos.x) < 20)
-		{
-			cameraPos.x = temp.x - 20;
-			cameraAt.x = cameraPos.x + 5;
-			MoveToCharX = false;
-		}
-	}
+	if (!firstPerson) {
 
-	// 카메라 자동이동 
-	if (!finish)
+		if (cameraMoveToChar)
+		{
+			VECTOR3 temp = character.getPos();
+			cameraPos.z += cameraMove * fabs(cameraPos.z - temp.z);
+			cameraAt.z = cameraPos.z + 20.f;
+			if (abs(cameraPos.z - temp.z) < 60) {
+				cameraPos.z = temp.z - 60;
+				cameraAt.z = cameraPos.z + 20;
+				cameraMoveToChar = false;
+			}
+		}
+		// 왼쪽으로 따라가기
+		if (MoveToCharX)
+		{
+			VECTOR3 temp = character.getPos();
+			cameraPos.x += cameraMove * fabs(temp.x - cameraPos.x);
+			cameraAt.x = cameraPos.x + 5;
+			if (fabs(temp.x - cameraPos.x) < 20)
+			{
+				cameraPos.x = temp.x - 20;
+				cameraAt.x = cameraPos.x + 5;
+				MoveToCharX = false;
+			}
+		}
+
+		// 카메라 자동이동 
+		if (!finish)
+		{
+			cameraPos.z += 3.0;
+			cameraAt.z = cameraPos.z + 20.f;
+		}
+	}
+	else
 	{
-		//cameraPos.z += 3.0;
-		//cameraAt.z = cameraPos.z + 20.f;
+		cameraPos = character.getPos();
+		cameraPos.y += 10;
+		cameraPos.z += 150;
+		cameraAt.x = cameraPos.x;
+		cameraAt.z = cameraPos.z + 20;
 	}
 
 	//충돌체크?
@@ -552,14 +589,23 @@ void gamingUpdate()
 			VECTOR3 charac = character.getPos();
 			VECTOR3 characSize = character.getSize();
 
-			if (collide(car, carSize, charac, characSize))
+			if (collide(car, carSize, charac, characSize)) 
+			{
 				finish = true;
+				if (firstPerson)
+				{
+					cameraPos.x = character.getPos().x - 20;
+					cameraPos.y = character.getPos().y + 60;
+					cameraPos.z = character.getPos().z - 60;
+					firstPerson = false;
+				}
+			}
 		}
 	}
 
 	//update Car
-	//for (auto& v : CarArray)
-	//	v.move();
+	for (auto& v : CarArray)
+		v.move();
 
 	//Release Car
 	for (auto iter = CarArray.begin(); iter != CarArray.end();)

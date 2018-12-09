@@ -92,12 +92,12 @@ std::uniform_real_distribution<float> carSpeedRange(100, 250);
 std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
 std::uniform_int_distribution<int> MakeCarPeriod(1300, 8000);
-std::uniform_int_distribution<int> MakeObstacleRange(-30, 4);
+std::uniform_int_distribution<int> MakeObstacleRange(-20, 4);
 std::uniform_int_distribution<int> trainSpeedRange(600, 1000);
 std::uniform_int_distribution<int> MakeTrainPeriod(3000, 8000);
 
 GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
-GLfloat DiffuseLight[] = {0.3, 0.3, 0.3, 0.5 };
+GLfloat DiffuseLight[] = {1.0, 1.0, 1.0, 0.5 };
 GLfloat SpecularLight[] = { 0.3, 0.3, 0.3, 1.0 };
 GLfloat lightPos[] = { 200, 100.0, cameraPos.z + 0, 1.0 };
 int Specular = 60;
@@ -108,3 +108,5 @@ GLfloat gray[] = { 0.75f, 0.75f, 0.75f, 1.0f };
 bool finish = false;
 
 std::string score = "123";
+
+bool firstPerson = false;

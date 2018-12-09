@@ -69,7 +69,6 @@ void Tile::loadPLY(std::string path)
 
 		if (file)//읽는데 성공을 했다면
 		{
-			std::cout << path.c_str() << std::endl;
 			char buffer[300];
 			int numofvertex;
 			while (strncmp("element vertex", buffer, strlen("element vertex")) != 0)
@@ -78,8 +77,6 @@ void Tile::loadPLY(std::string path)
 			}
 			strcpy(buffer, buffer + strlen("element vertex"));
 			sscanf(buffer, "%i", &numofvertex);
-
-			std::cout << numofvertex << std::endl;
 
 			while (strncmp("end_header", buffer, strlen("end_header")) != 0)
 			{
@@ -102,9 +99,6 @@ void Tile::loadPLY(std::string path)
 				temp.color.b = temp.color.b / 255.0;
 				info.push_back(temp);
 			}
-
-			std::cout << "-------------------------------------------------------------------------------------------" << std::endl;
-
 		}
 		else
 		{
