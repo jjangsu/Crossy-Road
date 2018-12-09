@@ -115,6 +115,10 @@ int main(int argc, char *argv[])
 	smallTree.loadPLY("resource/small tree.ply");
 	usingSmallTreeVector = smallTree.getVector();
 
+	train.loadPLY("resource/train.ply");
+	usingTrainVector = train.getVector();
+
+
 	for (int i = 0; i < COL; ++i) {	// z
 
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
@@ -123,19 +127,26 @@ int main(int argc, char *argv[])
 		{
 			fixedTileArray[i].setVector(usingGrassVector);
 			fixedTileArray[i].setType(GRASS);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+			fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
 		}
 		else if (tempType == ROAD || tempType == TREE)
 		{
 			fixedTileArray[i].setVector(usingRoadVector);
 			fixedTileArray[i].setType(ROAD);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
+			fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
 		}
 		else if (tempType == RAIL) {
 			fixedTileArray[i].setVector(usingRailVector);
 			fixedTileArray[i].setType(RAIL);
+			fixedTileArray[i].setCMake(clock());
+			fixedTileArray[i].setPeriod(MakeTrainPeriod(rd));
+			fixedTileArray[i].setCarSpeed(trainSpeedRange(rd));
 		}
-		fixedTileArray[i].setCMake(clock());
-		fixedTileArray[i].setPeriod(MakeCarPeriod(rd));
-		fixedTileArray[i].setCarSpeed(carSpeedRange(rd));
+		
 		int tempdir = TileType(rd);
 		if (tempdir == 1)
 		{
@@ -545,6 +556,23 @@ void gamingUpdate()
 				CarArray.push_back(tempcar);
 				fixedTileArray[i].setCMake(clock());
 
+			}
+
+			if (currenttime - fixedTileArray[i].getCMake() > fixedTileArray[i].getPeriod() && fixedTileArray[i].getType() == RAIL)
+			{
+				Car tempC1 = { {799.f *-fixedTileArray[i].getDirection() , 0.f, i * 40.f } };
+				Car tempC2 = { {(799.f - 126.f) *-fixedTileArray[i].getDirection() , 0.f, i * 40.f } };
+				tempC1.setVector(usingTrainVector);
+				tempC2.setVector(usingTrainVector);
+				tempC1.setSize({ 126 ,60, 40 });
+				tempC2.setSize({ 126 ,60, 40 });
+				tempC1.setSpeed(fixedTileArray[i].getCarSpeed());
+				tempC2.setSpeed(fixedTileArray[i].getCarSpeed());
+				tempC1.setDir();
+				tempC2.setDir();
+				CarArray.push_back(tempC1);
+				CarArray.push_back(tempC2);
+				fixedTileArray[i].setCMake(clock());
 			}
 		}
 	}

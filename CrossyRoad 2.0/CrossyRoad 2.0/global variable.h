@@ -47,6 +47,9 @@ std::vector<PLYINFO> usingRedTruckVector;
 Car blueTruck;
 std::vector<PLYINFO> usingBlueTruckVector;
 
+Car train;
+std::vector<PLYINFO> usingTrainVector;
+
 Tile grass{ {0, 0, 0} };
 Tile road{ {0,0,0} };
 Tile rail{ {0, 0, 0} };
@@ -63,13 +66,15 @@ Obstacle smallTree;
 
 Obstacle bigStone;
 
+Obstacle smallStone;
+
 std::vector<PLYINFO> usingBigTreeVector;
 std::vector<PLYINFO> usingSmallTreeVector;
 std::vector<PLYINFO> usingBigStoneVector;
 std::vector<PLYINFO> usingSmallStoneVector;
 
 
-Obstacle smallStone;
+
 
 Tile* fixedTileArray;
 //std::vector< std::vector<Obstacle> > fixedObstacle (COL,std::vector<Obstacle>(ROW));
@@ -82,6 +87,8 @@ std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
 std::uniform_int_distribution<int> MakeCarPeriod(1300, 8000);
 std::uniform_int_distribution<int> MakeObstacleRange(-30, 4);
+std::uniform_int_distribution<int> trainSpeedRange(300, 800);
+std::uniform_int_distribution<int> MakeTrainPeriod(3000, 8000);
 
 GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
 GLfloat DiffuseLight[] = { 0.5, 0.5, 0.5, 1.0 };
