@@ -218,7 +218,7 @@ GLvoid drawScene(GLvoid)
 	glClearColor(105 / 255.f, 204 / 255.f, 236 / 255.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
@@ -243,9 +243,7 @@ void TimerFunction(int value)
 	lightPos[2] = character.getPos().z + 30;
 
 
-	// 카메라 자동이동 
-	cameraPos.z += 1.0;
-	cameraAt.z = cameraPos.z + 20.f;
+	
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar)
@@ -259,19 +257,24 @@ void TimerFunction(int value)
 			cameraMoveToChar = false;
 		}
 	}
-
+	// 왼쪽으로 따라가기
+	std::cout << fabs(cameraAt.x - cameraPos.x) << std::endl;
 	if (MoveToCharX)
 	{
 		VECTOR3 temp = character.getPos();
 		cameraPos.x += cameraMove * fabs(temp.x - cameraPos.x);
-		cameraAt.x = cameraPos.x + 20;
-		if (fabs(temp.x - cameraPos.x) < 40)
+		cameraAt.x = cameraPos.x + 5;
+		if (fabs(temp.x - cameraPos.x) < 20)
 		{
-			cameraPos.x = temp.x - 40;
-			cameraAt.x = cameraPos.x + 20;
+			cameraPos.x = temp.x - 20;
+			cameraAt.x = cameraPos.x + 5;
 			MoveToCharX = false;
 		}
 	}
+
+	// 카메라 자동이동 
+	cameraPos.z += 1.0;
+	cameraAt.z = cameraPos.z + 20.f;
 
 	//충돌체크?
 	for (auto& iter : CarArray)
