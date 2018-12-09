@@ -6,8 +6,6 @@
 #include <random>
 #include <chrono>
 #include <vector>
-#include "SceneBase.h"
-#include "InGameScene.h"
 #include "Tile.h"
 #include "Obstacle.h"
 #include "Time.h"
@@ -15,9 +13,6 @@
 #include "global variable.h"
 #include "Define.h"
 
-
-
-Time frame;
 
 GLvoid drawScene(GLvoid);
 GLvoid Reshape(int w, int h);
@@ -28,82 +23,12 @@ void Mouse(int button, int state, int x, int y);
 void Keyboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
 void spckeycallback(int key, int x, int y);
+bool collide(VECTOR3 a, VECTOR3 sizeA, VECTOR3 b, VECTOR3 sizeB);
+void gamingRander();
+void gamingUpdate();
+void introRander();
+void introUpdate();
 
-void gamingRander()
-{
-	glPushMatrix();
-	{
-		glShadeModel(GL_SMOOTH);
-		glPushMatrix();
-		glColor3f(0, 0, 0);
-		glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
-		glRotatef(-90, 0.0, 0.0, 1.0);
-		glScalef(30.0, 20.0, 20.0);
-		glutSolidCube(1.0);
-		glPopMatrix();
-		// 조명
-
-		glEnable(GL_LIGHTING);
-		glEnable(GL_NORMALIZE);
-
-		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
-
-
-		glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
-		glLightfv(GL_LIGHT0, GL_POSITION, lightPos); //위치
-
-
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-		glEnable(GL_COLOR_MATERIAL);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specref);
-		glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 64);
-
-		glEnable(GL_LIGHT0);
-
-	}
-	glPopMatrix();
-
-	glPushMatrix();
-	{
-		character.draw();
-
-		for (auto& v : CarArray)
-			v.draw();
-
-		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i) {
-			if (fixedTileArray[i].getType() == RAIL)
-				fixedTileArray[i].drawRail();
-			else
-				fixedTileArray[i].draw();
-		}
-	}
-	glPopMatrix();
-}
-
-void changeScene(SceneBase::SceneType type)
-{
-	//if (currentScene)
-	//{
-	//	delete currentScene;
-	//	currentScene = NULL;
-	//}
-	//
-	//switch (type)
-	//{
-	//case SceneBase::inGame:
-	//	currentScene = new InGameScene();
-	//	break;
-	//default:
-	//	break;
-	//} 
-	//
-	//if (currentScene)
-	//{
-	//	currentScene->initialize();
-	//}
-}
 
 bool collide(VECTOR3 a, VECTOR3 sizeA, VECTOR3 b, VECTOR3 sizeB)
 {
@@ -222,15 +147,18 @@ GLvoid drawScene(GLvoid)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
-	gluLookAt(
-		cameraPos.x, cameraPos.y, cameraPos.z,
-		cameraAt.x, cameraAt.y, cameraAt.z,
-		0.0, 1.0, 0.0);
-
-	//if (currentScene == gaming) 
+	switch (currentScene)
 	{
+	case gaming:
 		gamingRander();
+		break;
+	case intro:
+		introRander();
+		break;
+	default:
+		break;
 	}
+
 
 	glPopMatrix();
 	glutSwapBuffers(); // 화면에 출력하기
@@ -238,12 +166,199 @@ GLvoid drawScene(GLvoid)
 
 void TimerFunction(int value)
 {
-	lightPos[0] = character.getPos().x + 40;
-	lightPos[1] = character.getPos().y + 80;
-	lightPos[2] = character.getPos().z + 30;
-
-
+	switch (currentScene)
+	{
+	case gaming:
+		gamingUpdate();
+		break;
+	case intro:
+		introUpdate();
+		break;
+	default:
+		break;
+	}
 	
+
+	glutPostRedisplay();
+	glutTimerFunc(1000 / 60, TimerFunction, 1);
+}
+
+void Mouse(int button, int state, int x, int y)
+{
+
+}
+
+GLvoid Reshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(90.0, (float)w / h, 0.1, 1000);
+	glTranslated(0, 0, -120);
+}
+
+
+void Keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'w':
+		cameraAt.y -= 10.0;
+		cameraPos.y -= 10.0;
+		break;
+	case 's':
+		cameraAt.y += 10.0;
+		cameraPos.y += 10.0;
+		break;
+	case 'a':
+		cameraAt.x += 10.0;
+		cameraPos.x += 10.0;
+		break;
+	case 'd':
+		cameraAt.x -= 10.0;
+		cameraPos.x -= 10.0;
+		break;
+	case 'e':
+		cameraAt.z -= 10.0;
+		cameraPos.z -= 10.0;
+		break;
+	case 'q':
+		cameraAt.z += 10.0;
+		cameraPos.z += 10.0;
+		break;
+	case 'x':
+		cameraAt.y -= 10.0;
+		break;
+	case 'X':
+		cameraAt.y += 10.0;
+		break;
+		// 카메라 y회전
+	case 'y':
+		cameraAt.x += 10.0;
+		break;
+	case 'Y':
+		cameraAt.x -= 10.0;
+		break;
+		// 카메라 z회전
+	case 'z':
+		cameraAt.z -= 10.0;
+		break;
+	case 'Z':
+		cameraAt.z += 10.0;
+
+		break;
+	case 27:
+		exit(1);
+	default:
+		break;
+	}
+
+	glutPostRedisplay();
+}
+
+void spckeycallback(int key, int x, int y)
+{
+	VECTOR3 temp;
+	switch (key)
+	{
+	case KEYUP:
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
+		character.setRotation({ 0, 0, 0 });
+		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
+			cameraMoveToChar = true;
+		}
+		break;
+
+	case KEYDOWN:
+		temp = character.getPos();
+		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+		character.setRotation({ 0, 180, 0 });
+		break;
+
+	case KEYLEFT:
+		temp = character.getPos();
+		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, 90, 0 });
+		MoveToCharX = true;
+		break;
+
+	case KEYRIGHT:
+		temp = character.getPos();
+		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+		character.setRotation({ 0, -90, 0 });
+		MoveToCharXminus = true;
+		cameraPos.x = cameraPos.x - 40;
+		cameraAt.x = cameraPos.x + 20;
+		break;
+	}
+}
+
+void gamingRander()
+{
+	gluLookAt(
+		cameraPos.x, cameraPos.y, cameraPos.z,
+		cameraAt.x, cameraAt.y, cameraAt.z,
+		0.0, 1.0, 0.0);
+
+	glPushMatrix();
+	{
+		glShadeModel(GL_SMOOTH);
+		glPushMatrix();
+		glColor3f(0, 0, 0);
+		glTranslatef(lightPos[0], lightPos[1], lightPos[2]);
+		glRotatef(-90, 0.0, 0.0, 1.0);
+		glScalef(30.0, 20.0, 20.0);
+		glutSolidCube(1.0);
+		glPopMatrix();
+		// 조명
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_NORMALIZE);
+
+		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_FALSE);
+
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, AmbientLight);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, DiffuseLight);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, SpecularLight);
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos); //위치
+
+
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		glEnable(GL_COLOR_MATERIAL);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specref);
+		glMateriali(GL_FRONT_AND_BACK, GL_SHININESS, 64);
+
+		glEnable(GL_LIGHT0);
+
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		character.draw();
+
+		for (auto& v : CarArray)
+			v.draw();
+
+		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i) {
+			if (fixedTileArray[i].getType() == RAIL)
+				fixedTileArray[i].drawRail();
+			else
+				fixedTileArray[i].draw();
+		}
+	}
+	glPopMatrix();
+}
+
+void gamingUpdate()
+{
+	lightPos[0] = character.getPos().x + 10;
+	lightPos[1] = character.getPos().y + 80;
+	lightPos[2] = character.getPos().z + 50;
+
 
 	// 카메라 캐릭터와의 거리와 비교해서 따라가기 
 	if (cameraMoveToChar)
@@ -258,7 +373,6 @@ void TimerFunction(int value)
 		}
 	}
 	// 왼쪽으로 따라가기
-	std::cout << fabs(cameraAt.x - cameraPos.x) << std::endl;
 	if (MoveToCharX)
 	{
 		VECTOR3 temp = character.getPos();
@@ -359,121 +473,14 @@ void TimerFunction(int value)
 		}
 	}
 
-
-	//if (currentScene) currentScene->update();
-	//if (currentScene) currentScene->render();
-
-	glutPostRedisplay();
-	glutTimerFunc(1000 / 60, TimerFunction, 1);
 }
 
-void Keyboard(unsigned char key, int x, int y)
-{
-	switch (key)
-	{
-	case 'w':
-		cameraAt.y -= 10.0;
-		cameraPos.y -= 10.0;
-		break;
-	case 's':
-		cameraAt.y += 10.0;
-		cameraPos.y += 10.0;
-		break;
-	case 'a':
-		cameraAt.x += 10.0;
-		cameraPos.x += 10.0;
-		break;
-	case 'd':
-		cameraAt.x -= 10.0;
-		cameraPos.x -= 10.0;
-		break;
-	case 'e':
-		cameraAt.z -= 10.0;
-		cameraPos.z -= 10.0;
-		break;
-	case 'q':
-		cameraAt.z += 10.0;
-		cameraPos.z += 10.0;
-		break;
-	case 'x':
-		cameraAt.y -= 10.0;
-		break;
-	case 'X':
-		cameraAt.y += 10.0;
-		break;
-		// 카메라 y회전
-	case 'y':
-		cameraAt.x += 10.0;
-		break;
-	case 'Y':
-		cameraAt.x -= 10.0;
-		break;
-		// 카메라 z회전
-	case 'z':
-		cameraAt.z -= 10.0;
-		break;
-	case 'Z':
-		cameraAt.z += 10.0;
-
-		break;
-	case 27:
-		exit(1);
-	default:
-		break;
-	}
-
-	glutPostRedisplay();
-}
-
-void Mouse(int button, int state, int x, int y)
+void introRander()
 {
 
 }
 
-GLvoid Reshape(int w, int h)
+void introUpdate()
 {
-	glViewport(0, 0, w, h);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(90.0, (float)w / h, 0.1, 1000);
-	glTranslated(0, 0, -120);
-}
-
-void spckeycallback(int key, int x, int y)
-{
-	VECTOR3 temp;
-	switch (key)
-	{
-	case KEYUP:
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
-		character.setRotation({ 0, 0, 0 });
-		if (abs(temp.z + MOVEDISTANCE - cameraPos.z) > 60.f) {
-			cameraMoveToChar = true;
-		}
-		break;
-
-	case KEYDOWN:
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-		character.setRotation({ 0, 180, 0 });
-		break;
-
-	case KEYLEFT:
-		temp = character.getPos();
-		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, 90, 0 });
-		MoveToCharX = true;
-		break;
-
-	case KEYRIGHT:
-		temp = character.getPos();
-		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, -90, 0 });
-		MoveToCharXminus = true;
-		cameraPos.x = cameraPos.x - 40;
-		cameraAt.x = cameraPos.x + 20;
-		break;
-	}
 }

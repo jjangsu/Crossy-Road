@@ -143,23 +143,19 @@
   <ItemGroup>
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Chicken.cpp" />
-    <ClCompile Include="InGameScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Car.h" />
     <ClInclude Include="Chicken.h" />
-    <ClInclude Include="InGameScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="global variable.h" />
     <ClInclude Include="Obstacle.h" />
-    <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="Time.h" />
