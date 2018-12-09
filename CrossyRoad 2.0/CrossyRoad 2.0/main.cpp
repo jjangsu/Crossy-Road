@@ -196,10 +196,12 @@ void spckeycallback(int key, int x, int y)
 	int charzindex = (int)(character.getPos().z / 40) ;
 
 	std::cout << charzindex << " " << charxindex << std::endl;
-	switch (key)
+	if (!finish) 
 	{
-	case KEYUP:
-		//if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+		switch (key)
+		{
+		case KEYUP:
+			//if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
 		{
 			temp = character.getPos();
 			character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
@@ -211,29 +213,30 @@ void spckeycallback(int key, int x, int y)
 		}
 		break;
 
-	case KEYDOWN:
-		temp = character.getPos();
-		character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
-		character.setRotation({ 0, 180, 0 });
-		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
-		break;
+		case KEYDOWN:
+			temp = character.getPos();
+			character.setPos({ temp.x,temp.y,temp.z - MOVEDISTANCE });
+			character.setRotation({ 0, 180, 0 });
+			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+			break;
 
-	case KEYLEFT:
-		temp = character.getPos();
-		character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, 90, 0 });
-		MoveToCharX = true;
-		//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
-		break;
+		case KEYLEFT:
+			temp = character.getPos();
+			character.setPos({ temp.x + MOVEDISTANCE,temp.y,temp.z });
+			character.setRotation({ 0, 90, 0 });
+			MoveToCharX = true;
+			//std::cout << character.getPos().x << " " << character.getPos().y << " " << character.getPos().z << std::endl;
+			break;
 
-	case KEYRIGHT:
-		temp = character.getPos();
-		character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
-		character.setRotation({ 0, -90, 0 });
-		MoveToCharXminus = true;
-		cameraPos.x = cameraPos.x - 40;
-		cameraAt.x = cameraPos.x + 5;
-		break;
+		case KEYRIGHT:
+			temp = character.getPos();
+			character.setPos({ temp.x - MOVEDISTANCE,temp.y,temp.z });
+			character.setRotation({ 0, -90, 0 });
+			MoveToCharXminus = true;
+			cameraPos.x = cameraPos.x - 40;
+			cameraAt.x = cameraPos.x + 5;
+			break;
+		}
 	}
 }
 
@@ -466,9 +469,6 @@ void gamingRander()
 					fixedObstacle[i][j].draw();
 			}
 		}
-
-
-
 	}
 	glPopMatrix();
 }

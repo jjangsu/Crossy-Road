@@ -29,7 +29,7 @@ bool MoveToCharXminus = false;
 Character character{ { 0, 0, 0 } };
 Character granPa{ {0, 0, 0} };
 
-std::vector<Car> usingCharVector;
+std::vector<PLYINFO> usingCharVector;
 
 Object crossy;
 
