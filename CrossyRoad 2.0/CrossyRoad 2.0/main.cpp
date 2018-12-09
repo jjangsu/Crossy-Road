@@ -132,50 +132,53 @@ void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'w':
-		cameraAt.y -= 10.0;
-		cameraPos.y -= 10.0;
-		break;
-	case 's':
-		cameraAt.y += 10.0;
-		cameraPos.y += 10.0;
-		break;
-	case 'a':
-		cameraAt.x += 10.0;
-		cameraPos.x += 10.0;
-		break;
-	case 'd':
-		cameraAt.x -= 10.0;
-		cameraPos.x -= 10.0;
-		break;
-	case 'e':
-		cameraAt.z -= 10.0;
-		cameraPos.z -= 10.0;
-		break;
-	case 'q':
-		cameraAt.z += 10.0;
-		cameraPos.z += 10.0;
-		break;
-	case 'x':
-		cameraAt.y -= 10.0;
-		break;
-	case 'X':
-		cameraAt.y += 10.0;
-		break;
-		// 카메라 y회전
-	case 'y':
-		cameraAt.x += 10.0;
-		break;
-	case 'Y':
-		cameraAt.x -= 10.0;
-		break;
-		// 카메라 z회전
-	case 'z':
-		cameraAt.z -= 10.0;
-		break;
-	case 'Z':
-		cameraAt.z += 10.0;
+	//case 'w':
+	//	cameraAt.y -= 10.0;
+	//	cameraPos.y -= 10.0;
+	//	break;
+	//case 's':
+	//	cameraAt.y += 10.0;
+	//	cameraPos.y += 10.0;
+	//	break;
+	//case 'a':
+	//	cameraAt.x += 10.0;
+	//	cameraPos.x += 10.0;
+	//	break;
+	//case 'd':
+	//	cameraAt.x -= 10.0;
+	//	cameraPos.x -= 10.0;
+	//	break;
+	//case 'e':
+	//	cameraAt.z -= 10.0;
+	//	cameraPos.z -= 10.0;
+	//	break;
+	//case 'q':
+	//	cameraAt.z += 10.0;
+	//	cameraPos.z += 10.0;
+	//	break;
+	//case 'x':
+	//	cameraAt.y -= 10.0;
+	//	break;
+	//case 'X':
+	//	cameraAt.y += 10.0;
+	//	break;
+	//	// 카메라 y회전
+	//case 'y':
+	//	cameraAt.x += 10.0;
+	//	break;
+	//case 'Y':
+	//	cameraAt.x -= 10.0;
+	//	break;
+	//	// 카메라 z회전
+	//case 'z':
+	//	cameraAt.z -= 10.0;
+	//	break;
+	//case 'Z':
+	//	cameraAt.z += 10.0;
+	//	break;
 
+	case '1':
+		character.setVector(granPa.getVector());
 		break;
 	case 27:
 		exit(1);
@@ -196,7 +199,7 @@ void spckeycallback(int key, int x, int y)
 	switch (key)
 	{
 	case KEYUP:
-		if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
+		//if (fixedObstacle[charzindex + 1][charxindex].getType() == NONE)
 		{
 			temp = character.getPos();
 			character.setPos({ temp.x,temp.y,temp.z + MOVEDISTANCE });
@@ -247,8 +250,8 @@ void gameInit()
 	character.setSize({ 20, 40, 30 });
 
 	granPa.loadPLY("resource/granPa.ply");
-	granPa.setPos({ 0,0,0, });
-	granPa.setSize({ 40, 40, 30 });
+	
+	
 
 
 	// 차
