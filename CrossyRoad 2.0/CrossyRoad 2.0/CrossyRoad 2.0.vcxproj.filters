@@ -48,14 +48,14 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>소스 파일\Object\Obstacle</Filter>
     </ClCompile>
-    <ClCompile Include="Chicken.cpp">
-      <Filter>소스 파일\Object\Character</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object\Object</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>소스 파일\BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>소스 파일\Object\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,14 +77,14 @@
     <ClInclude Include="Obstacle.h">
       <Filter>소스 파일\Object\Obstacle</Filter>
     </ClInclude>
-    <ClInclude Include="Chicken.h">
-      <Filter>소스 파일\Object\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object\Object</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>소스 파일\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>소스 파일\Object\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

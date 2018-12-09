@@ -9,7 +9,7 @@
 #include "Obstacle.h"
 #include "Tile.h"
 #include "Define.h"
-#include "Chicken.h"
+#include "Character.h"
 #include "Car.h"
 
 
@@ -26,7 +26,7 @@ bool MoveToCharX = false;
 //float moveX = 0.05;
 bool MoveToCharXminus = false;
 
-Chicken character{ { 0, 0, 0 } };
+Character character{ { 0, 0, 0 } };
 
 Car pupleCar;
 std::vector<Car> CarArray;
@@ -78,7 +78,8 @@ std::vector<PLYINFO> usingSmallStoneVector;
 
 Tile* fixedTileArray;
 //std::vector< std::vector<Obstacle> > fixedObstacle (COL,std::vector<Obstacle>(ROW));
-std::list<Obstacle> fixedObstacle(ROW*COL);
+//std::list<Obstacle> fixedObstacle(ROW*COL);
+Obstacle** fixedObstacle;
 
 std::random_device rd;
 std::uniform_real_distribution<float> carSpeedRange(100, 250);
@@ -87,7 +88,7 @@ std::uniform_int_distribution<int> carType(1, 6);
 std::uniform_int_distribution<int> TileType(1, 4);
 std::uniform_int_distribution<int> MakeCarPeriod(1300, 8000);
 std::uniform_int_distribution<int> MakeObstacleRange(-30, 4);
-std::uniform_int_distribution<int> trainSpeedRange(300, 800);
+std::uniform_int_distribution<int> trainSpeedRange(600, 1000);
 std::uniform_int_distribution<int> MakeTrainPeriod(3000, 8000);
 
 GLfloat AmbientLight[] = { 0.8, 0.8, 0.8, 1.0 };
