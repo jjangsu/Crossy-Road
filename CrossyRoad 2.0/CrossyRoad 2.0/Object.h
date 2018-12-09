@@ -3,6 +3,7 @@
 #include <gl/freeglut.h>
 #include "Struct.h"
 
+
 class Object
 {
 protected:

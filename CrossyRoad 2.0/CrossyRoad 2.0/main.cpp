@@ -115,101 +115,8 @@ int main(int argc, char *argv[])
 	smallTree.loadPLY("resource/small tree.ply");
 	usingSmallTreeVector = smallTree.getVector();
 
-
-	
-	//for (int i = 0; i < COL; ++i)
-	//{
-	//	for (int j = 0; j < ROW; ++j)
-	//	{
-	//		std::cout << i << " " << j << " 되냐?" << std::endl;
-	//		int tempType = MakeObstacleRange(rd);
-	//		if (tempType <= 0)
-	//		{
-	//			fixedObstacle[i][j].setType(NONE);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//		}
-	//		else if (tempType == BIGTREE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingBigTreeVector);
-	//		}
-
-	//		else if (tempType == SMALLTREE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingSmallTreeVector);
-	//		}
-
-	//		else if (tempType == BIGSTONE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingBigStoneVector);
-	//		}
-
-	//		else //if (tempType == SMALLSTONE)
-	//		{
-	//			fixedObstacle[i][j].setType(tempType);
-	//			fixedObstacle[i][j].setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-	//			fixedObstacle[i][j].setVector(usingSmallStoneVector);
-	//		}
-
-	//	
-	//	}
-	//}
-
-	int listI = 0, listJ = 0;
-
-	for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end();)
-	{
-		for (int i = 0; i < COL; ++i)
-		{
-			for (int j = 0; j < ROW; ++j)
-			{
-				int tempType = MakeObstacleRange(rd);
-				if (tempType <= 0)
-				{
-					iter->setType(NONE);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-				}
-				else if (tempType == BIGTREE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingBigTreeVector);
-				}
-
-				else if (tempType == SMALLTREE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingSmallTreeVector);
-				}
-
-				else if (tempType == BIGSTONE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingBigStoneVector);
-				}
-
-				else //if (tempType == SMALLSTONE)
-				{
-					iter->setType(tempType);
-					iter->setPos({ (j - 40) * 40.f,0.f,i * 40.f });
-					//iter->setVector(usingSmallStoneVector);
-				}
-				++iter;
-			}
-		}
-	}
-
-	std::cout << "오냐?" << std::endl;
-	
 	for (int i = 0; i < COL; ++i) {	// z
-		
+
 		fixedTileArray[i].setPos({ 0.f, -1.f, i * 40.f });
 		int tempType = TileType(rd);
 		if (tempType == GRASS)
@@ -239,6 +146,59 @@ int main(int argc, char *argv[])
 			fixedTileArray[i].setDirection(-1);
 		}
 	}
+	
+	
+
+	for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end();)
+	{
+		for (int i = 0; i < COL; ++i)
+		{
+			for (int j = 0; j < ROW; ++j)
+			{
+				if (fixedTileArray[i].getType() == GRASS)
+				{
+					int tempType = MakeObstacleRange(rd);
+					if (tempType <= 0)
+					{
+						iter->setType(NONE);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+					}
+					else if (tempType == BIGTREE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == SMALLTREE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == BIGSTONE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+
+					else if (tempType == SMALLSTONE)
+					{
+						iter->setType(tempType);
+						iter->setPos({ (j - 20) * 40.f,0.f,i * 40.f });
+
+					}
+				}
+				++iter;
+			}
+		}
+	}
+
+	std::cout << "오냐?" << std::endl;
+	
+	
 	
 	glutMainLoop();
 }
@@ -448,12 +408,23 @@ void gamingRander()
 		for (auto& v : CarArray)
 			v.draw();
 
-		for (int i = character.getPos().z / 40 - 5; i < character.getPos().z / 40 + 30; ++i) {
+		for (int i = character.getPos().z / 40 - 10; i < character.getPos().z / 40 + 30; ++i)
+		{
 			if (fixedTileArray[i].getType() == RAIL)
 				fixedTileArray[i].drawRail();
 			else
 				fixedTileArray[i].draw();
 		}
+
+		for (auto iter = fixedObstacle.begin(); iter != fixedObstacle.end(); ++iter)
+		{
+			if (character.getPos().z / 40 - iter->getPos().z / 40 < 10 && character.getPos().z / 40 - iter->getPos().z / 40 > -30)
+			{
+				iter->draw();
+			}
+		}
+
+
 	}
 	glPopMatrix();
 }
@@ -578,6 +549,7 @@ void gamingUpdate()
 		}
 	}
 
+	//Delete Obstacle
 }
 
 void introRander()
